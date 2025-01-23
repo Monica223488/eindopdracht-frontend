@@ -1,5 +1,5 @@
 import React from 'react';
-import './SavedMovies.css';
+import './SavedMovies.module.css';
 
 function SavedMovies() {
     return (

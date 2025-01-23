@@ -1,5 +1,5 @@
 import React from 'react';
-import './LogIn.css';
+import './LogIn.module.css';
 import InputField from '../../components/InputField/InputField.jsx';
 
 function LogIn() {
