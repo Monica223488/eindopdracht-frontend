@@ -22,9 +22,8 @@ function Navigation() {
                         {/*             to="/inloggen">inloggen</NavLink></li>*/}
                     </ul>
                     <Button text="inloggen"
-                            type= "button" onClick="() => navigate('/inloggen')"/>
-                    <Button text="registeren" clickHandler={()=>Navigate ("/registeren")} />
-                    <button type="button" onClick={()=>Navigate("/registreren")}>registreren</button>
+                            type= "button" clickHandler={() => Navigate("/inloggen")}/>
+                    <Button text="registreren" clickHandler={()=>Navigate ("/registreren")} />
                 </div>
             </nav>
         </>
