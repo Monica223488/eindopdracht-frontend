@@ -11,19 +11,19 @@ function Navigation() {
             <nav>
                 <div className={styles['nav-container']}>
                     <h4>MoovieMatcher</h4>
-                    <ul>
+                    <ul className={styles['nav-pages']}>
                         <li><NavLink className={({isActive}) => isActive ? 'active-menu-link' : 'default-menu-link'}
                                      to="/vragenlijst">vragenlijst</NavLink></li>
                         <li><NavLink className={({isActive}) => isActive ? 'active-menu-link' : 'default-menu-link'}
                                      to="/categorieën">categorieën</NavLink></li>
                         <li><NavLink className={({isActive}) => isActive ? 'active-menu-link' : 'default-menu-link'}
-                                     to="/opgeslagenflims">opgeslagen flims</NavLink></li>
-                        {/*<li><NavLink className={({isActive}) => isActive ? 'active-menu-link' : 'default-menu-link'}*/}
-                        {/*             to="/inloggen">inloggen</NavLink></li>*/}
+                                     to="/opgeslagenfilms">opgeslagen films</NavLink></li>
                     </ul>
+                    <div className={styles['nav-buttons']}>
                     <Button text="inloggen"
                             type= "button" clickHandler={() => Navigate("/inloggen")}/>
                     <Button text="registreren" clickHandler={()=>Navigate ("/registreren")} />
+                    </div>
                 </div>
             </nav>
         </>
