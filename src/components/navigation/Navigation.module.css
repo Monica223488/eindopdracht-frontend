@@ -29,6 +29,11 @@ ul {
     justify-content: space-between;
 }
 
+a, a:visited {
+    color: var(--color3);
+    text-decoration: none;
+}
+
 .active-menu-link {
     border-bottom: 1px solid white;
 

@@ -8,44 +8,44 @@ import Movietheater from '../../assets/jake-hills-23LET4Hxj_U-unsplash.jpg'
 
 
 function CreateAccount() {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [username, setUsername] = useState('');
-
-    const [error, toggleError] = useState(false);
-    const [loading, toggleLoading] = useState(false);
-    const navigate = useNavigate();
-
-    const source = axios.CancelToken.source();
-
-    useEffect(() => {
-        return function cleanup() {
-            source.cancel();
-        }
-    }, [] );
-
-        async function handleSubmitAccount (e) {
-            e.preventDefault();
-            toggleError(false);
-            toggleLoading(false);
-
-            try {
-                await axios.post(, {
-                    email: email,
-                    password: password,
-                    username: username,
-                }, {
-                    cancelToken: source.token,
-                });
-
-                navigate('/inloggen');
-
-            }catch(e) {
-                console.error(e);
-                toggleError(true);
-            }
-            toggleLoading(false);
-    }
+    // const [email, setEmail] = useState('');
+    // const [password, setPassword] = useState('');
+    // const [username, setUsername] = useState('');
+    //
+    // const [error, toggleError] = useState(false);
+    // const [loading, toggleLoading] = useState(false);
+    // const navigate = useNavigate();
+    //
+    // const source = axios.CancelToken.source();
+    //
+    // useEffect(() => {
+    //     return function cleanup() {
+    //         source.cancel();
+    //     }
+    // }, [] );
+    //
+    //     async function handleSubmitAccount (e) {
+    //         e.preventDefault();
+    //         toggleError(false);
+    //         toggleLoading(false);
+    //
+    //         try {
+    //             await axios.post(, {
+    //                 email: email,
+    //                 password: password,
+    //                 username: username,
+    //             }, {
+    //                 cancelToken: source.token,
+    //             });
+    //
+    //             navigate('/inloggen');
+    //
+    //         }catch(e) {
+    //             console.error(e);
+    //             toggleError(true);
+    //         }
+    //         toggleLoading(false);
+    // }
     return (
         <>
             <div className={styles["create-account-container"]}>
