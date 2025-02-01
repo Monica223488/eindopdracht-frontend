@@ -15,8 +15,8 @@ function LogIn() {
                 <form className={styles["login-form"]}>
                     <h2>Inloggen</h2>
                     <p>Log eerst in om gebruik te maken van MoovieMatcher</p>
-                    <InputField/>
-                    <InputField/>
+                    <InputField name="username" label="gebruikersnaam:" inputType="text" placeholder="Vul hier je gebruikersnaam in"/>
+                    <InputField name="password" label="wachtwoord:" inputType="password" placeholder="Vul hier je wachtwoord in"/>
                     <Button text="inloggen" />
                     <p>Nog geen account? Klik dan hier om naar de registratiepagina te gaan.</p>
                 </form>

@@ -1,7 +1,7 @@
-import React from 'react';
 import './InputField.module.css';
 
-function InputField({ name, inputType, label, value, changeHandler}) {
+
+function InputField({ name, inputType, label, value, changeHandler, placeholder}) {
     return (
         <>
             <label htmlFor={`${name}-field`}>{label}</label>
@@ -10,6 +10,7 @@ function InputField({ name, inputType, label, value, changeHandler}) {
                 id={`${name}-field`}
                 type={inputType}
                 value={value}
+                placeholder={placeholder}
                 onChange={(e) => changeHandler(e.target.value)}
             />
         </>
