@@ -1,9 +1,11 @@
-import './Footer.module.css';
+import styles from './Footer.module.css';
 
 function Footer() {
     return (
         <>
-            <h4>2025 Eindproject</h4>
+            <footer className={styles["footer-container"]}>
+                <h4>2025 MoovieMatcher</h4>
+            </footer>
         </>
     )
 }

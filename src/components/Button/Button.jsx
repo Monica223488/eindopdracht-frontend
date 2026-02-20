@@ -1,14 +1,14 @@
-import React from 'react';
 import './Button.module.css';
 
-function Button({text, onClick, type, clickHandler}) {
+function Button({text, type = "button", clickHandler, disabled, className}) {
     return (
         <>
             <button
-            onClick={clickHandler}
-            type={type}>
+                type={type}
+                onClick={clickHandler}
+                disabled={disabled}
+                className={className}>
                 {text}
-
             </button>
         </>
     )

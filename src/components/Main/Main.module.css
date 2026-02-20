@@ -12,5 +12,6 @@
 }
 
 .title-container img {
-    max-height: 10rem;
+    max-height: 300px;
+    max-width: 100px;
 }
