@@ -1,3 +1,18 @@
-.movie-list img {
-    border-radius: 250px;
+.movie-tile {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    flex-basis: 150px;
+    max-width: 400px;
+    flex: 0 0 150px;
+    align-items: center;
+    padding: 15px;
+}
+
+.image-wrapper {
+    padding: 20px;
+}
+.image-wrapper img {
+    width: 100%;
+    border-radius: 50%;
 }

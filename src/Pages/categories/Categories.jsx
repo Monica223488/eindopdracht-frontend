@@ -6,13 +6,40 @@ import Header from '../../components/header/Header.jsx';
 import Button from '../../components/Button/Button.jsx';
 
 
-
 function Categories() {
     const [movies, setMovies] = useState([]);
     const [page, setPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
     const [loading, toggleLoading] = useState(false);
     const [error, toggleError] = useState(false);
+    const [genres, setGenres] = useState ([]);
+
+    useEffect(() => {
+        const controller = new AbortController();
+
+        async function fetchGenres() {
+            try {
+                const { data } = await axios.get(
+                    "https://api.themoviedb.org/3/genre/movie/list",
+                    {
+                        signal: controller.signal,
+                        params: {
+                            api_key: import.meta.env.VITE_API_KEY,
+                            language: "nl-NL",
+                        }
+                    }
+                );
+
+                setGenres(data.genres);
+            } catch (e) {
+                if (e.code === "ERR_CANCELED") return;
+                console.error(e);
+            }
+        }
+
+        fetchGenres();
+        return () => controller.abort();
+    }, []);
 
     useEffect(() => {
         const controller = new AbortController();
@@ -53,31 +80,38 @@ function Categories() {
         <>
             <Header title="Categorieën" />
             <main>
-                <div className={styles['labels']}>
-                    <div className={styles['label']}>Action</div>
-                    <div className={styles['label']}>Adventure</div>
-                    <div className={styles['label']}>Drama</div>
-                    <div className={styles['label']}>Comedy</div>
+                <div className={styles['genre-labels']}>
+                    {genres.map((genre) => (
+                        <button
+                            key={genre.id}
+                            onClick={() => handleGenreClick(genre.id)}
+                            className={styles['genre-label']}
+                        >
+                            {genre.name}
+                        </button>
+                    ))}
                 </div>
 
-                <Button
-                    disabled={page <= 1}
-                    clickHandler={() => setPage(p => Math.max(1, p - 1))}
-                    text="vorige"
-                    className={styles['page-navigation-button']}
-                />
-                <Button
-                    disabled={page >= totalPages}
-                    clickHandler={() => setPage(p => Math.min(totalPages, p + 1))}
-                    text="volgende"
-                    className={styles['page-navigation-button']}
-                />
+                <div className={styles['page-navigation-button-wrapper']}>
+                    <Button
+                        disabled={page <= 1}
+                        clickHandler={() => setPage(p => Math.max(1, p - 1))}
+                        text="vorige"
+                        className={styles['page-navigation-button']}
+                    />
+                    <Button
+                        disabled={page >= totalPages}
+                        clickHandler={() => setPage(p => Math.min(totalPages, p + 1))}
+                        text="volgende"
+                        className={styles['page-navigation-button']}
+                    />
+                </div>
 
                 {loading && <p>Loading...</p>}
                 {error && <p>Er ging iets mis met ophalen.</p>}
 
-                {!loading && !error &&(
-                    <ul className={styles["movie-list"]}>
+                {!loading && !error && (
+                    <ul className={styles['movie-list']}>
                         {movies.map((movie) => (
                             <li key={movie.id}>
                                 <Movie movie={movie}/>
@@ -86,10 +120,25 @@ function Categories() {
                     </ul>
                 )}
 
+                <div className={styles['page-navigation-button-wrapper']}>
+                    <Button
+                        disabled={page <= 1}
+                        clickHandler={() => setPage(p => Math.max(1, p - 1))}
+                        text="vorige"
+                        className={styles['page-navigation-button']}
+                    />
+                    <Button
+                        disabled={page >= totalPages}
+                        clickHandler={() => setPage(p => Math.min(totalPages, p + 1))}
+                        text="volgende"
+                        className={styles['page-navigation-button']}
+                    />
+                </div>
+
 
             </main>
         </>
-    );
+);
 }
 
 export default Categories;

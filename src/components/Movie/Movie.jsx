@@ -1,6 +1,5 @@
-import './Movie.module.css';
+import styles from './Movie.module.css';
 import PropTypes from "prop-types";
-import styles from "../../Pages/categories/Categories.module.css";
 
 const IMG_URL = "https://image.tmdb.org/t/p/w500";
 
@@ -8,10 +7,12 @@ function Movie({movie}) {
     return (
         <article className={styles['movie-tile']}>
             {movie.backdrop_path && (
+                <div className={styles['image-wrapper']}>
                 <img src={IMG_URL + movie.backdrop_path} alt={movie.title}/>
+                    </div>
             )}
-            <p><strong>Titel:</strong> {movie.title}</p>
-            <p><strong>Omschrijving:</strong> {movie.overview}</p>
+            <h3> {movie.title}</h3>
+            <p> {movie.overview}</p>
         </article>
     );
 }

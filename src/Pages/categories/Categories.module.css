@@ -1,35 +1,30 @@
 .movie-list {
     display: flex;
-    flex-direction: column;
-    flex-basis: 150px;
+    flex-direction: row;
     margin: 8px;
     padding: 12px;
     flex-wrap: wrap;
-
-
+    align-items: stretch;
 }
 
 .movie-list li {
-    border: solid 1px var(--color3);
-    margin: 8px;
-    padding: 12px;
-    flex-basis: 200px;
-    align-items: center;
-    max-width: 500px;
+
 }
 
 .movie-list img {
     border-radius: 250px;
+    max-width: 400px;
+    height: auto;
 }
 
-.labels {
+.genre-labels {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
 }
 
-.label {
+.genre-label {
     border: solid 3px var(--color3);
     border-radius: 20px;
     padding: 10px;
@@ -38,12 +33,18 @@
     background-color: var(--color3);
 }
 
-.page.navigation.button {
+.page-navigation-button-wrapper {
     display: flex;
     justify-content: center;
+    align-items: center;
+    padding-bottom: 20px;
+    padding-top: 20px;
+}
+
+.page.navigation.button {
+
 }
 
 article {
     display: flex;
-    justify-content: center;
 }
