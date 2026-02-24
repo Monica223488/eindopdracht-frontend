@@ -1,5 +1,6 @@
 import styles from './Movie.module.css';
 import PropTypes from "prop-types";
+import Button from '../../components/Button/Button.jsx';
 
 const IMG_URL = "https://image.tmdb.org/t/p/w500";
 
@@ -13,6 +14,7 @@ function Movie({movie}) {
             )}
             <h3> {movie.title}</h3>
             <p> {movie.overview}</p>
+            <Button text="film opslaan"></Button>
         </article>
     );
 }

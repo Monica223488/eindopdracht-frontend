@@ -13,6 +13,12 @@ function Categories() {
     const [loading, toggleLoading] = useState(false);
     const [error, toggleError] = useState(false);
     const [genres, setGenres] = useState ([]);
+    const [selectedGenre, setSelectedGenre] = useState(null);
+
+    function handleGenreClick(genreId) {
+        setSelectedGenre(genreId);
+        setPage(1);
+    }
 
     useEffect(() => {
         const controller = new AbortController();
@@ -56,7 +62,8 @@ function Categories() {
                         params: {
                             api_key: import.meta.env.VITE_API_KEY,
                             page,
-                            language: "nl-NL"
+                            language: "nl-NL",
+                            with_genres: selectedGenre ?? undefined
                         }
                     }
                 );
@@ -74,7 +81,7 @@ function Categories() {
 
         fetchData();
         return () => controller.abort();
-    }, [page]);
+    }, [page, selectedGenre]);
 
     return (
         <>
