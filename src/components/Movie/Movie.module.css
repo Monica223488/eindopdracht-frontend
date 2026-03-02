@@ -2,17 +2,47 @@
     display: flex;
     flex-direction: column;
     gap: 16px;
-    flex-basis: 150px;
-    max-width: 400px;
-    flex: 0 0 150px;
+    width: 100%;
     align-items: center;
     padding: 15px;
+    height: 100%;
 }
 
 .image-wrapper {
-    padding-top: 30px;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    border-radius: 999px;
+    position: relative;
+    background: var(--color3);
+    line-height: 0;
+
 }
 .image-wrapper img {
     width: 100%;
-    border-radius: 50%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.noPoster {
+    position:absolute;
+    inset:0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color1);
+    text-align: center;
+    padding: 10px;
+    font-weight: 600;
+}
+
+.noPoster p {
+    margin: 0;
+}
+
+.movie-save-button {
+    margin-top: auto;
+    background: var(--color3);
+    border: solid 2px var(--color3);
 }

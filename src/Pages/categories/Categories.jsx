@@ -16,7 +16,7 @@ function Categories() {
     const [selectedGenre, setSelectedGenre] = useState(null);
 
     function handleGenreClick(genreId) {
-        setSelectedGenre(genreId);
+        setSelectedGenre(prev => (prev === genreId ? null : genreId));
         setPage(1);
     }
 
@@ -92,11 +92,16 @@ function Categories() {
                         <button
                             key={genre.id}
                             onClick={() => handleGenreClick(genre.id)}
-                            className={styles['genre-label']}
+                            className={`${styles['genre-label']} ${selectedGenre === genre.id ? styles['active'] : ''}`}
                         >
                             {genre.name}
                         </button>
                     ))}
+                    <button type="button"
+                            onClick={() => { setSelectedGenre(null); setPage(1); }}
+                            className={`${styles['genre-label']} ${selectedGenre === null ? styles['active'] : ''}`}>
+                    Alle categorieën
+                    </button>
                 </div>
 
                 <div className={styles['page-navigation-button-wrapper']}>

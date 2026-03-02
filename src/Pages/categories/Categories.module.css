@@ -1,21 +1,20 @@
 .movie-list {
     display: flex;
-    flex-direction: row;
     margin: 8px;
     padding: 12px;
     flex-wrap: wrap;
     align-items: stretch;
+    justify-content: center;
+    gap: 24px;
+    list-style: none;
 }
 
-.movie-list li {
-
-}
-
-.movie-list img {
-    border-radius: 250px;
+.movie-list > li {
+    flex: 1 1 280px;
     max-width: 400px;
-    height: auto;
+    display: flex;
 }
+
 
 .genre-labels {
     display: flex;
@@ -33,6 +32,12 @@
     background-color: var(--color3);
 }
 
+.active {
+    border: 2px solid var(--color1);
+    background-color: var(--color1);
+    color: var(--color2);
+}
+
 .page-navigation-button-wrapper {
     display: flex;
     justify-content: center;
@@ -45,6 +50,3 @@
 
 }
 
-article {
-    display: flex;
-}
