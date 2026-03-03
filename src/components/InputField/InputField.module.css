@@ -3,5 +3,7 @@ form input {
     padding: 5px 10px;
     margin: 8px 0;
     border: none;
-    background-color: #D5A021;
+    border-radius: 30px;
+    background-color: var(--color3);
+    color: var(--color1);
 }

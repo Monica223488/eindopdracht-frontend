@@ -1,7 +1,7 @@
 .nav-container {
     display: flex;
-    background-color: var(--color1);
-    color: var(--color2);
+    background-color: var(--color2);
+    color: var(--color1);
     justify-content: space-between;
     align-items: center;
     flex-basis: 100%;
@@ -24,18 +24,22 @@ ul {
     align-items: center;
 }
 
+li, h4 {
+    font-family: "Funnel Display", serif;
+}
+
 .nav-buttons {
     display: flex;
     justify-content: space-between;
 }
 
 a, a:visited {
-    color: var(--color3);
+    color: var(--color1);
     text-decoration: none;
 }
 
 .active-menu-link {
-    border-bottom: 1px solid white;
+    border-bottom: 1px solid ;
 
 }
 

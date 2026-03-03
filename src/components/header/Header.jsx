@@ -1,9 +1,12 @@
-import './Header.module.css';
+import styles from "../header/Header.module.css";
 
-function Header() {
-    return (
-        <></>
-    )
+function Header({icon, title}) {
+        return (
+            <>
+                <div className={styles ["title-container"]}><img src={icon} alt={title}/>
+                    <h1 className={styles["page-title"]}>{title}</h1>
+                </div>
+            </>)
 }
 
 export default Header;

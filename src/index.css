@@ -1,22 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Funnel+Display:wght@300..800&family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+    line-height: 1.5;
+    font-weight: 400;
 
-  color-scheme: light dark;
-  color: var(--color1);
-  background-color: var(--color2);
+    color-scheme: light dark;
+    color: var(--color1);
+    background-color: var(--color2);
 
-  --color1: #12130F;
-  --color2: #F4F4F4;
-  --color3: #9D8DF1;
-  --color4: #D5A021;
-  --color5: #816F68;
+    --color1: #12130F;
+    --color2: #F4F4F4;
+    --color3: #9D8DF1;
+    --color4: #D5A021;
+    --color5: #816F68;
 
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 

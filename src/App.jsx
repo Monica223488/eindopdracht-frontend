@@ -15,6 +15,8 @@ function App() {
         <>
             <div className="page-container">
                 <Navigation/>
+
+                <main className="page-content">
                 <Routes>
                     <Route path="/vragenlijst" element={<Questionnaire />} />
                     <Route path="/categorieën" element={<Categories />} />
@@ -22,8 +24,9 @@ function App() {
                     <Route path="/inloggen" element={<LogIn />} />
                     <Route path="/registreren" element={<CreateAccount />}/>
                 </Routes>
+                </main>
+                <Footer/>
             </div>
-            <Footer/>
         </>
     )
 }

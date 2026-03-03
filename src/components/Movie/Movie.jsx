@@ -1,52 +1,41 @@
-import './Movie.module.css';
-import {useEffect, useState} from 'react';
-import axios from 'axios';
+import styles from './Movie.module.css';
+import PropTypes from "prop-types";
+import Button from '../../components/Button/Button.jsx';
 
-function Movie({endpoint}) {
-    const [movies, setMovies] = useState({});
-    const [loading, toggleLoading] = useState(false);
-    const [error, toggleError] = useState(false);
+const IMG_URL = "https://image.tmdb.org/t/p/w500";
 
-    useEffect(()=>{
-        const controller = new AbortController();
-
-        async function fetchData() {
-            toggleLoading(true);
-            toggleError(false);
-
-            try {
-                const { data } = await axios.get('https://api.themoviedb.org/3/search/movie', {
-                    signal: controller.signal,
-                });
-                setMovie(data);
-            } catch (e) {
-                if (axios.isCancel(e)) {
-                    console.error(e);
-                    toggleError(true);
-                }
-
-            } finally {
-                toggleLoading(false);
-            }
-        }
-        if ('https://api.themoviedb.org/3/search/movie') {
-            fetchData();
-        }
-        return () => {
-            console.log('unmount effect is triggered');
-            controller.abort();
-        }
-    },[]);
+function Movie({ movie }) {
+    const backdropUrl = movie.backdrop_path
+        ? `${IMG_URL}${movie.backdrop_path}`
+        : null;
 
     return (
         <article className={styles['movie-tile']}>
-            {console.log('Rerender is triggered')}
-        <h2>title:</h2>
-        <h3>{text}</h3>
-        <h2>description:</h2>
-        <h3>{text}</h3>
-</article>
-)
+            <div className={styles['image-wrapper']}>
+                {backdropUrl ? (
+                    <img src={backdropUrl} alt={movie.title} />
+                ) : (
+                    <div className={styles.noPoster}>
+                        <p>{movie.title}</p>
+                    </div>
+                )}
+            </div>
+
+            <h3>{movie.title}</h3>
+            <p>{movie.overview || "Geen omschrijving beschikbaar"}</p>
+            <Button text="film opslaan" className={styles['movie-save-button']} />
+        </article>
+    );
 }
+
+Movie.propTypes = {
+    movie: PropTypes.shape({
+        id: PropTypes.number.isRequired,
+        title: PropTypes.string,
+        overview: PropTypes.string,
+        poster_path: PropTypes.string,
+        backdrop_path: PropTypes.string,
+    }).isRequired,
+};
 
 export default Movie;
