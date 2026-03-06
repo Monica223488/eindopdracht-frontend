@@ -18,6 +18,7 @@ function App() {
 
                 <main className="page-content">
                 <Routes>
+                    <Route path="/" element={<Questionnaire />} />
                     <Route path="/vragenlijst" element={<Questionnaire />} />
                     <Route path="/categorieën" element={<Categories />} />
                     <Route path="/opgeslagenfilms" element={<SavedMovies /> }/>
