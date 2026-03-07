@@ -1,10 +1,9 @@
 import styles from './Questionnaire.module.css';
-import {useEffect, useState} from 'react';
+import layout from "../../styles/shared-layout.module.css"
 import axios from 'axios';
+import {useState} from "react";
 import {invertAnswers} from "../../Helpers/invertAnswers.js";
-import {invertRecency} from "../../Helpers/invertRecency.js";
 import Movie from '../../components/Movie/Movie.jsx';
-import InputField from '../../components/InputField/InputField.jsx';
 import Header from '../../components/header/Header.jsx'
 import Button from '../../components/Button/Button.jsx';
 import popcorn from '../../assets/popcorn.png'
@@ -38,6 +37,7 @@ function Questionnaire() {
                         with_genres: inverted.genreId,
                         'primary_release_date.gte': inverted.gte,
                         'primary_release_date.lte': inverted.lte,
+                        language: "nl-NL",
                         page: 1,
                     },
                 }
@@ -57,14 +57,14 @@ function Questionnaire() {
             <Header title="Vragenlijst" icon={popcorn}>
                 <p>Vul deze vragenlijst in om een film suggestie te krijgen</p>
             </Header>
-            <main className={styles["questionnaire-main"]}>
+            <main className={`${styles["questionnaire-main"]} ${layout["centered-column"]}`}>
                 {!showResults ? (<form onSubmit={handleSubmit} className={styles["questionnaire-form"]}>
-                        <p>Wil je vandaag eens iets kijken buiten je comfortzone? Vul dan onderstaande vragenlijst in en laat je
+                        <p className={layout["centerText"]}>Wil je vandaag eens iets kijken buiten je comfortzone? Vul dan onderstaande vragenlijst in en laat je
                             verrassen.</p>
-                        <fieldset>
+                        <fieldset className={styles["form-group"]}>
                             <legend>Welke genres kijk je het meeste?</legend>
 
-                            <select value={answers.genreId} onChange={(e) => setAnswers((prev) => ({
+                            <select className={styles["dropdown"]} value={answers.genreId} onChange={(e) => setAnswers((prev) => ({
                                 ...prev, genreId: Number(e.target.value),
                             }))
                             }>
@@ -77,7 +77,7 @@ function Questionnaire() {
                             </select>
                         </fieldset>
 
-                        <fieldset>
+                        <fieldset className={styles["form-group"]}>
                             <legend>Kijk je meestal recente films(de afgelopen 5 jaar) of oudere films?</legend>
 
                             <label>
@@ -95,7 +95,7 @@ function Questionnaire() {
                             </label>
                         </fieldset>
 
-                    <fieldset>
+                    <fieldset className={styles["form-group"]}>
                         <legend>In welke taal kijk je meestal een film?</legend>
 
                         <label>
@@ -142,18 +142,21 @@ function Questionnaire() {
                         <Button text="Uitkomsten" type="submit"></Button>
                 </form>
                     ) : (
-                    <div>
+                    <div className={layout["pageContent"]}>
+                        <div className={layout["centeredButtonRow"]}>
                     <Button text="Terug naar de vragenlijst" type="button" clickHandler={() => setShowResults(false)}/>
-
+                        </div>
             {loading && <p>Loading...</p>}
             {error && <p>Er ging iets mis bij het ophalen van films.</p>}
 
             {!loading && !error && (
-                <section className={styles["results"]}>
+                <ul className={layout["movie-grid"]}>
                     {movies.map((movie) => (
-                        <Movie key={movie.id} movie={movie}/>
+                        <li key={movie.id} className={layout["movie-grid-item"]}>
+                        <Movie movie={movie}/>
+                        </li>
                         ))}
-                </section>
+                </ul>
             )}
             </div>
                 )}
