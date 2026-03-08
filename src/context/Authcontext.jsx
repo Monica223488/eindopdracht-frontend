@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { jwtDecode } from "jwt-decode";
 import axios from 'axios';
 
+export const AuthContext = createContext(null);
 
 function AuthContextProvider({ children }) {
     const [authState, setAuthState] = useState({
@@ -11,29 +12,55 @@ function AuthContextProvider({ children }) {
     })
 
     useEffect(() => {
-        // check of er nog een token in Local Storage staat
-        // ZO JA: haal dan de nieuwe data op en zet deze in de state:
-        setAuthState({
-            user: {
-                username: 'Piet',
-                email: 'pieter@gmail.com',
-                id: 23,
-            },
-            status: 'done',
-        });
-
-        // ZO NEE:
+        const token = localStorage.getItem('token');
+        if (!token){
         setAuthState({
             user: null,
             status: 'done',
         });
+        return;
+        }
 
+        try {
+            const decoded =jwtDecode(token);
+
+            setAuthState({
+            user: {username: decoded.sub || decoded.username || null,},
+            status: 'done',
+        });
+
+    } catch (error)
+    {
+        console.error(error);
+        localStorage.removeItem('token');
+        setAuthState({user: null, status: 'done',});
+    }
     }, []);
+
+    function login(token) {
+        localStorage.setItem("token", token);
+        const decoded = jwtDecode(token);
+
+        setAuthState({
+            user: {
+                username: decoded.sub || decoded.username,
+            }, status: "done",
+        });
+    }
+
+    function logout(token) {
+        localStorage.removeItem("token", token);
+
+        setAuthState({
+            user: null, status: "done",
+        });
+    }
+
 
     const data = {
         ...authState,
-        login: login,
-        logout: logout,
+        login,
+        logout,
     };
 
     return (

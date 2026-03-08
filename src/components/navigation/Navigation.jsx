@@ -1,10 +1,13 @@
 import React from 'react';
+import {useContext} from 'react';
 import styles from './Navigation.module.css';
 import {NavLink, useNavigate} from 'react-router-dom';
+import {AuthContext} from "../../context/AuthContext.jsx";
 import Button from '../../components/Button/Button.jsx';
 
 function Navigation() {
-    const Navigate = useNavigate();
+    const navigate = useNavigate();
+    const {user, logout}= useContext(AuthContext);
 
     return (
         <>
@@ -20,10 +23,19 @@ function Navigation() {
                                      to="/opgeslagenfilms">opgeslagen films</NavLink></li>
                     </ul>
                     <div className={styles['nav-buttons']}>
+                        {user ? (<>
+                        <span>Welkom {user.username}</span>
+                        <Button text="uitloggen" type="button" clickHandler={logout}/>
+                        </>
+                            ):(
+                                <>
                     <Button text="inloggen"
-                            type= "button" clickHandler={() => Navigate("/inloggen")}/>
-                    <Button text="registreren" clickHandler={()=>Navigate ("/registreren")} />
-                    </div>
+                            type= "button" clickHandler={() => navigate("/inloggen")}/>
+                    <Button text="registreren" clickHandler={()=>navigate ("/registreren")} />
+                    </>
+                            )}
+
+                        </div>
                 </div>
             </nav>
         </>
