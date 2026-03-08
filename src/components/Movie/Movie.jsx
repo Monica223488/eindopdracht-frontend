@@ -1,10 +1,14 @@
 import styles from './Movie.module.css';
+import { useContext } from "react";
+import { SavedMoviesContext } from "../../context/SavedMoviesContext.jsx";
 import PropTypes from "prop-types";
 import Button from '../../components/Button/Button.jsx';
 
 const IMG_URL = "https://image.tmdb.org/t/p/w500";
 
 function Movie({ movie }) {
+    const {saveMovie} = useContext(SavedMoviesContext);
+
     const backdropUrl = movie.backdrop_path
         ? `${IMG_URL}${movie.backdrop_path}`
         : null;
@@ -23,7 +27,8 @@ function Movie({ movie }) {
 
             <h3>{movie.title}</h3>
             <p>{movie.overview || "Geen omschrijving beschikbaar"}</p>
-            <Button text="film opslaan" className={styles['movie-save-button']} />
+            <Button text="film opslaan" className={styles['movie-save-button']}
+                    clickHandler={()=> saveMovie(movie)} />
         </article>
     );
 }

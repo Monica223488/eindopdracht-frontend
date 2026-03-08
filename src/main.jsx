@@ -3,11 +3,14 @@ import {createRoot} from 'react-dom/client'
 import './index.css'
 import App from './App.jsx'
 import {BrowserRouter as Router} from 'react-router-dom';
+import {SavedMoviesProvider} from "./context/SavedMoviesContext.jsx";
 
 createRoot(document.getElementById('root')).render(
     <StrictMode>
         <Router>
+            <SavedMoviesProvider>
             <App/>
+            </SavedMoviesProvider>
         </Router>
     </StrictMode>,
 )
