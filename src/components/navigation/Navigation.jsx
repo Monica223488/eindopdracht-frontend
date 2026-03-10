@@ -24,7 +24,6 @@ function Navigation() {
                     </ul>
                     <div className={styles['nav-buttons']}>
                         {user ? (<>
-                        <span>Welkom {user.username}</span>
                         <Button text="uitloggen" type="button" clickHandler={logout}/>
                         </>
                             ):(

@@ -52,7 +52,7 @@ function LogIn() {
                                 changeHandler={setPassword} placeholder="Vul hier je wachtwoord in"/>
                     <Button text="inloggen" type="submit" />
                     {error && <p>Inloggen mislukt. Controleer je gegevens.</p>}
-                    <p>Nog geen account? Klik dan{" "}<Link to={"/registreren"}>hier</Link> om naar de registratiepagina te gaan.</p>
+                    <p>Nog geen account? Klik dan{" "}<Link to={"/registreren"}><strong>hier</strong></Link> om naar de registratiepagina te gaan.</p>
                 </form>
             </div>
         </>
