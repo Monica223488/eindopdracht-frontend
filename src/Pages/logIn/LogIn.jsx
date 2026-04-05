@@ -25,7 +25,7 @@ function LogIn() {
         toggleError(false);
 
         try{
-            const result = await axios.post("https://api.datavortex.nl/mooviematcher/users/authenticate",
+            const result = await axios.post("/api/usersauthenticate",
                 {username: username,
                 password: password});
 

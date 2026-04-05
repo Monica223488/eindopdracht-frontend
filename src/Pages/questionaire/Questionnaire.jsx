@@ -1,5 +1,4 @@
 import styles from './Questionnaire.module.css';
-import layout from "../../styles/shared-layout.module.css"
 import axios from 'axios';
 import {useState} from "react";
 import {invertAnswers} from "../../Helpers/invertAnswers.js";
@@ -57,9 +56,9 @@ function Questionnaire() {
             <Header title="Vragenlijst" icon={popcorn}>
                 <p>Vul deze vragenlijst in om een film suggestie te krijgen</p>
             </Header>
-            <main className={`${styles["questionnaire-main"]} ${layout["centered-column"]}`}>
+            <main className={styles["questionnaire-main"]}>
                 {!showResults ? (<form onSubmit={handleSubmit} className={styles["questionnaire-form"]}>
-                        <p className={layout["centerText"]}>Wil je vandaag eens iets kijken buiten je comfortzone? Vul dan onderstaande vragenlijst in en laat je
+                        <p className={styles["centerText"]}>Wil je vandaag eens iets kijken buiten je comfortzone? Vul dan onderstaande vragenlijst in en laat je
                             verrassen.</p>
                         <fieldset className={styles["form-group"]}>
                             <legend>Welke genres kijk je het meeste?</legend>
@@ -142,17 +141,17 @@ function Questionnaire() {
                         <Button text="Uitkomsten" type="submit"></Button>
                 </form>
                     ) : (
-                    <div className={layout["pageContent"]}>
-                        <div className={layout["centeredButtonRow"]}>
+                    <div className={styles["pageContent"]}>
+                        <div className={styles["centeredButtonRow"]}>
                     <Button text="Terug naar de vragenlijst" type="button" clickHandler={() => setShowResults(false)}/>
                         </div>
             {loading && <p>Loading...</p>}
             {error && <p>Er ging iets mis bij het ophalen van films.</p>}
 
             {!loading && !error && (
-                <ul className={layout["movie-grid"]}>
+                <ul className={styles["movie-grid"]}>
                     {movies.map((movie) => (
-                        <li key={movie.id} className={layout["movie-grid-item"]}>
+                        <li key={movie.id} className={styles["movie-grid-item"]}>
                         <Movie movie={movie}/>
                         </li>
                         ))}

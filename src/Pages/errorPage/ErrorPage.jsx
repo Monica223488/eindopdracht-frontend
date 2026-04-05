@@ -1,10 +1,11 @@
 import React from 'react';
 import './ErrorPage.module.css';
+import {Link} from "react-router-dom";
 
 function ErrorPage() {
     return (
         <>
-            <h2>O, nee! Er is iets fout gegaan. Klik hier om weer terug te keren naar de categorieën pagina.</h2>
+            <h2>O, nee! Er is iets fout gegaan. Klik <Link to="/vragenlijst"><strong>hier</strong></Link> om weer terug te keren naar de vragenlijst pagina.</h2>
         </>
     )
 }

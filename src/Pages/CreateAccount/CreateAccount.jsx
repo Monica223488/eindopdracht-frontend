@@ -15,24 +15,19 @@ function CreateAccount() {
     const [loading, toggleLoading] = useState(false);
     const navigate = useNavigate();
 
-    useEffect(() => {
-    const source = axios.CancelToken.source();
-       return function cleanup() {
-       source.cancel();
-       }
-     }, [] );
 
         async function handleSubmitAccount (e) {
              e.preventDefault();
              toggleError(false);
-             toggleLoading(false);
+             toggleLoading(true);
 
              try {
                  await axios.post(
-                     "https://api.datavortex.nl/mooviematcher/users",{
+                     "/api/users",{
                      email: email,
                      username: username,
                      password: password,
+                         info: "[]",
                  }, {
                      headers: {
                      "Content-Type":"application/json",
@@ -44,8 +39,9 @@ function CreateAccount() {
             }catch(e) {
                  console.error(e);
                  toggleError(true);
+             } finally {
+                 toggleLoading(false);
              }
-             toggleLoading(false);
      }
     return (
         <>
