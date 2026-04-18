@@ -1,0 +1,31 @@
+.container{
+    display: flex;
+    flex-direction: row;
+    height: 100vh;
+}
+
+.container h1 {
+    font-size: 50px;
+}
+
+.left {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    padding: 100px;
+    background-color: var(--color3);
+}
+
+.right{
+    display: flex;
+    flex-direction: column;
+    margin: 20px;
+    flex:2;
+    justify-content: center;
+    padding: 40px;
+}
+
+.right button {
+    max-width: 300px;
+    margin: 20px;
+}

@@ -1,0 +1,61 @@
+{
+  "collections": [
+    {
+      "name": "profiles",
+      "fields": [
+        {
+          "name": "id",
+          "type": "number",
+          "required": true
+        },
+        {
+          "name":"email",
+          "type": "string",
+          "required": false
+      },
+        {
+          "name": "username",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "password",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "permissions": {
+
+      }
+    },
+    {
+      "name": "saved_movies",
+      "fields": [
+        {
+          "name": "id",
+          "type": "number",
+          "required": true
+        },
+        {
+          "name": "movieId",
+          "type": "number",
+          "required": true
+        },
+        {
+          "name": "userId",
+          "type": "reference:users",
+          "required": true
+        },
+        {
+          "name": "createdAt",
+          "type": "date",
+          "required": false,
+          "default": "CurrentDate"
+        }
+      ],
+      "permissions": {
+
+      }
+    }
+  ]
+}

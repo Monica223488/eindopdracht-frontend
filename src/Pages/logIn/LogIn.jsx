@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import {AuthContext} from '../../context/AuthContext.jsx'
 import {useContext, useEffect, useState} from "react";
 import axios from 'axios';
+import AuthenticatePage from "../../components/AuthenticatePage/AuthenticatePage.jsx";
 
 function LogIn() {
     const [username, setUsername] = useState('');
@@ -39,12 +40,8 @@ function LogIn() {
     }
     return (
         <>
-            <div className={styles["login-container"]}>
-                <div className={styles["login-text"]}>
-                <h1>Welke film wil je kijken? Eens iets buiten je comfortzone?</h1>
-                </div>
+            <AuthenticatePage title="Inloggen">
                 <form className={styles["login-form"]} onSubmit={handleSubmit}>
-                    <h2>Inloggen</h2>
                     <p>Log eerst in om gebruik te maken van MoovieMatcher</p>
                     <InputField name="username" label="gebruikersnaam:" inputType="text" value={username}
                                 changeHandler={setUsername} placeholder="Vul hier je gebruikersnaam in"/>
@@ -54,7 +51,7 @@ function LogIn() {
                     {error && <p>Inloggen mislukt. Controleer je gegevens.</p>}
                     <p>Nog geen account? Klik dan{" "}<Link to={"/registreren"}><strong>hier</strong></Link> om naar de registratiepagina te gaan.</p>
                 </form>
-            </div>
+            </AuthenticatePage>
         </>
     )
 }

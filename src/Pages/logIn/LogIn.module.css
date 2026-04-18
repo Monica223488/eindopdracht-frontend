@@ -19,10 +19,8 @@
 .login-form {
     display: flex;
     flex-direction: column;
-    margin: 20px;
     flex:2;
     justify-content: center;
-    padding: 40px;
 }
 
 .login-form button {
