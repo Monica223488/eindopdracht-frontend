@@ -24,15 +24,14 @@ function CreateAccount() {
 
              try {
                  await axios.post(
-                     "/api/users",{
+                     "https://novi-backend-api-wgsgz.ondigitalocean.app/api/users",{
                      email: email,
                      username: username,
-                     password: password,
-                         info: "[]",
+                     password: password
                  }, {
                      headers: {
                      "Content-Type":"application/json",
-                     "X-Api-Key": "mooviematcher:RG3eIYx4yvmjXMS2Y5HO"}
+                         "novi-education-project-id": "35d6eeb3-c55f-4b14-a12a-9274341e30b1"}
                  });
 
                 navigate("/inloggen");

@@ -9,7 +9,7 @@ import axios from 'axios';
 import AuthenticatePage from "../../components/AuthenticatePage/AuthenticatePage.jsx";
 
 function LogIn() {
-    const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, toggleError] = useState(false);
     const {login} = useContext(AuthContext);
@@ -26,9 +26,13 @@ function LogIn() {
         toggleError(false);
 
         try{
-            const result = await axios.post("/api/usersauthenticate",
-                {username: username,
-                password: password});
+            const result = await axios.post("https://novi-backend-api-wgsgz.ondigitalocean.app/api/login",
+                {email: email,
+                password: password},
+                {headers: {
+                        "Content-Type": "application/json",
+                        "novi-education-project-id": "35d6eeb3-c55f-4b14-a12a-9274341e30b1"
+                    }});
 
             console.log(result.data);
 
@@ -43,8 +47,8 @@ function LogIn() {
             <AuthenticatePage title="Inloggen">
                 <form className={styles["login-form"]} onSubmit={handleSubmit}>
                     <p>Log eerst in om gebruik te maken van MoovieMatcher</p>
-                    <InputField name="username" label="gebruikersnaam:" inputType="text" value={username}
-                                changeHandler={setUsername} placeholder="Vul hier je gebruikersnaam in"/>
+                    <InputField name="email" label="e-mail:" inputType="text" value={email}
+                                changeHandler={setEmail} placeholder="Vul hier je email in"/>
                     <InputField name="password" label="wachtwoord:" inputType="password" value={password}
                                 changeHandler={setPassword} placeholder="Vul hier je wachtwoord in"/>
                     <Button text="inloggen" type="submit" />

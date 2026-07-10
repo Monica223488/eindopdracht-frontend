@@ -8,12 +8,12 @@ function AuthenticatePage({title, children}) {
                 <div className={styles['left']}>
                     <h1>Welke film wil je kijken? Eens iets buiten je comfortzone?</h1>
                 </div>
-                <form className={styles['right']}>
+                <div className={styles['right']}>
                     <div className={styles['form-container']}>
                     <h2>{title}</h2>
                     {children}
                     </div>
-                </form>
+                </div>
             </div>
 
         </>
