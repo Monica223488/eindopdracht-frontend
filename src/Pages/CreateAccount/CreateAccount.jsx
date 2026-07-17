@@ -27,7 +27,8 @@ function CreateAccount() {
                      "https://novi-backend-api-wgsgz.ondigitalocean.app/api/users",{
                      email: email,
                      username: username,
-                     password: password
+                     password: password,
+                         roles:["user"]
                  }, {
                      headers: {
                      "Content-Type":"application/json",
@@ -51,14 +52,11 @@ function CreateAccount() {
                     <InputField name="email" label="e-mailadres:" inputType="email"
                                 value={email} changeHandler={setEmail}
                                 placeholder="Vul hier je e-mailadres in" />
-                    <InputField name="create-username" label="gebruikersnaam:" inputType="text"
-                                value={username} changeHandler={setUsername}
-                                placeholder="Kies een gebruikersnaam" />
                     <InputField name="create-password" label="wachtwoord:" inputType="password"
                                 value={password} changeHandler={setPassword}
                                 placeholder="Kies een wachtwoord"/>
                     <Button text={loading ? "Registreren..." : "registreren"} type="submit"/>
-                    {error && <p>Registreren is niet gelukt. Probeer het opnieuw.</p>}
+                    {error && <p>Het registreren is niet gelukt. Probeer het opnieuw.</p>}
                     <p>Al een account? Klik{" "} <Link to="/inloggen"><strong>hier</strong></Link> om naar de inlogpagina te gaan.</p>
                 </form>
             </AuthenticatePage>

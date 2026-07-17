@@ -34,11 +34,8 @@ function LogIn() {
                         "novi-education-project-id": "35d6eeb3-c55f-4b14-a12a-9274341e30b1"
                     }});
 
-            console.log(result.data);
-
-            login(result.data.jwt);
+            login(result.data.token);
         } catch (e) {
-            console.error(e);
             toggleError(true);
         }
     }
@@ -52,7 +49,7 @@ function LogIn() {
                     <InputField name="password" label="wachtwoord:" inputType="password" value={password}
                                 changeHandler={setPassword} placeholder="Vul hier je wachtwoord in"/>
                     <Button text="inloggen" type="submit" />
-                    {error && <p>Inloggen mislukt. Controleer je gegevens.</p>}
+                    {error && <p>Het inloggen is mislukt. Controleer je gegevens.</p>}
                     <p>Nog geen account? Klik dan{" "}<Link to={"/registreren"}><strong>hier</strong></Link> om naar de registratiepagina te gaan.</p>
                 </form>
             </AuthenticatePage>
