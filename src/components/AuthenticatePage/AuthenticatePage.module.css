@@ -1,10 +1,14 @@
-.login-container {
+.container{
     display: flex;
     flex-direction: row;
     height: 100vh;
 }
 
-.login-text {
+.container h1 {
+    font-size: 50px;
+}
+
+.left {
     display: flex;
     align-items: center;
     flex: 1;
@@ -12,18 +16,16 @@
     background-color: var(--color3);
 }
 
-.login-text h1 {
-    font-size: 50px;
-}
-
-.login-form {
+.right{
     display: flex;
     flex-direction: column;
+    margin: 20px;
     flex:2;
     justify-content: center;
+    padding: 40px;
 }
 
-.login-form button {
+.right button {
     max-width: 300px;
     margin: 20px;
 }

@@ -4,65 +4,62 @@ import {Link, useNavigate} from 'react-router-dom';
 import axios from 'axios';
 import InputField from '../../components/InputField/InputField.jsx';
 import Button from '../../components/Button/Button.jsx';
-import Movietheater from '../../assets/jake-hills-23LET4Hxj_U-unsplash.jpg'
+import AuthenticatePage from "../../components/AuthenticatePage/AuthenticatePage.jsx";
+
 
 
 function CreateAccount() {
-    // const [email, setEmail] = useState('');
-    // const [password, setPassword] = useState('');
-    // const [username, setUsername] = useState('');
-    //
-    // const [error, toggleError] = useState(false);
-    // const [loading, toggleLoading] = useState(false);
-    // const navigate = useNavigate();
-    //
-    // const source = axios.CancelToken.source();
-    //
-    // useEffect(() => {
-    //     return function cleanup() {
-    //         source.cancel();
-    //     }
-    // }, [] );
-    //
-    //     async function handleSubmitAccount (e) {
-    //         e.preventDefault();
-    //         toggleError(false);
-    //         toggleLoading(false);
-    //
-    //         try {
-    //             await axios.post(, {
-    //                 email: email,
-    //                 password: password,
-    //                 username: username,
-    //             }, {
-    //                 cancelToken: source.token,
-    //             });
-    //
-    //             navigate('/inloggen');
-    //
-    //         }catch(e) {
-    //             console.error(e);
-    //             toggleError(true);
-    //         }
-    //         toggleLoading(false);
-    // }
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [username, setUsername] = useState('');
+    const [error, toggleError] = useState(false);
+    const [loading, toggleLoading] = useState(false);
+    const navigate = useNavigate();
+
+
+        async function handleSubmitAccount (e) {
+             e.preventDefault();
+             toggleError(false);
+             toggleLoading(true);
+
+             try {
+                 await axios.post(
+                     "https://novi-backend-api-wgsgz.ondigitalocean.app/api/users",{
+                     email: email,
+                     username: username,
+                     password: password,
+                         roles:["user"]
+                 }, {
+                     headers: {
+                     "Content-Type":"application/json",
+                         "novi-education-project-id": "35d6eeb3-c55f-4b14-a12a-9274341e30b1"}
+                 });
+
+                navigate("/inloggen");
+
+            }catch(e) {
+                 console.error(e);
+                 toggleError(true);
+             } finally {
+                 toggleLoading(false);
+             }
+     }
     return (
         <>
-            <div className={styles["create-account-container"]}>
-                <div className={styles["create-account-image"]}>
-                    <h1>Welke film wil je kijken? Eens iets buiten je comfortzone?</h1>
-                    <img src={Movietheater} alt="bioscoop"/>
-                </div>
-                <form className={styles["create-account-form"]}>
-                    <h2>Registreren</h2>
+            <AuthenticatePage title="Registreren">
+                <form className={styles["create-account-form"]} onSubmit={handleSubmitAccount}>
                     <p>Vul onderstaande velden in om je te registreren</p>
-                    <InputField name="email" label="e-mailadres:" inputType="email" placeholder="Vul hier je e-mailadres in" />
-                    <InputField name="create-username" label="gebruikersnaam:" inputType="text" placeholder="Kies een gebruikersnaam" />
-                    <InputField name="create-password" label="wachtwoord:" inputType="password" placeholder="Kies een wachtwoord"/>
-                    <Button text="registreren"/>
-                    <p>Al een account? Klik hier om naar de inlogpagina te gaan.</p>
+                    <InputField name="email" label="e-mailadres:" inputType="email"
+                                value={email} changeHandler={setEmail}
+                                placeholder="Vul hier je e-mailadres in" />
+                    <InputField name="create-password" label="wachtwoord:" inputType="password"
+                                value={password} changeHandler={setPassword}
+                                placeholder="Kies een wachtwoord"/>
+                    <Button text={loading ? "Registreren..." : "registreren"} type="submit"/>
+                    {error && <p>Het registreren is niet gelukt. Probeer het opnieuw.</p>}
+                    <p>Al een account? Klik{" "} <Link to="/inloggen"><strong>hier</strong></Link> om naar de inlogpagina te gaan.</p>
                 </form>
-            </div>
+            </AuthenticatePage>
         </>
     )
 }
