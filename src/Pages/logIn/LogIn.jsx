@@ -2,9 +2,9 @@ import React from 'react';
 import styles from './LogIn.module.css';
 import InputField from '../../components/InputField/InputField.jsx';
 import Button from '../../components/Button/Button.jsx';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {AuthContext} from '../../context/AuthContext.jsx'
-import {useContext, useEffect, useState} from "react";
+import {useContext, useState} from "react";
 import axios from 'axios';
 import AuthenticatePage from "../../components/AuthenticatePage/AuthenticatePage.jsx";
 
@@ -13,13 +13,7 @@ function LogIn() {
     const [password, setPassword] = useState('');
     const [error, toggleError] = useState(false);
     const {login} = useContext(AuthContext);
-
-    useEffect(()=> {
-        const source = axios.CancelToken.source();
-        return function cleanup(){
-            source.cancel();
-        }
-    }, []);
+    const navigate = useNavigate();
 
     async function handleSubmit(e){
         e.preventDefault();
@@ -35,6 +29,12 @@ function LogIn() {
                     }});
 
             login(result.data.token);
+
+            navigate("/", {
+                state: {
+                    message: "Je bent succesvol ingelogd."
+                }
+            });
         } catch (e) {
             toggleError(true);
         }
