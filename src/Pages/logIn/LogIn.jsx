@@ -5,8 +5,12 @@ import Button from '../../components/Button/Button.jsx';
 import { Link, useNavigate } from "react-router-dom";
 import {AuthContext} from '../../context/AuthContext.jsx'
 import {useContext, useState} from "react";
+import {jwtDecode} from "jwt-decode";
 import axios from 'axios';
 import AuthenticatePage from "../../components/AuthenticatePage/AuthenticatePage.jsx";
+
+const noviApiUrl = import.meta.env.VITE_NOVI_API_URL;
+const projectId = import.meta.env.VITE_NOVI_PROJECT_ID;
 
 function LogIn() {
     const [email, setEmail] = useState('');
@@ -20,15 +24,29 @@ function LogIn() {
         toggleError(false);
 
         try{
-            const result = await axios.post("https://novi-backend-api-wgsgz.ondigitalocean.app/api/login",
+            const result = await axios.post(`${noviApiUrl}/login`,
                 {email: email,
                 password: password},
                 {headers: {
                         "Content-Type": "application/json",
-                        "novi-education-project-id": "35d6eeb3-c55f-4b14-a12a-9274341e30b1"
+                        "novi-education-project-id": projectId
                     }});
 
-            login(result.data.token);
+            const decodedToken = jwtDecode(result.data.token);
+
+            const loggedInUser = {
+                ...result.data.user,
+                id: decodedToken.userId,
+            };
+
+            console.log("Opgeslagen gebruiker:", loggedInUser);
+
+            localStorage.setItem("token", result.data.token);
+            localStorage.setItem("user", JSON.stringify(loggedInUser));
+
+            console.log("Loginresponse:", result.data);
+
+            login(result.data.token, loggedInUser);
 
             navigate("/", {
                 state: {

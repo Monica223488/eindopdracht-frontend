@@ -6,7 +6,8 @@ import InputField from '../../components/InputField/InputField.jsx';
 import Button from '../../components/Button/Button.jsx';
 import AuthenticatePage from "../../components/AuthenticatePage/AuthenticatePage.jsx";
 
-
+const noviApiUrl = import.meta.env.VITE_NOVI_API_URL;
+const projectId = import.meta.env.VITE_NOVI_PROJECT_ID;
 
 function CreateAccount() {
     const [email, setEmail] = useState('');
@@ -24,7 +25,7 @@ function CreateAccount() {
 
              try {
                  await axios.post(
-                     "https://novi-backend-api-wgsgz.ondigitalocean.app/api/users",{
+                     `${noviApiUrl}/users`,{
                      email: email,
                      username: username,
                      password: password,
@@ -32,7 +33,7 @@ function CreateAccount() {
                  }, {
                      headers: {
                      "Content-Type":"application/json",
-                         "novi-education-project-id": "35d6eeb3-c55f-4b14-a12a-9274341e30b1"}
+                         "novi-education-project-id": projectId}
                  });
 
                 navigate("/inloggen");

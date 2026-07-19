@@ -7,11 +7,12 @@ import Button from '../../components/Button/Button.jsx';
 const IMG_URL = "https://image.tmdb.org/t/p/w500";
 
 function Movie({ movie }) {
-    const {saveMovie} = useContext(SavedMoviesContext);
+    const {saveMovie, removeMovie, isMovieSaved} = useContext(SavedMoviesContext);
 
     const backdropUrl = movie.backdrop_path
         ? `${IMG_URL}${movie.backdrop_path}`
         : null;
+
 
     return (
         <article className={styles['movie-tile']}>
@@ -27,8 +28,12 @@ function Movie({ movie }) {
 
             <h3>{movie.title}</h3>
             <p>{movie.overview || "Geen omschrijving beschikbaar"}</p>
-            <Button text="film opslaan" className={styles['movie-save-button']}
-                    clickHandler={()=> saveMovie(movie)} />
+            <Button text={isMovieSaved(movie.id) ? "film verwijderen": "film opslaan"}
+                    className={styles['movie-save-button']}
+                    clickHandler={()=>
+                        isMovieSaved(movie.id)
+                        ? removeMovie(movie.id)
+                            :saveMovie(movie)} />
         </article>
     );
 }

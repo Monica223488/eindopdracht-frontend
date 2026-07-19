@@ -1,52 +1,16 @@
 {
   "collections": [
     {
-      "name": "profiles",
-      "fields": [
-        {
-          "name": "id",
-          "type": "number",
-          "required": true
-        },
-        {
-          "name": "email",
-          "type": "string",
-          "required": true,
-          "min": 5,
-          "max": 100
-        },
-        {
-          "name": "username",
-          "type": "string",
-          "required": true,
-          "min": 3,
-          "max": 30
-        }
-      ],
-      "permissions": {
-        "GET": ["user", "admin"],
-        "POST": ["anonymous", "user", "admin"],
-        "PUT": ["user", "admin"],
-        "PATCH": ["user", "admin"],
-        "DELETE": ["admin"]
-      }
-    },
-    {
       "name": "savedMovies",
       "fields": [
-        {
-          "name": "id",
-          "type": "number",
-          "required": true
-        },
         {
           "name": "movieId",
           "type": "number",
           "required": true
         },
         {
-          "name": "profileId",
-          "type": "reference:profiles",
+          "name": "userId",
+          "type": "number",
           "required": true
         }
       ],
@@ -70,18 +34,6 @@
     }
   ],
   "data": {
-    "profiles": [
-      {
-        "id": 1,
-        "email": "admin@mooviematcher.nl",
-        "username": "admin"
-      },
-      {
-        "id": 2,
-        "email": "user@mooviematcher.nl",
-        "username": "user"
-      }
-    ],
     "savedMovies": []
   }
 }
