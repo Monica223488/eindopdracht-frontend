@@ -60,7 +60,7 @@ function SavedMovies() {
     return (
         <>
             <Header title="Opgeslagen films" />
-            <main className={styles.container}>
+            <main className={styles['container']}>
                 {loadingSavedMovies || (loadingMovies && movies.length ===0) ? (
                     <p>Films laden...</p>
                 ) : movies.length === 0 ? (

@@ -1,5 +1,6 @@
-import {createContext, useEffect, useState} from "react";
+import {createContext, useContext, useEffect, useState} from "react";
 import axios from "axios";
+import { AuthContext } from "./AuthContext.jsx";
 
 const noviApiUrl = import.meta.env.VITE_NOVI_API_URL;
 const projectId = import.meta.env.VITE_NOVI_PROJECT_ID;
@@ -8,21 +9,19 @@ export const SavedMoviesContext = createContext();
 
 export function SavedMoviesProvider({children}) {
     const [savedMovieIds, setSavedMovieIds] = useState([])
-    const [currentUser, setCurrentUser] = useState(null);
     const [loadingSavedMovies, setLoadingSavedMovies] = useState(true);
 
+    const {user} = useContext(AuthContext)
 
     useEffect(() => {
-        const storedUser = localStorage.getItem("user");
 
-        if (!storedUser) {
+        if (!user) {
+            setSavedMovieIds([]);
             setLoadingSavedMovies(false);
             return;
         }
-        const parsedUser = JSON.parse(storedUser);
-        setCurrentUser(parsedUser);
-        loadSavedMovies(parsedUser);
-    }, []);
+        loadSavedMovies(user);
+    }, [user]);
 
     async function loadSavedMovies(user) {
         const token = localStorage.getItem("token");
@@ -46,7 +45,7 @@ export function SavedMoviesProvider({children}) {
 
             const moviesForCurrentUser = response.data.filter(
                 (savedMovie) =>
-                    savedMovie.userId === user.id
+                    savedMovie.email === user.email
             );
 
             const movieIds = moviesForCurrentUser.map(
@@ -72,15 +71,16 @@ export function SavedMoviesProvider({children}) {
 
         const token = localStorage.getItem("token");
 
-        console.log("currentUser:", currentUser);
-        console.log("userId dat wordt opgeslagen:", currentUser?.id);
+        console.log("currentUser:", user);
+        console.log("userId dat wordt opgeslagen:", user?.id);
 
         try {
             await axios.post(
                 `${noviApiUrl}/savedMovies`,
                 {
                     movieId: movie.id,
-                    userId: currentUser.id,
+                    userId: user.id,
+                    email: user.email,
                 },
                 {
                     headers: {
@@ -119,7 +119,7 @@ export function SavedMoviesProvider({children}) {
                 }
             );
 
-            const foundRecord = response.data.find((savedMovie) => savedMovie.movieId === movieId && savedMovie.userId === currentUser.id);
+            const foundRecord = response.data.find((savedMovie) => savedMovie.movieId === movieId && savedMovie.email === user.email);
 
             console.log(foundRecord);
 

@@ -12,6 +12,11 @@
           "name": "userId",
           "type": "number",
           "required": true
+        },
+        {
+          "name": "email",
+          "type": "string",
+          "required": true
         }
       ],
       "permissions": {
