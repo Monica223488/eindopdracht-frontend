@@ -29,3 +29,18 @@
     max-width: 300px;
     margin: 20px;
 }
+
+@media (max-width: 768px){
+    .container {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .container h1{
+        font-size: 30px;
+    }
+
+    .left {
+        padding: 40px;
+    }
+}

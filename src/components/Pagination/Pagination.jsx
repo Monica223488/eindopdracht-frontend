@@ -4,7 +4,7 @@ import Button from '../../components/Button/Button.jsx';
 
 function Pagination({page, totalPages, onPrevious, onNext}) {
     return (
-        <>
+        <div className={styles["page-navigation-button-wrapper"]}>
         <Button
             disabled={page <= 1}
             clickHandler={onPrevious}
@@ -16,7 +16,7 @@ function Pagination({page, totalPages, onPrevious, onNext}) {
         clickHandler={onNext}
         text="Volgende"
     />
-        </>
+        </div>
     );
 }
 

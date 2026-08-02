@@ -1,11 +1,12 @@
 import React from 'react';
-import {useContext} from 'react';
+import {useState, useContext} from 'react';
 import styles from './Navigation.module.css';
 import {NavLink, useNavigate} from 'react-router-dom';
 import {AuthContext} from "../../context/AuthContext.jsx";
 import Button from '../../components/Button/Button.jsx';
 
 function Navigation() {
+    const[menuOpen, setMenuOpen] = useState(false);
     const navigate = useNavigate();
     const {user, logout}= useContext(AuthContext);
 
@@ -14,13 +15,21 @@ function Navigation() {
             <nav>
                 <div className={styles['nav-container']}>
                     <h4>MoovieMatcher</h4>
+
+                    <button
+                        type="button" className={styles["hamburger"]} onClick={() => setMenuOpen((prev) => !prev)}>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                    <div className={`${styles['nav-menu']} ${menuOpen ? styles.open : ''}`}>
                     <ul className={styles['nav-pages']}>
                         <li><NavLink className={({isActive}) => isActive ? 'active-menu-link' : 'default-menu-link'}
-                                     to="/vragenlijst">vragenlijst</NavLink></li>
+                                     to="/vragenlijst" onClick={() => setMenuOpen(false)}>vragenlijst</NavLink></li>
                         <li><NavLink className={({isActive}) => isActive ? 'active-menu-link' : 'default-menu-link'}
-                                     to="/categorieën">categorieën</NavLink></li>
+                                     to="/categorieën" onClick={() => setMenuOpen(false)}>categorieën</NavLink></li>
                         <li><NavLink className={({isActive}) => isActive ? 'active-menu-link' : 'default-menu-link'}
-                                     to="/opgeslagenfilms">opgeslagen films</NavLink></li>
+                                     to="/opgeslagenfilms" onClick={() => setMenuOpen(false)}>opgeslagen films</NavLink></li>
                     </ul>
                     <div className={styles['nav-buttons']}>
                         {user ? (<>
@@ -29,12 +38,13 @@ function Navigation() {
                             ):(
                                 <>
                     <Button text="inloggen"
-                            type= "button" clickHandler={() => navigate("/inloggen")}/>
-                    <Button text="registreren" clickHandler={()=>navigate ("/registreren")} />
+                            type= "button" clickHandler={() =>{setMenuOpen(false); navigate("/inloggen");}}/>
+                    <Button text="registreren" clickHandler={()=> {setMenuOpen(false);navigate ("/registreren");}} />
                     </>
                             )}
 
                         </div>
+                    </div>
                 </div>
             </nav>
         </>

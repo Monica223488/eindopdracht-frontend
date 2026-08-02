@@ -21,6 +21,12 @@ function AuthContextProvider({ children }) {
 
         try {
             const decoded =jwtDecode(token);
+            const expired = Date.now() > (decoded.exp * 1000)
+                if (expired) {
+                alert("Je sessie is verlopen. Log opnieuw in.");
+                logout ();
+                return;
+            }
 
             setAuthState({
             user: {id: decoded.userId, email: decoded.email, role: decoded.role,},

@@ -4,9 +4,12 @@
     color: var(--color1);
     justify-content: space-between;
     align-items: center;
-    flex-basis: 100%;
-    margin: 0 auto;
+    width: 100%;
     padding: 0 30px;
+}
+
+.nav-container h4 {
+    margin: 0;
 }
 
 nav {
@@ -16,13 +19,6 @@ nav {
     height: 60px;
 }
 
-ul {
-    list-style-type: none;
-    flex-basis: 2000px;
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-}
 
 li, h4 {
     font-family: "Funnel Display", serif;
@@ -30,7 +26,24 @@ li, h4 {
 
 .nav-buttons {
     display: flex;
-    justify-content: space-between;
+    gap: 12px;
+}
+
+.nav-menu {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    margin-left: 30px;
+}
+
+.nav-pages {
+    display: flex;
+    align-items: center;
+    gap: 100px;
+    list-style: none;
+    margin: 0 auto;
+    padding: 0;
+    flex-basis: auto;
 }
 
 a, a:visited {
@@ -45,4 +58,68 @@ a, a:visited {
 
 .default-menu-link {
     border-bottom: 1px solid transparent;
+}
+
+.hamburger {
+    display:none;
+}
+
+@media (max-width: 768px) {
+    .nav-container {
+        flex-wrap: wrap;
+        position: relative;
+        padding: 0 20px;
+    }
+
+    .hamburger{
+        display: flex;
+        flex-direction: column;
+        width: 35px;
+        gap: 5px;
+        padding: 4px;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        margin-left: auto;
+        position: relative;
+        z-index: 20;
+    }
+
+    .hamburger span {
+        display: block;
+        width: 28px;
+        height: 3px;
+        background-color: var(--color1);
+        border-radius: 2px;
+    }
+
+    .nav-menu {
+        position: absolute;
+        top: 60px;
+        left: 0;
+        width: 100%;
+        padding: 20px;
+        background-color: var(--color2);
+        z-index: 10;
+        display: none;
+        margin-left: 0;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    .nav-menu.open {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .nav-pages {
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .nav-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
 }
