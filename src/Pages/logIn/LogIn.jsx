@@ -61,7 +61,7 @@ function LogIn() {
         <>
             <AuthenticatePage title="Inloggen">
                 <form className={styles["login-form"]} onSubmit={handleSubmit}>
-                    <p>Log eerst in om gebruik te maken van MoovieMatcher</p>
+                    <p>Log eerst in om films te kunnen opslaan in MoovieMatcher</p>
                     <InputField name="email" label="e-mail:" inputType="text" value={email}
                                 changeHandler={setEmail} placeholder="Vul hier je email in"/>
                     <InputField name="password" label="wachtwoord:" inputType="password" value={password}
