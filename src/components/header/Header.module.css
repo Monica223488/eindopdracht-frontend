@@ -14,3 +14,13 @@
 .title-container img {
     max-height: 10rem;
 }
+
+@media (max-width: 768px) {
+    .page-title {
+        font-size: 50px;
+    }
+
+    .title-container img {
+        max-height: 6rem;
+    }
+}

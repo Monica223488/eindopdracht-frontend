@@ -1,7 +1,5 @@
 import { createContext, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { jwtDecode } from "jwt-decode";
-import axios from 'axios';
 
 export const AuthContext = createContext(null);
 
@@ -23,9 +21,15 @@ function AuthContextProvider({ children }) {
 
         try {
             const decoded =jwtDecode(token);
+            const expired = Date.now() > (decoded.exp * 1000)
+                if (expired) {
+                alert("Je sessie is verlopen. Log opnieuw in.");
+                logout ();
+                return;
+            }
 
             setAuthState({
-            user: {username: decoded.sub || decoded.username || null,},
+            user: {id: decoded.userId, email: decoded.email, role: decoded.role,},
             status: 'done',
         });
 
@@ -40,16 +44,17 @@ function AuthContextProvider({ children }) {
     function login(token) {
         localStorage.setItem("token", token);
         const decoded = jwtDecode(token);
+        console.log("Decoded token:", decoded);
 
         setAuthState({
             user: {
-                username: decoded.sub || decoded.username,
+                id: decoded.userId, email: decoded.email, role: decoded.role,
             }, status: "done",
         });
     }
 
     function logout(token) {
-        localStorage.removeItem("token", token);
+        localStorage.removeItem("token");
 
         setAuthState({
             user: null, status: "done",

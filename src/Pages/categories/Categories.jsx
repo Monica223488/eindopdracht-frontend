@@ -1,9 +1,11 @@
 import styles from './Categories.module.css';
 import {useEffect, useState} from 'react';
 import axios from "axios";
-import Movie from '../../components/Movie/Movie.jsx';
 import Header from '../../components/header/Header.jsx';
-import Button from '../../components/Button/Button.jsx';
+import MovieContainer from "../../components/MovieContainer/MovieContainer.jsx";
+import Pagination from "../../components/Pagination/Pagination.jsx";
+
+const tmdbUrl = import.meta.env.VITE_TMDB_URL
 
 
 function Categories() {
@@ -25,8 +27,7 @@ function Categories() {
 
         async function fetchGenres() {
             try {
-                const { data } = await axios.get(
-                    "https://api.themoviedb.org/3/genre/movie/list",
+                const { data } = await axios.get(`${tmdbUrl}/genre/movie/list`,
                     {
                         signal: controller.signal,
                         params: {
@@ -55,8 +56,7 @@ function Categories() {
             toggleError(false);
 
             try {
-                const { data } = await axios.get(
-                    'https://api.themoviedb.org/3/discover/movie',
+                const { data } = await axios.get(`${tmdbUrl}/discover/movie`,
                     {
                         signal: controller.signal,
                         params: {
@@ -104,48 +104,25 @@ function Categories() {
                     </button>
                 </div>
 
-                <div className={styles['page-navigation-button-wrapper']}>
-                    <Button
-                        disabled={page <= 1}
-                        clickHandler={() => setPage(p => Math.max(1, p - 1))}
-                        text="vorige"
-                        className={styles['page-navigation-button']}
-                    />
-                    <Button
-                        disabled={page >= totalPages}
-                        clickHandler={() => setPage(p => Math.min(totalPages, p + 1))}
-                        text="volgende"
-                        className={styles['page-navigation-button']}
-                    />
-                </div>
+                <Pagination page={page}
+                            totalPages={totalPages}
+                            onPrevious={()=> setPage((previousPage)=> previousPage - 1 )}
+                            onNext={()=> setPage((previousPage)=> previousPage + 1)}>
+                </Pagination>
 
                 {loading && <p>Loading...</p>}
                 {error && <p>Er ging iets mis met ophalen.</p>}
 
                 {!loading && !error && (
-                    <ul className={styles['movie-list']}>
-                        {movies.map((movie) => (
-                            <li key={movie.id}>
-                                <Movie movie={movie}/>
-                            </li>
-                        ))}
-                    </ul>
+                    <MovieContainer movies={movies}>
+            </MovieContainer>
                 )}
 
-                <div className={styles['page-navigation-button-wrapper']}>
-                    <Button
-                        disabled={page <= 1}
-                        clickHandler={() => setPage(p => Math.max(1, p - 1))}
-                        text="vorige"
-                        className={styles['page-navigation-button']}
-                    />
-                    <Button
-                        disabled={page >= totalPages}
-                        clickHandler={() => setPage(p => Math.min(totalPages, p + 1))}
-                        text="volgende"
-                        className={styles['page-navigation-button']}
-                    />
-                </div>
+                <Pagination page={page}
+                            totalPages={totalPages}
+                            onPrevious={()=> setPage((previousPage)=> previousPage - 1 )}
+                            onNext={()=> setPage((previousPage)=> previousPage + 1)}>
+                </Pagination>
 
 
             </main>

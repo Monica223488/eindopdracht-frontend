@@ -1,85 +1,148 @@
-import { createContext, useEffect, useState } from "react";
+import {createContext, useContext, useEffect, useState} from "react";
 import axios from "axios";
+import { AuthContext } from "./AuthContext.jsx";
+
+const noviApiUrl = import.meta.env.VITE_NOVI_API_URL;
+const projectId = import.meta.env.VITE_NOVI_PROJECT_ID;
 
 export const SavedMoviesContext = createContext();
 
-export function SavedMoviesProvider({ children }) {
-    const [savedMovieIds, setSavedMovieIds] = useState([]);
-    const [currentUser, setCurrentUser] = useState(null);
+export function SavedMoviesProvider({children}) {
+    const [savedMovieIds, setSavedMovieIds] = useState([])
     const [loadingSavedMovies, setLoadingSavedMovies] = useState(true);
 
-    useEffect(() => {
-        const storedUser = localStorage.getItem("user");
+    const {user} = useContext(AuthContext)
 
-        if (!storedUser) {
+    useEffect(() => {
+
+        if (!user) {
+            setSavedMovieIds([]);
             setLoadingSavedMovies(false);
             return;
         }
-
-        const parsedUser = JSON.parse(storedUser);
-        setCurrentUser(parsedUser);
-        loadSavedMovies(parsedUser);
-    }, []);
+        loadSavedMovies(user);
+    }, [user]);
 
     async function loadSavedMovies(user) {
+        const token = localStorage.getItem("token");
+
         try {
             setLoadingSavedMovies(true);
 
-            if (user.info) {
-                const parsedIds = JSON.parse(user.info);
-                setSavedMovieIds(Array.isArray(parsedIds) ? parsedIds : []);
-            } else {
-                setSavedMovieIds([]);
-            }
-        } catch (error) {
-            console.error("Fout bij laden van opgeslagen films:", error);
+            const response = await axios.get(
+                `${noviApiUrl}/savedMovies`,
+                {
+                    headers:
+                        {
+                            Authorization: `Bearer ${token}`,
+                            "novi-education-project-id":
+                            projectId
+                        },
+                }
+            );
+
+
+            const moviesForCurrentUser = response.data.filter(
+                (savedMovie) =>
+                    savedMovie.email === user.email
+            );
+
+            const movieIds = moviesForCurrentUser.map(
+                (savedMovie) => savedMovie.movieId
+            );
+
+            setSavedMovieIds(movieIds);
+
+        } catch
+            (error) {
+            console.error(
+                "fout bij het laden van de films:",
+                error.response?.data || error.message
+            );
             setSavedMovieIds([]);
         } finally {
             setLoadingSavedMovies(false);
         }
     }
 
-    async function updateSavedMoviesInBackend(updatedMovieIds) {
-        if (!currentUser) return;
+    async function saveMovie(movie) {
+        if (savedMovieIds.includes(movie.id)) return;
 
-        const updatedUser = {
-            name: currentUser.username || currentUser.name,
-            email: currentUser.email,
-            password: currentUser.password,
-            info: JSON.stringify(updatedMovieIds),
-        };
+        const token = localStorage.getItem("token");
+
 
         try {
-            await axios.put(
-                `http://localhost:8080/users/${currentUser.username}`,
-                updatedUser
+            await axios.post(
+                `${noviApiUrl}/savedMovies`,
+                {
+                    movieId: movie.id,
+                    userId: user.id,
+                    email: user.email,
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                        "novi-education-project-id":
+                        projectId,
+                    }
+                }
             );
 
-            const updatedCurrentUser = {
-                ...currentUser,
-                info: JSON.stringify(updatedMovieIds),
-            };
-
-            setCurrentUser(updatedCurrentUser);
-            setSavedMovieIds(updatedMovieIds);
-
-            localStorage.setItem("user", JSON.stringify(updatedCurrentUser));
+            setSavedMovieIds((previousIds) => [
+                ...previousIds,
+                movie.id,
+            ]);
         } catch (error) {
-            console.error("Fout bij updaten van gebruiker:", error);
+            console.error(
+                "Fout bij het opslaan van film:",
+                error.response?.data || error.message
+            );
         }
     }
 
-    async function saveMovie(movie) {
-        const alreadySaved = savedMovieIds.includes(movie.id);
-        if (alreadySaved) return;
-
-        const updatedMovieIds = [...savedMovieIds, movie.id];
-        await updateSavedMoviesInBackend(updatedMovieIds);
-    }
-
     async function removeMovie(movieId) {
-        const updatedMovieIds = savedMovieIds.filter((id) => id !== movieId);
-        await updateSavedMoviesInBackend(updatedMovieIds);
+        const token = localStorage.getItem("token");
+
+        try {
+            const response = await axios.get(
+                `${noviApiUrl}/savedMovies`,
+                {
+                    headers:
+                        {
+                            Authorization: `Bearer ${token}`,
+                            "novi-education-project-id":
+                            projectId
+                        },
+                }
+            );
+
+            const foundRecord = response.data.find((savedMovie) => savedMovie.movieId === movieId && savedMovie.email === user.email);
+
+
+            if (foundRecord) {
+                await axios.delete(
+                    `${noviApiUrl}/savedMovies/${foundRecord.id}`,
+                    {
+                        headers:
+                            {
+                                Authorization: `Bearer ${token}`,
+                                "novi-education-project-id":
+                                projectId
+                            },
+                    }
+                );
+
+                setSavedMovieIds((previousIds)=>
+                previousIds.filter((id)=> id !== movieId)
+                );
+            }
+
+        } catch (error) {
+
+            console.log("Fout bij verwijderen van film:",
+                error.response?.data || error.message
+            );
+        }
     }
 
     function isMovieSaved(movieId) {

@@ -2,10 +2,12 @@ import styles from './Questionnaire.module.css';
 import axios from 'axios';
 import {useState} from "react";
 import {invertAnswers} from "../../Helpers/invertAnswers.js";
-import Movie from '../../components/Movie/Movie.jsx';
 import Header from '../../components/header/Header.jsx'
 import Button from '../../components/Button/Button.jsx';
+import MovieContainer from "../../components/MovieContainer/MovieContainer.jsx";
 import popcorn from '../../assets/popcorn.png'
+
+const tmdbUrl = import.meta.env.VITE_TMDB_URL
 
 function Questionnaire() {
     const [answers, setAnswers] = useState({
@@ -20,15 +22,13 @@ function Questionnaire() {
 
     async function handleSubmit (e) {
         e.preventDefault();
-        console.log("Je formulier is verzonden");
         toggleLoading(true);
         toggleError(false);
 
         try{
             const inverted = invertAnswers(answers);
 
-            const {data} = await axios.get(
-            "https://api.themoviedb.org/3/discover/movie",
+            const {data} = await axios.get(`${tmdbUrl}/discover/movie`,
                 {
                     params: {
                         api_key: import.meta.env.VITE_API_KEY,
@@ -61,7 +61,7 @@ function Questionnaire() {
                         <p className={styles["centerText"]}>Wil je vandaag eens iets kijken buiten je comfortzone? Vul dan onderstaande vragenlijst in en laat je
                             verrassen.</p>
                         <fieldset className={styles["form-group"]}>
-                            <legend>Welke genres kijk je het meeste?</legend>
+                            <legend>Welk genre kijk je het meeste?</legend>
 
                             <select className={styles["dropdown"]} value={answers.genreId} onChange={(e) => setAnswers((prev) => ({
                                 ...prev, genreId: Number(e.target.value),
@@ -149,13 +149,9 @@ function Questionnaire() {
             {error && <p>Er ging iets mis bij het ophalen van films.</p>}
 
             {!loading && !error && (
-                <ul className={styles["movie-grid"]}>
-                    {movies.map((movie) => (
-                        <li key={movie.id} className={styles["movie-grid-item"]}>
-                        <Movie movie={movie}/>
-                        </li>
-                        ))}
-                </ul>
+                <MovieContainer movies={movies}>
+
+                </MovieContainer>
             )}
             </div>
                 )}

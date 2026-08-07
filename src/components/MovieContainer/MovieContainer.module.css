@@ -1,0 +1,18 @@
+.movie-list {
+    display: flex;
+    margin: 8px;
+    padding: 12px;
+    flex-wrap: wrap;
+    align-items: stretch;
+    justify-content: center;
+    gap: 24px;
+    list-style: none;
+}
+
+.movie-list > li {
+    flex: 0 0 280px;
+    display: flex;
+}
+
+
+
