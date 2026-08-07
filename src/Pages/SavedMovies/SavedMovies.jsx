@@ -5,6 +5,11 @@ import { SavedMoviesContext } from "../../context/SavedMoviesContext.jsx";
 import Header from '../../components/header/Header.jsx';
 import MovieContainer from "../../components/MovieContainer/MovieContainer.jsx";
 import Pagination from "../../components/Pagination/Pagination.jsx";
+import {AuthContext} from "../../context/AuthContext.jsx";
+import {Link} from "react-router-dom";
+
+const tmdbUrl = import.meta.env.VITE_TMDB_URL
+
 
 function SavedMovies() {
     const { savedMovieIds, loadingSavedMovies } = useContext(SavedMoviesContext);
@@ -20,13 +25,14 @@ function SavedMovies() {
 
     const moviesForCurrentPage = movies.slice(startIndex, endIndex);
 
+
     useEffect(() => {
         async function fetchSavedMovies() {
             try {
                 setLoadingMovies(true);
 
                 const requests = savedMovieIds.map((movieId) =>
-                    axios.get(`https://api.themoviedb.org/3/movie/${movieId}`, {
+                    axios.get(`${tmdbUrl}/movie/${movieId}`, {
                         params: {
                             api_key: import.meta.env.VITE_API_KEY,
                             language: "nl-NL",
@@ -53,10 +59,20 @@ function SavedMovies() {
         }
     }, [savedMovieIds]);
 
-    console.log(movies);
-    console.log("loadingSavedMovies:", loadingSavedMovies);
-    console.log("loadingMovies:", loadingMovies);
-    console.log("movies:", movies);
+    const {user} = useContext(AuthContext);
+
+
+    if (!user) {
+        return <>
+            <Header title="Opgeslagen films" />
+            <main className={styles["container"]}>
+        <p>Je moet ingelogd zijn om je opgeslagen films te bekijken.</p>
+            <Link to="/inloggen"><strong>Log hier in</strong></Link>
+                </main>
+        </>
+
+    }
+
     return (
         <>
             <Header title="Opgeslagen films" />

@@ -1,3 +1,7 @@
+.centerText {
+    margin: 10px;
+}
+
 .checkbox-container input {
     border-radius: 10px;
     background-color: #fff;

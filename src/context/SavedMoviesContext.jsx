@@ -41,7 +41,6 @@ export function SavedMoviesProvider({children}) {
                 }
             );
 
-            console.log("Opgeslagen films:", response.data);
 
             const moviesForCurrentUser = response.data.filter(
                 (savedMovie) =>
@@ -71,8 +70,6 @@ export function SavedMoviesProvider({children}) {
 
         const token = localStorage.getItem("token");
 
-        console.log("currentUser:", user);
-        console.log("userId dat wordt opgeslagen:", user?.id);
 
         try {
             await axios.post(
@@ -121,7 +118,6 @@ export function SavedMoviesProvider({children}) {
 
             const foundRecord = response.data.find((savedMovie) => savedMovie.movieId === movieId && savedMovie.email === user.email);
 
-            console.log(foundRecord);
 
             if (foundRecord) {
                 await axios.delete(

@@ -39,13 +39,6 @@ function LogIn() {
                 id: decodedToken.userId,
             };
 
-            console.log("Opgeslagen gebruiker:", loggedInUser);
-
-            localStorage.setItem("token", result.data.token);
-            localStorage.setItem("user", JSON.stringify(loggedInUser));
-
-            console.log("Loginresponse:", result.data);
-
             login(result.data.token, loggedInUser);
 
             navigate("/", {

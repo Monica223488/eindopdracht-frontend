@@ -2,11 +2,12 @@ import styles from './Questionnaire.module.css';
 import axios from 'axios';
 import {useState} from "react";
 import {invertAnswers} from "../../Helpers/invertAnswers.js";
-import Movie from '../../components/Movie/Movie.jsx';
 import Header from '../../components/header/Header.jsx'
 import Button from '../../components/Button/Button.jsx';
 import MovieContainer from "../../components/MovieContainer/MovieContainer.jsx";
 import popcorn from '../../assets/popcorn.png'
+
+const tmdbUrl = import.meta.env.VITE_TMDB_URL
 
 function Questionnaire() {
     const [answers, setAnswers] = useState({
@@ -21,15 +22,13 @@ function Questionnaire() {
 
     async function handleSubmit (e) {
         e.preventDefault();
-        console.log("Je formulier is verzonden");
         toggleLoading(true);
         toggleError(false);
 
         try{
             const inverted = invertAnswers(answers);
 
-            const {data} = await axios.get(
-            "https://api.themoviedb.org/3/discover/movie",
+            const {data} = await axios.get(`${tmdbUrl}/discover/movie`,
                 {
                     params: {
                         api_key: import.meta.env.VITE_API_KEY,

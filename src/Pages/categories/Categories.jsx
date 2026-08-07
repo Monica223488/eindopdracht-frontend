@@ -5,6 +5,8 @@ import Header from '../../components/header/Header.jsx';
 import MovieContainer from "../../components/MovieContainer/MovieContainer.jsx";
 import Pagination from "../../components/Pagination/Pagination.jsx";
 
+const tmdbUrl = import.meta.env.VITE_TMDB_URL
+
 
 function Categories() {
     const [movies, setMovies] = useState([]);
@@ -25,8 +27,7 @@ function Categories() {
 
         async function fetchGenres() {
             try {
-                const { data } = await axios.get(
-                    "https://api.themoviedb.org/3/genre/movie/list",
+                const { data } = await axios.get(`${tmdbUrl}/genre/movie/list`,
                     {
                         signal: controller.signal,
                         params: {
@@ -55,8 +56,7 @@ function Categories() {
             toggleError(false);
 
             try {
-                const { data } = await axios.get(
-                    'https://api.themoviedb.org/3/discover/movie',
+                const { data } = await axios.get(`${tmdbUrl}/discover/movie`,
                     {
                         signal: controller.signal,
                         params: {
