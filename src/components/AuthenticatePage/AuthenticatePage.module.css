@@ -1,7 +1,8 @@
-.container{
+.container {
     display: flex;
     flex-direction: row;
-    height: 100vh;
+    flex: 1;
+    align-items: stretch;
 }
 
 .container h1 {
@@ -10,18 +11,18 @@
 
 .left {
     display: flex;
-    align-items: center;
     flex: 1;
+    align-items: center;
     padding: 100px;
     background-color: var(--color3);
 }
 
-.right{
+.right {
     display: flex;
+    flex: 2;
     flex-direction: column;
-    margin: 20px;
-    flex:2;
     justify-content: center;
+    margin: 20px;
     padding: 40px;
 }
 
@@ -30,13 +31,12 @@
     margin: 20px;
 }
 
-@media (max-width: 768px){
+@media (max-width: 768px) {
     .container {
-        display: flex;
         flex-direction: column;
     }
 
-    .container h1{
+    .container h1 {
         font-size: 30px;
     }
 

@@ -1,6 +1,7 @@
-import {createContext, useContext, useEffect, useState} from "react";
-import axios from "axios";
-import { AuthContext } from "./AuthContext.jsx";
+import {createContext, useContext, useEffect, useState} from 'react';
+import axios from 'axios';
+
+import {AuthContext} from './AuthContext.jsx';
 
 const noviApiUrl = import.meta.env.VITE_NOVI_API_URL;
 const projectId = import.meta.env.VITE_NOVI_PROJECT_ID;
@@ -132,8 +133,8 @@ export function SavedMoviesProvider({children}) {
                     }
                 );
 
-                setSavedMovieIds((previousIds)=>
-                previousIds.filter((id)=> id !== movieId)
+                setSavedMovieIds((previousIds) =>
+                    previousIds.filter((id) => id !== movieId)
                 );
             }
 

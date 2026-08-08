@@ -1,9 +1,11 @@
-import styles from './Categories.module.css';
 import {useEffect, useState} from 'react';
-import axios from "axios";
+import axios from 'axios';
+
 import Header from '../../components/header/Header.jsx';
-import MovieContainer from "../../components/MovieContainer/MovieContainer.jsx";
-import Pagination from "../../components/Pagination/Pagination.jsx";
+import MovieContainer from '../../components/MovieContainer/MovieContainer.jsx';
+import Pagination from '../../components/Pagination/Pagination.jsx';
+
+import styles from './Categories.module.css';
 
 const tmdbUrl = import.meta.env.VITE_TMDB_URL
 
@@ -14,7 +16,7 @@ function Categories() {
     const [totalPages, setTotalPages] = useState(1);
     const [loading, toggleLoading] = useState(false);
     const [error, toggleError] = useState(false);
-    const [genres, setGenres] = useState ([]);
+    const [genres, setGenres] = useState([]);
     const [selectedGenre, setSelectedGenre] = useState(null);
 
     function handleGenreClick(genreId) {
@@ -27,7 +29,7 @@ function Categories() {
 
         async function fetchGenres() {
             try {
-                const { data } = await axios.get(`${tmdbUrl}/genre/movie/list`,
+                const {data} = await axios.get(`${tmdbUrl}/genre/movie/list`,
                     {
                         signal: controller.signal,
                         params: {
@@ -56,7 +58,7 @@ function Categories() {
             toggleError(false);
 
             try {
-                const { data } = await axios.get(`${tmdbUrl}/discover/movie`,
+                const {data} = await axios.get(`${tmdbUrl}/discover/movie`,
                     {
                         signal: controller.signal,
                         params: {
@@ -85,7 +87,7 @@ function Categories() {
 
     return (
         <>
-            <Header title="Categorieën" />
+            <Header title="Categorieën"/>
             <main>
                 <div className={styles['genre-labels']}>
                     {genres.map((genre) => (
@@ -98,16 +100,19 @@ function Categories() {
                         </button>
                     ))}
                     <button type="button"
-                            onClick={() => { setSelectedGenre(null); setPage(1); }}
+                            onClick={() => {
+                                setSelectedGenre(null);
+                                setPage(1);
+                            }}
                             className={`${styles['genre-label']} ${selectedGenre === null ? styles['active'] : ''}`}>
-                    Alle categorieën
+                        Alle categorieën
                     </button>
                 </div>
 
                 <Pagination page={page}
                             totalPages={totalPages}
-                            onPrevious={()=> setPage((previousPage)=> previousPage - 1 )}
-                            onNext={()=> setPage((previousPage)=> previousPage + 1)}>
+                            onPrevious={() => setPage((previousPage) => previousPage - 1)}
+                            onNext={() => setPage((previousPage) => previousPage + 1)}>
                 </Pagination>
 
                 {loading && <p>Loading...</p>}
@@ -115,19 +120,19 @@ function Categories() {
 
                 {!loading && !error && (
                     <MovieContainer movies={movies}>
-            </MovieContainer>
+                    </MovieContainer>
                 )}
 
                 <Pagination page={page}
                             totalPages={totalPages}
-                            onPrevious={()=> setPage((previousPage)=> previousPage - 1 )}
-                            onNext={()=> setPage((previousPage)=> previousPage + 1)}>
+                            onPrevious={() => setPage((previousPage) => previousPage - 1)}
+                            onNext={() => setPage((previousPage) => previousPage + 1)}>
                 </Pagination>
 
 
             </main>
         </>
-);
+    );
 }
 
 export default Categories;

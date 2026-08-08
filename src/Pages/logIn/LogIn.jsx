@@ -1,13 +1,15 @@
-import React from 'react';
-import styles from './LogIn.module.css';
-import InputField from '../../components/InputField/InputField.jsx';
-import Button from '../../components/Button/Button.jsx';
-import { Link, useNavigate } from "react-router-dom";
-import {AuthContext} from '../../context/AuthContext.jsx'
-import {useContext, useState} from "react";
-import {jwtDecode} from "jwt-decode";
+import {useContext, useState} from 'react';
 import axios from 'axios';
-import AuthenticatePage from "../../components/AuthenticatePage/AuthenticatePage.jsx";
+import {jwtDecode} from 'jwt-decode';
+import {Link, useNavigate} from 'react-router-dom';
+
+import {AuthContext} from '../../context/AuthContext.jsx';
+
+import AuthenticatePage from '../../components/AuthenticatePage/AuthenticatePage.jsx';
+import Button from '../../components/Button/Button.jsx';
+import InputField from '../../components/InputField/InputField.jsx';
+
+import styles from './LogIn.module.css';
 
 const noviApiUrl = import.meta.env.VITE_NOVI_API_URL;
 const projectId = import.meta.env.VITE_NOVI_PROJECT_ID;
@@ -19,18 +21,22 @@ function LogIn() {
     const {login} = useContext(AuthContext);
     const navigate = useNavigate();
 
-    async function handleSubmit(e){
+    async function handleSubmit(e) {
         e.preventDefault();
         toggleError(false);
 
-        try{
+        try {
             const result = await axios.post(`${noviApiUrl}/login`,
-                {email: email,
-                password: password},
-                {headers: {
+                {
+                    email: email,
+                    password: password
+                },
+                {
+                    headers: {
                         "Content-Type": "application/json",
                         "novi-education-project-id": projectId
-                    }});
+                    }
+                });
 
             const decodedToken = jwtDecode(result.data.token);
 
@@ -50,6 +56,7 @@ function LogIn() {
             toggleError(true);
         }
     }
+
     return (
         <>
             <AuthenticatePage title="Inloggen">
@@ -59,9 +66,10 @@ function LogIn() {
                                 changeHandler={setEmail} placeholder="Vul hier je email in"/>
                     <InputField name="password" label="wachtwoord:" inputType="password" value={password}
                                 changeHandler={setPassword} placeholder="Vul hier je wachtwoord in"/>
-                    <Button text="inloggen" type="submit" />
+                    <Button text="inloggen" type="submit"/>
                     {error && <p>Het inloggen is mislukt. Controleer je gegevens.</p>}
-                    <p>Nog geen account? Klik dan{" "}<Link to={"/registreren"}><strong>hier</strong></Link> om naar de registratiepagina te gaan.</p>
+                    <p>Nog geen account? Klik dan{" "}<Link to={"/registreren"}><strong>hier</strong></Link> om naar de
+                        registratiepagina te gaan.</p>
                 </form>
             </AuthenticatePage>
         </>

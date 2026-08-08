@@ -10,8 +10,8 @@ function AuthenticatePage({title, children}) {
                 </div>
                 <div className={styles['right']}>
                     <div className={styles['form-container']}>
-                    <h2>{title}</h2>
-                    {children}
+                        <h2>{title}</h2>
+                        {children}
                     </div>
                 </div>
             </div>
