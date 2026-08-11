@@ -1,6 +1,7 @@
 import styles from './Movie.module.css';
 import { useContext } from "react";
 import { SavedMoviesContext } from "../../context/SavedMoviesContext.jsx";
+import { AuthContext } from "../../context/AuthContext.jsx";
 import PropTypes from "prop-types";
 import Button from '../../components/Button/Button.jsx';
 
@@ -8,10 +9,24 @@ const IMG_URL = "https://image.tmdb.org/t/p/w500";
 
 function Movie({ movie }) {
     const {saveMovie, removeMovie, isMovieSaved} = useContext(SavedMoviesContext);
+    const {user} = useContext(AuthContext);
 
     const backdropUrl = movie.backdrop_path
         ? `${IMG_URL}${movie.backdrop_path}`
         : null;
+
+    function handleSaveMovie() {
+        if (!user) {
+            alert("Log eerst in voordat je een film op kunt slaan.");
+            return;
+        }
+
+        if (isMovieSaved(movie.id)){
+            removeMovie(movie.id);
+        } else {
+            saveMovie(movie);
+        }
+    }
 
 
     return (
@@ -30,10 +45,7 @@ function Movie({ movie }) {
             <p>{movie.overview || "Geen omschrijving beschikbaar"}</p>
             <Button text={isMovieSaved(movie.id) ? "film verwijderen": "film opslaan"}
                     className={styles['movie-save-button']}
-                    clickHandler={()=>
-                        isMovieSaved(movie.id)
-                        ? removeMovie(movie.id)
-                            :saveMovie(movie)} />
+                    clickHandler={handleSaveMovie} />
         </article>
     );
 }

@@ -1,12 +1,15 @@
-import styles from './SavedMovies.module.css';
 import { useContext, useEffect, useState } from 'react';
-import axios from "axios";
-import { SavedMoviesContext } from "../../context/SavedMoviesContext.jsx";
+import axios from 'axios';
+import { Link } from 'react-router-dom';
+
+import { AuthContext } from '../../context/AuthContext.jsx';
+import { SavedMoviesContext } from '../../context/SavedMoviesContext.jsx';
+
 import Header from '../../components/header/Header.jsx';
-import MovieContainer from "../../components/MovieContainer/MovieContainer.jsx";
-import Pagination from "../../components/Pagination/Pagination.jsx";
-import {AuthContext} from "../../context/AuthContext.jsx";
-import {Link} from "react-router-dom";
+import MovieContainer from '../../components/MovieContainer/MovieContainer.jsx';
+import Pagination from '../../components/Pagination/Pagination.jsx';
+
+import styles from './SavedMovies.module.css';
 
 const tmdbUrl = import.meta.env.VITE_TMDB_URL
 

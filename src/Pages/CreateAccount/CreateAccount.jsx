@@ -1,10 +1,12 @@
-import {useState} from 'react';
-import styles from './CreateAccount.module.css';
-import {Link, useNavigate} from 'react-router-dom';
+import { useState } from 'react';
 import axios from 'axios';
-import InputField from '../../components/InputField/InputField.jsx';
+import { Link, useNavigate } from 'react-router-dom';
+
+import AuthenticatePage from '../../components/AuthenticatePage/AuthenticatePage.jsx';
 import Button from '../../components/Button/Button.jsx';
-import AuthenticatePage from "../../components/AuthenticatePage/AuthenticatePage.jsx";
+import InputField from '../../components/InputField/InputField.jsx';
+
+import styles from './CreateAccount.module.css';
 
 const noviApiUrl = import.meta.env.VITE_NOVI_API_URL;
 const projectId = import.meta.env.VITE_NOVI_PROJECT_ID;

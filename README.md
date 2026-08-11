@@ -93,28 +93,19 @@ Wil je weer uit deze modus? Gebruik dan:
 `command + c` voor mac
 
 ### 3 Invullen API key en project id
-Ik heb in mijn code gebruik gemaakt van een omgevingsbestand (.env). Dus overal waar de API key ingevuld moet staan staat deze variabele zodat wanneer mijn bestanden naar GIT gepusht worden niet overal mijn API key meegaat. In mijn project staat een .env.dist bestand. Hierin staat al de variabele 
+Ik heb in mijn code gebruik gemaakt van een omgevingsbestand (.env). Dus overal waar de API key ingevuld moet staan staat deze variabele zodat wanneer mijn bestanden naar GIT gepusht worden niet overal mijn API key meegaat. In mijn project staat een .env.dist bestand. Hierin staat al de variabelen.
 
-`VITE_API_KEY`
+Maak in de map eindopdracht-frontend een nieuw bestand aan en noem deze .env.
 
-`VITE_TMDB_URL`
+Kopieer de waarden die in .env.dist staan en plak deze in het nieuwe .env bestand. 
 
-Hier kan de API key ingevuld worden zodat er weer een waarde gegeven is aan de variabele en de code editor overal de API key weer kan gebruiken.
-
-Vul bij de `VITE_API_KEY` deze key in:
+Vul bij `VITE_API_KEY` deze key in:
 
 "9e44b6912eabb276f49bed50f63b50ac"
 
-En bij `VITE_TMDB_URL` vul je deze url in:
+En bij `VITE_TMDB_URL` vul je deze url van the movie database in:
 
 https://api.themoviedb.org/3
-
-In dit bestand .env.dist staan ook 
-
-`VITE_NOVI_API_URL` 
-
-`VITE_NOVI_PROJECT_ID`
-
 
 Bij `VITE_NOVI_API_URL`
 vul je de url van API in: 

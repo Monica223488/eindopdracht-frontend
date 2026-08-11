@@ -15,7 +15,6 @@
     border-radius: 999px;
     position: relative;
     background: var(--color3);
-    line-height: 0;
 
 }
 .image-wrapper img {

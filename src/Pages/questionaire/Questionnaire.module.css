@@ -1,5 +1,7 @@
 .centerText {
-    margin: 10px;
+    margin-left: 250px;
+    margin-right: 250px;
+    text-align: center;
 }
 
 .checkbox-container input {
@@ -100,4 +102,11 @@ input[type="submit"] {
 .centeredButtonRow {
     display: flex;
     justify-content: center;
+}
+
+@media (max-width: 768px){
+    .centerText {
+        margin-left: 15px;
+        margin-right: 15px;
+    }
 }

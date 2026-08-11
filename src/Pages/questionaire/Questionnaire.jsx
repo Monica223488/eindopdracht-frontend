@@ -1,11 +1,15 @@
-import styles from './Questionnaire.module.css';
+import {useState} from 'react';
 import axios from 'axios';
-import {useState} from "react";
-import {invertAnswers} from "../../Helpers/invertAnswers.js";
-import Header from '../../components/header/Header.jsx'
+
+import {invertAnswers} from '../../Helpers/invertAnswers.js';
+
+import Header from '../../components/header/Header.jsx';
 import Button from '../../components/Button/Button.jsx';
-import MovieContainer from "../../components/MovieContainer/MovieContainer.jsx";
-import popcorn from '../../assets/popcorn.png'
+import MovieContainer from '../../components/MovieContainer/MovieContainer.jsx';
+
+import popcorn from '../../assets/popcorn.png';
+
+import styles from './Questionnaire.module.css';
 
 const tmdbUrl = import.meta.env.VITE_TMDB_URL
 
@@ -20,12 +24,12 @@ function Questionnaire() {
     const [loading, toggleLoading] = useState(false);
     const [error, toggleError] = useState(false);
 
-    async function handleSubmit (e) {
+    async function handleSubmit(e) {
         e.preventDefault();
         toggleLoading(true);
         toggleError(false);
 
-        try{
+        try {
             const inverted = invertAnswers(answers);
 
             const {data} = await axios.get(`${tmdbUrl}/discover/movie`,
@@ -41,15 +45,15 @@ function Questionnaire() {
                     },
                 }
             );
-        setMovies(data.results ?? []);
-        setShowResults(true);
-    } catch (e) {
-        console.error(e);
-        toggleError(true);
-    } finally {
-        toggleLoading(false);
+            setMovies(data.results ?? []);
+            setShowResults(true);
+        } catch (e) {
+            console.error(e);
+            toggleError(true);
+        } finally {
+            toggleLoading(false);
+        }
     }
-}
 
     return (
         <div>
@@ -58,15 +62,17 @@ function Questionnaire() {
             </Header>
             <main className={styles["questionnaire-main"]}>
                 {!showResults ? (<form onSubmit={handleSubmit} className={styles["questionnaire-form"]}>
-                        <p className={styles["centerText"]}>Wil je vandaag eens iets kijken buiten je comfortzone? Vul dan onderstaande vragenlijst in en laat je
-                            verrassen.</p>
+                        <p className={styles["centerText"]}>Wil je vandaag eens iets anders kijken? Beantwoord de onderstaande
+                            vragen over jouw voorkeuren en ontvang juist aanbevelingen die daar nét van afwijken.
+                            Zo ontdek je films die je anders misschien nooit zou kiezen.</p>
                         <fieldset className={styles["form-group"]}>
                             <legend>Welk genre kijk je het meeste?</legend>
 
-                            <select className={styles["dropdown"]} value={answers.genreId} onChange={(e) => setAnswers((prev) => ({
-                                ...prev, genreId: Number(e.target.value),
-                            }))
-                            }>
+                            <select className={styles["dropdown"]} value={answers.genreId}
+                                    onChange={(e) => setAnswers((prev) => ({
+                                        ...prev, genreId: Number(e.target.value),
+                                    }))
+                                    }>
                                 <option value={28}>Actie</option>
                                 <option value={35}>Comedy</option>
                                 <option value={27}>Horror</option>
@@ -94,69 +100,70 @@ function Questionnaire() {
                             </label>
                         </fieldset>
 
-                    <fieldset className={styles["form-group"]}>
-                        <legend>In welke taal kijk je meestal een film?</legend>
+                        <fieldset className={styles["form-group"]}>
+                            <legend>In welke taal kijk je meestal een film?</legend>
 
-                        <label>
-                            <input type="radio" name="language" value="en"
-                                   checked={answers.language === 'en'}
-                                   onChange={(e) => setAnswers((prev) => ({
-                                       ...prev, language: e.target.value,
-                                   }))
-                                   }/>
-                            Engels
-                        </label>
+                            <label>
+                                <input type="radio" name="language" value="en"
+                                       checked={answers.language === 'en'}
+                                       onChange={(e) => setAnswers((prev) => ({
+                                           ...prev, language: e.target.value,
+                                       }))
+                                       }/>
+                                Engels
+                            </label>
 
-                        <label>
-                            <input type="radio" name="language" value="nl"
-                                   checked={answers.language === 'nl'}
-                                   onChange={(e) => setAnswers((prev) => ({
-                                       ...prev, language: e.target.value,
-                                   }))
-                                   }/>
-                            Nederlands
-                        </label>
+                            <label>
+                                <input type="radio" name="language" value="nl"
+                                       checked={answers.language === 'nl'}
+                                       onChange={(e) => setAnswers((prev) => ({
+                                           ...prev, language: e.target.value,
+                                       }))
+                                       }/>
+                                Nederlands
+                            </label>
 
-                        <label>
-                            <input type="radio" name="language" value="fr"
-                                   checked={answers.language === 'fr'}
-                                   onChange={(e) => setAnswers((prev) => ({
-                                       ...prev, language: e.target.value,
-                                   }))
-                                   }/>
-                            Frans
-                        </label>
+                            <label>
+                                <input type="radio" name="language" value="fr"
+                                       checked={answers.language === 'fr'}
+                                       onChange={(e) => setAnswers((prev) => ({
+                                           ...prev, language: e.target.value,
+                                       }))
+                                       }/>
+                                Frans
+                            </label>
 
-                        <label>
-                            <input type="radio" name="language" value="de"
-                                   checked={answers.language === 'de'}
-                                   onChange={(e) => setAnswers((prev) => ({
-                                       ...prev, language: e.target.value,
-                                   }))
-                                   }/>
-                            Duits
-                        </label>
+                            <label>
+                                <input type="radio" name="language" value="de"
+                                       checked={answers.language === 'de'}
+                                       onChange={(e) => setAnswers((prev) => ({
+                                           ...prev, language: e.target.value,
+                                       }))
+                                       }/>
+                                Duits
+                            </label>
                         </fieldset>
 
                         <Button text="Uitkomsten" type="submit"></Button>
-                </form>
-                    ) : (
+                    </form>
+                ) : (
                     <div className={styles["pageContent"]}>
                         <div className={styles["centeredButtonRow"]}>
-                    <Button text="Terug naar de vragenlijst" type="button" clickHandler={() => setShowResults(false)}/>
+                            <Button text="Terug naar de vragenlijst" type="button"
+                                    clickHandler={() => setShowResults(false)}/>
                         </div>
-            {loading && <p>Loading...</p>}
-            {error && <p>Er ging iets mis bij het ophalen van films.</p>}
+                        {loading && <p>Loading...</p>}
+                        {error && <p>Er ging iets mis bij het ophalen van films.</p>}
 
-            {!loading && !error && (
-                <MovieContainer movies={movies}>
+                        {!loading && !error && (
+                            <MovieContainer movies={movies}>
 
-                </MovieContainer>
-            )}
-            </div>
+                            </MovieContainer>
+                        )}
+                    </div>
                 )}
             </main>
-</div>);
+        </div>);
 }
 
 export default Questionnaire;

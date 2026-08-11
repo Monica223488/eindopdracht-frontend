@@ -1,7 +1,7 @@
 import './InputField.module.css';
 
 
-function InputField({ name, inputType, label, value, changeHandler, placeholder}) {
+function InputField({name, inputType, label, value, changeHandler, placeholder}) {
     return (
         <>
             <label htmlFor={`${name}-field`}>{label}</label>
