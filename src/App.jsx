@@ -8,6 +8,7 @@ import Categories from './Pages/categories/Categories.jsx';
 import SavedMovies from './Pages/SavedMovies/SavedMovies.jsx';
 import CreateAccount from './Pages/CreateAccount/CreateAccount.jsx';
 import ErrorPage from './Pages/errorPage/ErrorPage.jsx'
+import MovieDetails from "./Pages/movieDetails/MovieDetails.jsx";
 function App() {
 
 
@@ -25,6 +26,7 @@ function App() {
                     <Route path="/inloggen" element={<LogIn />} />
                     <Route path="/registreren" element={<CreateAccount />}/>
                     <Route path="*" element={<ErrorPage />} />
+                    <Route path="/movies/:movieId" element={<MovieDetails />}/>
                 </Routes>
                 </main>
                 <Footer/>

@@ -5,7 +5,7 @@ import {Link, useNavigate} from 'react-router-dom';
 
 import {AuthContext} from '../../context/AuthContext.jsx';
 
-import AuthenticatePage from '../../components/AuthenticatePage/AuthenticatePage.jsx';
+import AuthenticateLayout from '../../components/AuthenticateLayout/AuthenticateLayout.jsx';
 import Button from '../../components/Button/Button.jsx';
 import InputField from '../../components/InputField/InputField.jsx';
 
@@ -59,7 +59,7 @@ function LogIn() {
 
     return (
         <>
-            <AuthenticatePage title="Inloggen">
+            <AuthenticateLayout title="Inloggen">
                 <form className={styles["login-form"]} onSubmit={handleSubmit}>
                     <p>Log eerst in om films te kunnen opslaan in MoovieMatcher</p>
                     <InputField name="email" label="e-mail:" inputType="text" value={email}
@@ -71,7 +71,7 @@ function LogIn() {
                     <p>Nog geen account? Klik dan{" "}<Link to={"/registreren"}><strong>hier</strong></Link> om naar de
                         registratiepagina te gaan.</p>
                 </form>
-            </AuthenticatePage>
+            </AuthenticateLayout>
         </>
     )
 }

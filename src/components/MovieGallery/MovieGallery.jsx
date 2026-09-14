@@ -1,14 +1,14 @@
-import styles from './MovieContainer.module.css';
+import styles from './MovieGallery.module.css';
 import PropTypes from "prop-types";
-import Movie from "../Movie/Movie.jsx";
+import MovieCard from "../MovieCard/MovieCard.jsx";
 
-function MovieContainer({movies}) {
+function MovieGallery({movies}) {
 
     return (
  <ul className={styles["movie-list"]}>
      {movies.map((movie)=> (
      <li key={movie.id}>
-         <Movie movie={movie} />
+         <MovieCard movie={movie} />
      </li>
      ))}
  </ul>
@@ -16,8 +16,8 @@ function MovieContainer({movies}) {
 
 }
 
-MovieContainer.propTypes ={
+MovieGallery.propTypes ={
     movies: PropTypes.array.isRequired,
 };
 
-export default MovieContainer;
+export default MovieGallery;

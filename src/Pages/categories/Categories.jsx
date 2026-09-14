@@ -2,7 +2,7 @@ import {useEffect, useState} from 'react';
 import axios from 'axios';
 
 import Header from '../../components/header/Header.jsx';
-import MovieContainer from '../../components/MovieContainer/MovieContainer.jsx';
+import MovieGallery from '../../components/MovieGallery/MovieGallery.jsx';
 import Pagination from '../../components/Pagination/Pagination.jsx';
 
 import styles from './Categories.module.css';
@@ -18,6 +18,7 @@ function Categories() {
     const [error, toggleError] = useState(false);
     const [genres, setGenres] = useState([]);
     const [selectedGenre, setSelectedGenre] = useState(null);
+    const [genreError, toggleGenreError] = useState(false);
 
     function handleGenreClick(genreId) {
         setSelectedGenre(prev => (prev === genreId ? null : genreId));
@@ -43,6 +44,7 @@ function Categories() {
             } catch (e) {
                 if (e.code === "ERR_CANCELED") return;
                 console.error(e);
+                toggleGenreError(true);
             }
         }
 
@@ -87,9 +89,10 @@ function Categories() {
 
     return (
         <>
-            <Header title="Categorieën"/>
+            <Header title="Ontdekken"/>
             <main>
                 <div className={styles['genre-labels']}>
+                    {genreError && <p>De categorieën konden niet worden opgehaald.</p>}
                     {genres.map((genre) => (
                         <button
                             key={genre.id}
@@ -115,12 +118,12 @@ function Categories() {
                             onNext={() => setPage((previousPage) => previousPage + 1)}>
                 </Pagination>
 
-                {loading && <p>Loading...</p>}
+                {loading && <p>Films worden geladen...</p>}
                 {error && <p>Er ging iets mis met ophalen.</p>}
 
                 {!loading && !error && (
-                    <MovieContainer movies={movies}>
-                    </MovieContainer>
+                    <MovieGallery movies={movies}>
+                    </MovieGallery>
                 )}
 
                 <Pagination page={page}

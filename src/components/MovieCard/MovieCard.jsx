@@ -1,4 +1,4 @@
-import styles from './Movie.module.css';
+import styles from './MovieCard.module.css';
 import { useContext } from "react";
 import { SavedMoviesContext } from "../../context/SavedMoviesContext.jsx";
 import { AuthContext } from "../../context/AuthContext.jsx";
@@ -7,7 +7,7 @@ import Button from '../../components/Button/Button.jsx';
 
 const IMG_URL = "https://image.tmdb.org/t/p/w500";
 
-function Movie({ movie }) {
+function MovieCard({ movie }) {
     const {saveMovie, removeMovie, isMovieSaved} = useContext(SavedMoviesContext);
     const {user} = useContext(AuthContext);
 
@@ -50,7 +50,7 @@ function Movie({ movie }) {
     );
 }
 
-Movie.propTypes = {
+MovieCard.propTypes = {
     movie: PropTypes.shape({
         id: PropTypes.number.isRequired,
         title: PropTypes.string,
@@ -60,4 +60,4 @@ Movie.propTypes = {
     }).isRequired,
 };
 
-export default Movie;
+export default MovieCard;

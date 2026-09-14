@@ -30,7 +30,7 @@ Via deze link kun je node.js downloaden: "https://nodejs.org/en"
 Later in de handleiding is er een uitgebreidere uitleg over de installatie van node.js
 
 ### 3 API key en tmdb url
-Voor deze applicatie is er gebruik gemaakt van de The Movie Database (TMDB). Om hier gebruik van te kunnen maken heb je een API key nodig. Dit is de API key die gebruikt kan worden:
+Voor deze applicatie is er gebruik gemaakt van de The MovieCard Database (TMDB). Om hier gebruik van te kunnen maken heb je een API key nodig. Dit is de API key die gebruikt kan worden:
 
 “9e44b6912eabb276f49bed50f63b50ac”
 

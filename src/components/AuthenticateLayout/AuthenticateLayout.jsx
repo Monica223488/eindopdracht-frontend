@@ -1,7 +1,7 @@
-import styles from './AuthenticatePage.module.css';
+import styles from './AuthenticateLayout.module.css';
 import React from "react";
 
-function AuthenticatePage({title, children}) {
+function AuthenticateLayout({title, children}) {
     return (
         <>
             <div className={styles['container']}>
@@ -20,4 +20,4 @@ function AuthenticatePage({title, children}) {
     )
 }
 
-export default AuthenticatePage;
+export default AuthenticateLayout;

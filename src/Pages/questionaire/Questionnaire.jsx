@@ -5,7 +5,7 @@ import {invertAnswers} from '../../Helpers/invertAnswers.js';
 
 import Header from '../../components/header/Header.jsx';
 import Button from '../../components/Button/Button.jsx';
-import MovieContainer from '../../components/MovieContainer/MovieContainer.jsx';
+import MovieGallery from '../../components/MovieGallery/MovieGallery.jsx';
 
 import popcorn from '../../assets/popcorn.png';
 
@@ -156,9 +156,9 @@ function Questionnaire() {
                         {error && <p>Er ging iets mis bij het ophalen van films.</p>}
 
                         {!loading && !error && (
-                            <MovieContainer movies={movies}>
+                            <MovieGallery movies={movies}>
 
-                            </MovieContainer>
+                            </MovieGallery>
                         )}
                     </div>
                 )}

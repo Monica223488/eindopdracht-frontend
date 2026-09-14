@@ -6,7 +6,7 @@ import { AuthContext } from '../../context/AuthContext.jsx';
 import { SavedMoviesContext } from '../../context/SavedMoviesContext.jsx';
 
 import Header from '../../components/header/Header.jsx';
-import MovieContainer from '../../components/MovieContainer/MovieContainer.jsx';
+import MovieGallery from '../../components/MovieGallery/MovieGallery.jsx';
 import Pagination from '../../components/Pagination/Pagination.jsx';
 
 import styles from './SavedMovies.module.css';
@@ -86,8 +86,8 @@ function SavedMovies() {
                     <p>Je hebt nog geen films opgeslagen.</p>
                 ) : (
                     <>
-                    <MovieContainer movies={moviesForCurrentPage}>
-                    </MovieContainer>
+                    <MovieGallery movies={moviesForCurrentPage}>
+                    </MovieGallery>
                     <Pagination page={page}
             totalPages={totalPages}
             onPrevious={()=> setPage((previousPage)=> previousPage - 1 )}

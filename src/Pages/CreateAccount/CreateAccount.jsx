@@ -2,7 +2,7 @@ import { useState } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 
-import AuthenticatePage from '../../components/AuthenticatePage/AuthenticatePage.jsx';
+import AuthenticateLayout from '../../components/AuthenticateLayout/AuthenticateLayout.jsx';
 import Button from '../../components/Button/Button.jsx';
 import InputField from '../../components/InputField/InputField.jsx';
 
@@ -49,7 +49,7 @@ function CreateAccount() {
      }
     return (
         <>
-            <AuthenticatePage title="Registreren">
+            <AuthenticateLayout title="Registreren">
                 <form className={styles["create-account-form"]} onSubmit={handleSubmitAccount}>
                     <p>Vul onderstaande velden in om je te registreren</p>
                     <InputField name="email" label="e-mailadres:" inputType="email"
@@ -62,7 +62,7 @@ function CreateAccount() {
                     {error && <p>Het registreren is niet gelukt. Probeer het opnieuw.</p>}
                     <p>Al een account? Klik{" "} <Link to="/inloggen"><strong>hier</strong></Link> om naar de inlogpagina te gaan.</p>
                 </form>
-            </AuthenticatePage>
+            </AuthenticateLayout>
         </>
     )
 }
