@@ -1,17 +1,40 @@
 import styles from './MovieDetails.module.css';
-import { useParams } from "react-router-dom";
-import {useEffect, useState} from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import {useContext, useEffect, useState} from "react";
 import axios from 'axios';
+import {SavedMoviesContext} from "../../context/SavedMoviesContext.jsx";
+import {AuthContext} from "../../context/AuthContext.jsx";
+import Button from "../../components/Button/Button.jsx";
 
 const tmdbUrl = import.meta.env.VITE_TMDB_URL;
 const IMG_URL = "https://image.tmdb.org/t/p/w500";
+const languageNames = new Intl.DisplayNames(["nl"], {
+    type: "language"
+});
 
 function MovieDetails() {
     const [movieDetails, setMovieDetails] = useState(null);
     const [error, toggleError] = useState(false);
     const [loading, toggleLoading] = useState(false);
 
+    const {saveMovie, removeMovie, isMovieSaved} = useContext(SavedMoviesContext);
+    const {user} = useContext(AuthContext);
     const { movieId } = useParams();
+    const navigate = useNavigate();
+
+    function handleSaveMovie() {
+        if (!user) {
+            alert("Log eerst in voordat je een film op kunt slaan.");
+            return;
+        }
+
+        if (isMovieSaved(movieDetails.id)) {
+            removeMovie(movieDetails.id);
+        } else {
+            saveMovie(movieDetails);
+        }
+    }
+
 
     useEffect(() => {
         const controller = new AbortController();
@@ -49,25 +72,38 @@ function MovieDetails() {
     }, [movieId]);
 
     return (
-        <main>
+        <main className={styles['movie-details-tile']}>
             {loading && <p>Film wordt geladen...</p>}
             {error && <p>De film kon niet worden opgehaald.</p>}
 
             {!loading && !error && movieDetails && (
                 <>
                     <h1>{movieDetails.title}</h1>
-                    <p>{movieDetails.original_language}</p>
-                    <p>{movieDetails.release_date}</p>
-                    <p>{movieDetails.runtime}</p>
+                    <div className={styles['movie-detail-numbers']}>
+                        <p>{movieDetails.release_date?.slice(0, 4) || "onbekend"}</p>
+                        <p>{movieDetails.runtime} min</p>
+                        <p>★ {movieDetails.vote_average?.toFixed(1)}</p>
+                    </div>
                     <img
                         src={`${IMG_URL}${movieDetails.backdrop_path}`}
                         alt={movieDetails.title}
                     />
+                    <div className={styles['movie-details-genre-language']}>
+                    <p>
+                        {languageNames.of(movieDetails.original_language)}
+                    </p>
                     <p>{movieDetails.genres?.map((genre) => genre.name).join(", ")}</p>
-                    <p>{movieDetails.vote_average}</p>
-                    <p>{movieDetails.overview}</p>
+                    </div>
+                    <p>{movieDetails.overview || "Geen omschrijving beschikbaar"}</p>
                 </>
             )}
+            {movieDetails && (
+                <Button
+                    text={isMovieSaved(movieDetails.id) ? "film verwijderen" : "film opslaan"}
+                    clickHandler={handleSaveMovie}
+                />
+            )}
+            <Button text={"← Terug"} clickHandler={() => navigate(-1)}/>
         </main>
     );
 }

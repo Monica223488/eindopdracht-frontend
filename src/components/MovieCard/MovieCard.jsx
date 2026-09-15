@@ -4,6 +4,7 @@ import { SavedMoviesContext } from "../../context/SavedMoviesContext.jsx";
 import { AuthContext } from "../../context/AuthContext.jsx";
 import PropTypes from "prop-types";
 import Button from '../../components/Button/Button.jsx';
+import { Link } from "react-router-dom";
 
 const IMG_URL = "https://image.tmdb.org/t/p/w500";
 
@@ -31,6 +32,7 @@ function MovieCard({ movie }) {
 
     return (
         <article className={styles['movie-tile']}>
+            <Link to={`/movies/${movie.id}`}>
             <div className={styles['image-wrapper']}>
                 {backdropUrl ? (
                     <img src={backdropUrl} alt={movie.title} />
@@ -42,7 +44,7 @@ function MovieCard({ movie }) {
             </div>
 
             <h3>{movie.title}</h3>
-            <p>{movie.overview || "Geen omschrijving beschikbaar"}</p>
+            </Link>
             <Button text={isMovieSaved(movie.id) ? "film verwijderen": "film opslaan"}
                     className={styles['movie-save-button']}
                     clickHandler={handleSaveMovie} />
@@ -54,7 +56,6 @@ MovieCard.propTypes = {
     movie: PropTypes.shape({
         id: PropTypes.number.isRequired,
         title: PropTypes.string,
-        overview: PropTypes.string,
         poster_path: PropTypes.string,
         backdrop_path: PropTypes.string,
     }).isRequired,
