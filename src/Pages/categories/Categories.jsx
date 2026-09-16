@@ -18,6 +18,8 @@ function Categories() {
     const [error, toggleError] = useState(false);
     const [genres, setGenres] = useState([]);
     const [selectedGenre, setSelectedGenre] = useState(null);
+    const [searchInput, setSearchInput] = useState('');
+    const [searchQuery, setSearchQuery] = useState('');
     const [genreError, toggleGenreError] = useState(false);
 
     function handleGenreClick(genreId) {

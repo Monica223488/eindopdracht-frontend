@@ -9,6 +9,7 @@ import SavedMovies from './Pages/SavedMovies/SavedMovies.jsx';
 import CreateAccount from './Pages/CreateAccount/CreateAccount.jsx';
 import ErrorPage from './Pages/errorPage/ErrorPage.jsx'
 import MovieDetails from "./Pages/movieDetails/MovieDetails.jsx";
+import PrivateRoute from "./components/PrivateRoute/PrivateRoute.jsx";
 function App() {
 
 
@@ -22,7 +23,7 @@ function App() {
                     <Route path="/" element={<Questionnaire />} />
                     <Route path="/vragenlijst" element={<Questionnaire />} />
                     <Route path="/categorieën" element={<Categories />} />
-                    <Route path="/opgeslagenfilms" element={<SavedMovies /> }/>
+                    <Route path="/opgeslagenfilms" element={<PrivateRoute><SavedMovies /></PrivateRoute> }/>
                     <Route path="/inloggen" element={<LogIn />} />
                     <Route path="/registreren" element={<CreateAccount />}/>
                     <Route path="*" element={<ErrorPage />} />

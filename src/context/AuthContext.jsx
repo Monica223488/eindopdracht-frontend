@@ -44,7 +44,6 @@ function AuthContextProvider({ children }) {
     function login(token) {
         localStorage.setItem("token", token);
         const decoded = jwtDecode(token);
-        console.log("Decoded token:", decoded);
 
         setAuthState({
             user: {
@@ -53,7 +52,7 @@ function AuthContextProvider({ children }) {
         });
     }
 
-    function logout(token) {
+    function logout() {
         localStorage.removeItem("token");
 
         setAuthState({
