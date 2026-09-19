@@ -1,18 +1,36 @@
-import {createContext, useContext, useEffect, useState} from 'react';
+import {createContext, useEffect, useState} from 'react';
+import type { ReactNode } from 'react';
 import axios from 'axios';
+import type { Movie } from '../components/MovieCard/MovieCard';
 
-import {AuthContext} from './AuthContext.jsx';
+import {useAuth} from './AuthContext';
 
 const noviApiUrl = import.meta.env.VITE_NOVI_API_URL;
 const projectId = import.meta.env.VITE_NOVI_PROJECT_ID;
 
-export const SavedMoviesContext = createContext();
+type SavedMoviesProviderProps = {
+    children: ReactNode;
+};
 
-export function SavedMoviesProvider({children}) {
-    const [savedMovieIds, setSavedMovieIds] = useState([])
+type SavedMoviesContextType = {
+    savedMovieIds: number[];
+    saveMovie: (movie: Movie) => Promise<void>;
+    removeMovie: (movieId: number) => Promise<void>;
+    isMovieSaved: (movieId: number) => boolean;
+    loadingSavedMovies: boolean;
+};
+export function SavedMoviesProvider({
+                                        children
+                                    }: SavedMoviesProviderProps) {
+
+    export const SavedMoviesContext =
+        createContext<SavedMoviesContextType | null>(null);
+
+export function SavedMoviesProvider({children}:SavedMoviesProviderProps) {
+    const [savedMovieIds, setSavedMovieIds] = useState<number[]>([]);
     const [loadingSavedMovies, setLoadingSavedMovies] = useState(true);
 
-    const {user} = useContext(AuthContext)
+    const {user} = useAuth();
 
     useEffect(() => {
 
@@ -66,7 +84,7 @@ export function SavedMoviesProvider({children}) {
         }
     }
 
-    async function saveMovie(movie) {
+    async function saveMovie(movie: Movie) {
         if (savedMovieIds.includes(movie.id)) return;
 
         const token = localStorage.getItem("token");
@@ -101,7 +119,7 @@ export function SavedMoviesProvider({children}) {
         }
     }
 
-    async function removeMovie(movieId) {
+    async function removeMovie(movieId: number) {
         const token = localStorage.getItem("token");
 
         try {
@@ -146,7 +164,7 @@ export function SavedMoviesProvider({children}) {
         }
     }
 
-    function isMovieSaved(movieId) {
+    function isMovieSaved(movieId: number) {
         return savedMovieIds.includes(movieId);
     }
 

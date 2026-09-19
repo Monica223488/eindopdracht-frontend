@@ -3,6 +3,6 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    background-color: var(--color1);
-    color: var(--color2);
+    background-color: var(--color2);
+    color: var(--color1);
 }

@@ -1,9 +1,13 @@
 import styles from './AuthenticateLayout.module.css';
-import React from "react";
+import type { ReactNode } from "react";
 
-function AuthenticateLayout({title, children}) {
+type AuthenticateLayoutProps ={
+    title: string;
+    children: ReactNode;
+}
+
+function AuthenticateLayout({title, children}:AuthenticateLayoutProps) {
     return (
-        <>
             <div className={styles['container']}>
                 <div className={styles['left']}>
                     <h1>Welke film wil je kijken? Eens iets buiten je comfortzone?</h1>
@@ -15,8 +19,6 @@ function AuthenticateLayout({title, children}) {
                     </div>
                 </div>
             </div>
-
-        </>
     )
 }
 

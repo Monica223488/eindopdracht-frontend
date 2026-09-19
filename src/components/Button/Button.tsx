@@ -1,8 +1,15 @@
 import './Button.module.css';
 
-function Button({text, type = "button", clickHandler, disabled, className}) {
+type ButtonProps = {
+    text: string;
+    type?: "button" | "submit" | "reset";
+    clickHandler?: () => void;
+    disabled?: boolean;
+    className?: string;
+};
+
+function Button({text, type = "button", clickHandler, disabled, className}:ButtonProps) {
     return (
-        <>
             <button
                 type={type}
                 onClick={clickHandler}
@@ -10,7 +17,6 @@ function Button({text, type = "button", clickHandler, disabled, className}) {
                 className={className}>
                 {text}
             </button>
-        </>
     )
 }
 

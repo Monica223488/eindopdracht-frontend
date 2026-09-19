@@ -1,16 +1,25 @@
 import styles from './MovieCard.module.css';
 import { useContext } from "react";
-import { SavedMoviesContext } from "../../context/SavedMoviesContext.jsx";
-import { AuthContext } from "../../context/AuthContext.jsx";
-import PropTypes from "prop-types";
-import Button from '../../components/Button/Button.jsx';
+import { SavedMoviesContext } from "../../context/SavedMoviesContext.js";
+import { useAuth } from "../../context/AuthContext.js";
+import Button from '../Button/Button.js';
 import { Link } from "react-router-dom";
 
 const IMG_URL = "https://image.tmdb.org/t/p/w500";
+export type Movie = {
+    id: number;
+    title?: string;
+    poster_path?: string | null;
+    backdrop_path?: string | null;
+};
 
-function MovieCard({ movie }) {
+type MovieCardProps = {
+    movie: Movie;
+};
+
+function MovieCard({ movie }:MovieCardProps) {
     const {saveMovie, removeMovie, isMovieSaved} = useContext(SavedMoviesContext);
-    const {user} = useContext(AuthContext);
+    const {user} = useAuth();
 
     const backdropUrl = movie.backdrop_path
         ? `${IMG_URL}${movie.backdrop_path}`
@@ -51,14 +60,5 @@ function MovieCard({ movie }) {
         </article>
     );
 }
-
-MovieCard.propTypes = {
-    movie: PropTypes.shape({
-        id: PropTypes.number.isRequired,
-        title: PropTypes.string,
-        poster_path: PropTypes.string,
-        backdrop_path: PropTypes.string,
-    }).isRequired,
-};
 
 export default MovieCard;

@@ -1,18 +1,17 @@
 import { useContext, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 
-import { AuthContext } from '../../context/AuthContext.jsx';
-import Button from '../../components/Button/Button.jsx';
+import { useAuth } from '../../context/AuthContext';
+import Button from '../Button/Button';
 
 import styles from './Navigation.module.css';
 
 function Navigation() {
     const[menuOpen, setMenuOpen] = useState(false);
     const navigate = useNavigate();
-    const {user, logout}= useContext(AuthContext);
+    const {user, logout}= useAuth();
 
     return (
-        <>
             <nav>
                 <div className={styles['nav-container']}>
                     <h4>MoovieMatcher</h4>
@@ -55,7 +54,6 @@ function Navigation() {
                     </div>
                 </div>
             </nav>
-        </>
     )
 }
 

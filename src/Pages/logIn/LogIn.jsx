@@ -3,11 +3,11 @@ import axios from 'axios';
 import {jwtDecode} from 'jwt-decode';
 import {Link, useNavigate} from 'react-router-dom';
 
-import {AuthContext} from '../../context/AuthContext.jsx';
+import {AuthContext} from '../../context/AuthContext.tsx';
 
-import AuthenticateLayout from '../../components/AuthenticateLayout/AuthenticateLayout.jsx';
-import Button from '../../components/Button/Button.jsx';
-import InputField from '../../components/InputField/InputField.jsx';
+import AuthenticateLayout from '../../components/AuthenticateLayout/AuthenticateLayout.tsx';
+import Button from '../../components/Button/Button.tsx';
+import InputField from '../../components/InputField/InputField.tsx';
 
 import styles from './LogIn.module.css';
 

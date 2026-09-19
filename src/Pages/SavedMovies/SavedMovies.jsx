@@ -2,12 +2,12 @@ import { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 
-import { AuthContext } from '../../context/AuthContext.jsx';
-import { SavedMoviesContext } from '../../context/SavedMoviesContext.jsx';
+import { AuthContext } from '../../context/AuthContext.tsx';
+import { SavedMoviesContext } from '../../context/SavedMoviesContext.tsx';
 
-import Header from '../../components/header/Header.jsx';
-import MovieGallery from '../../components/MovieGallery/MovieGallery.jsx';
-import Pagination from '../../components/Pagination/Pagination.jsx';
+import Header from '../../components/header/Header.tsx';
+import MovieGallery from '../../components/MovieGallery/MovieGallery.tsx';
+import Pagination from '../../components/Pagination/Pagination.tsx';
 
 import styles from './SavedMovies.module.css';
 

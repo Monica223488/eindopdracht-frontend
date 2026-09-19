@@ -1,7 +1,16 @@
 import './InputField.module.css';
 
+type InputFieldProps = {
+    name: string;
+    inputType: "text" | "email" | "password";
+    label: string;
+    value: string;
+    changeHandler: (value: string) => void;
+    placeholder?: string;
+};
 
-function InputField({name, inputType, label, value, changeHandler, placeholder}) {
+
+function InputField({name, inputType, label, value, changeHandler, placeholder}:InputFieldProps) {
     return (
         <>
             <label htmlFor={`${name}-field`}>{label}</label>

@@ -2,9 +2,9 @@ import styles from './MovieDetails.module.css';
 import { useParams, useNavigate } from "react-router-dom";
 import {useContext, useEffect, useState} from "react";
 import axios from 'axios';
-import {SavedMoviesContext} from "../../context/SavedMoviesContext.jsx";
-import {AuthContext} from "../../context/AuthContext.jsx";
-import Button from "../../components/Button/Button.jsx";
+import {SavedMoviesContext} from "../../context/SavedMoviesContext.tsx";
+import {AuthContext} from "../../context/AuthContext.tsx";
+import Button from "../../components/Button/Button.tsx";
 
 const tmdbUrl = import.meta.env.VITE_TMDB_URL;
 const IMG_URL = "https://image.tmdb.org/t/p/w500";

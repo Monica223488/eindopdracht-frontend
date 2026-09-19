@@ -3,9 +3,9 @@ import axios from 'axios';
 
 import {invertAnswers} from '../../Helpers/invertAnswers.js';
 
-import Header from '../../components/header/Header.jsx';
-import Button from '../../components/Button/Button.jsx';
-import MovieGallery from '../../components/MovieGallery/MovieGallery.jsx';
+import Header from '../../components/header/Header.tsx';
+import Button from '../../components/Button/Button.tsx';
+import MovieGallery from '../../components/MovieGallery/MovieGallery.tsx';
 
 import popcorn from '../../assets/popcorn.png';
 

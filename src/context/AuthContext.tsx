@@ -1,10 +1,52 @@
-import { createContext, useEffect, useState } from 'react';
+import {createContext, ReactNode, useContext, useEffect, useState} from 'react';
 import { jwtDecode } from "jwt-decode";
 
-export const AuthContext = createContext(null);
+type User = {
+    id: string;
+    email: string;
+    role: string;
+};
 
-function AuthContextProvider({ children }) {
-    const [authState, setAuthState] = useState({
+type AuthState = {
+    user: User | null;
+    status: 'pending' | 'done';
+};
+
+type JwtPayload = {
+    exp: number;
+    userId: string;
+    email: string;
+    role: string;
+};
+
+type AuthContextType = {
+    user: User | null;
+    status: 'pending' | 'done';
+    login: (token: string) => void;
+    logout: () => void;
+};
+
+type AuthContextProviderProps = {
+    children: ReactNode;
+};
+
+
+export const AuthContext = createContext<AuthContextType | null>(null);
+
+export function useAuth() {
+    const context = useContext(AuthContext);
+
+    if (!context) {
+        throw new Error(
+            "useAuth moet binnen een AuthContextProvider gebruikt worden."
+        );
+    }
+
+    return context;
+}
+
+function AuthContextProvider({ children }:AuthContextProviderProps) {
+    const [authState, setAuthState] = useState<AuthState>({
         user: null,
         status: 'pending',
     })
@@ -20,7 +62,7 @@ function AuthContextProvider({ children }) {
         }
 
         try {
-            const decoded =jwtDecode(token);
+            const decoded =jwtDecode<JwtPayload>(token);
             const expired = Date.now() > (decoded.exp * 1000)
                 if (expired) {
                 alert("Je sessie is verlopen. Log opnieuw in.");
@@ -41,9 +83,9 @@ function AuthContextProvider({ children }) {
     }
     }, []);
 
-    function login(token) {
+    function login(token: string) {
         localStorage.setItem("token", token);
-        const decoded = jwtDecode(token);
+        const decoded = jwtDecode<JwtPayload>(token);
 
         setAuthState({
             user: {
