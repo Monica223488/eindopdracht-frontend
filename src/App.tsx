@@ -1,14 +1,14 @@
 import './App.css'
 import Navigation from './components/navigation/Navigation.js';
 import { Routes, Route } from 'react-router-dom';
-import Questionnaire from './Pages/questionaire/Questionnaire.jsx';
-import LogIn from './Pages/logIn/LogIn.jsx';
+import Questionnaire from './Pages/questionaire/Questionnaire.js';
+import LogIn from './Pages/logIn/LogIn.js';
 import Footer from './components/footer/Footer';
-import Categories from './Pages/categories/Categories.jsx';
-import SavedMovies from './Pages/SavedMovies/SavedMovies.jsx';
-import CreateAccount from './Pages/CreateAccount/CreateAccount.jsx';
-import ErrorPage from './Pages/errorPage/ErrorPage.jsx'
-import MovieDetails from "./Pages/movieDetails/MovieDetails.jsx";
+import Categories from './Pages/categories/Categories.js';
+import SavedMovies from './Pages/SavedMovies/SavedMovies.js';
+import CreateAccount from './Pages/CreateAccount/CreateAccount.js';
+import ErrorPage from './Pages/errorPage/ErrorPage.js'
+import MovieDetails from "./Pages/movieDetails/MovieDetails.js";
 import PrivateRoute from "./components/PrivateRoute/PrivateRoute.js";
 function App() {
 

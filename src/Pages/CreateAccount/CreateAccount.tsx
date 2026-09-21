@@ -1,10 +1,10 @@
-import { useState } from 'react';
+import { type FormEvent, useState } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 
-import AuthenticateLayout from '../../components/AuthenticateLayout/AuthenticateLayout.tsx';
-import Button from '../../components/Button/Button.tsx';
-import InputField from '../../components/InputField/InputField.tsx';
+import AuthenticateLayout from '../../components/AuthenticateLayout/AuthenticateLayout';
+import Button from '../../components/Button/Button';
+import InputField from '../../components/InputField/InputField';
 
 import styles from './CreateAccount.module.css';
 
@@ -14,13 +14,12 @@ const projectId = import.meta.env.VITE_NOVI_PROJECT_ID;
 function CreateAccount() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [username, setUsername] = useState('');
     const [error, toggleError] = useState(false);
     const [loading, toggleLoading] = useState(false);
     const navigate = useNavigate();
 
 
-        async function handleSubmitAccount (e) {
+        async function handleSubmitAccount (e: FormEvent<HTMLFormElement>) {
              e.preventDefault();
              toggleError(false);
              toggleLoading(true);
@@ -28,9 +27,8 @@ function CreateAccount() {
              try {
                  await axios.post(
                      `${noviApiUrl}/users`,{
-                     email: email,
-                     username: username,
-                     password: password,
+                     email,
+                     password,
                          roles:["user"]
                  }, {
                      headers: {

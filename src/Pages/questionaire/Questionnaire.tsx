@@ -1,11 +1,15 @@
 import {useState} from 'react';
 import axios from 'axios';
 
-import {invertAnswers} from '../../Helpers/invertAnswers.js';
+import {invertAnswers} from '../../Helpers/invertAnswers';
 
-import Header from '../../components/header/Header.tsx';
-import Button from '../../components/Button/Button.tsx';
-import MovieGallery from '../../components/MovieGallery/MovieGallery.tsx';
+import Header from '../../components/header/Header';
+import Button from '../../components/Button/Button';
+import MovieGallery from '../../components/MovieGallery/MovieGallery';
+
+import type { Movie } from '../../types/Movie';
+import type { FormEvent } from 'react';
+import type { Answers } from '../../types/Questionnaire';
 
 import popcorn from '../../assets/popcorn.png';
 
@@ -13,18 +17,22 @@ import styles from './Questionnaire.module.css';
 
 const tmdbUrl = import.meta.env.VITE_TMDB_URL
 
+type MovieResponse = {
+    results: Movie[];
+};
+
 function Questionnaire() {
-    const [answers, setAnswers] = useState({
+    const [answers, setAnswers] = useState<Answers>({
         language: "en",
         genreId: 28,
         recency: "recent",
     });
-    const [movies, setMovies] = useState([]);
+    const [movies, setMovies] = useState<Movie[]>([]);
     const [showResults, setShowResults] = useState(false);
     const [loading, toggleLoading] = useState(false);
     const [error, toggleError] = useState(false);
 
-    async function handleSubmit(e) {
+    async function handleSubmit(e:FormEvent<HTMLFormElement>) {
         e.preventDefault();
         toggleLoading(true);
         toggleError(false);
@@ -32,7 +40,7 @@ function Questionnaire() {
         try {
             const inverted = invertAnswers(answers);
 
-            const {data} = await axios.get(`${tmdbUrl}/discover/movie`,
+            const {data} = await axios.get<MovieResponse>(`${tmdbUrl}/discover/movie`,
                 {
                     params: {
                         api_key: import.meta.env.VITE_API_KEY,
@@ -57,9 +65,7 @@ function Questionnaire() {
 
     return (
         <div>
-            <Header title="Vragenlijst" icon={popcorn}>
-                <p>Vul deze vragenlijst in om een film suggestie te krijgen</p>
-            </Header>
+            <Header title="Vragenlijst" icon={popcorn}/>
             <main className={styles["questionnaire-main"]}>
                 {!showResults ? (<form onSubmit={handleSubmit} className={styles["questionnaire-form"]}>
                         <p className={styles["centerText"]}>Wil je vandaag eens iets anders kijken? Beantwoord de onderstaande

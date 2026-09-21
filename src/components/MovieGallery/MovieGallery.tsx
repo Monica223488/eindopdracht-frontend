@@ -1,5 +1,6 @@
 import styles from './MovieGallery.module.css';
-import MovieCard, { type Movie } from "../MovieCard/MovieCard";
+import MovieCard from "../MovieCard/MovieCard";
+import type { Movie } from '../../types/Movie';
 
 type MovieGalleryProps = {
     movies: Movie[];

@@ -1,9 +1,10 @@
-import {createContext, useEffect, useState} from 'react';
+import {createContext, useContext, useEffect, useState} from 'react';
 import type { ReactNode } from 'react';
 import axios from 'axios';
-import type { Movie } from '../components/MovieCard/MovieCard';
+import type { Movie } from '../types/Movie';
 
 import {useAuth} from './AuthContext';
+import type { User } from './AuthContext';
 
 const noviApiUrl = import.meta.env.VITE_NOVI_API_URL;
 const projectId = import.meta.env.VITE_NOVI_PROJECT_ID;
@@ -19,14 +20,31 @@ type SavedMoviesContextType = {
     isMovieSaved: (movieId: number) => boolean;
     loadingSavedMovies: boolean;
 };
+
+type SavedMovieRecord = {
+    id: string;
+    movieId: number;
+    email: string;
+};
+
+export const SavedMoviesContext =
+    createContext<SavedMoviesContextType | null>(null);
+
+export function useSavedMovies() {
+    const context = useContext(SavedMoviesContext);
+
+    if (!context) {
+        throw new Error(
+            "useSavedMovies moet binnen een SavedMoviesProvider gebruikt worden."
+        );
+    }
+
+    return context;
+}
+
 export function SavedMoviesProvider({
                                         children
                                     }: SavedMoviesProviderProps) {
-
-    export const SavedMoviesContext =
-        createContext<SavedMoviesContextType | null>(null);
-
-export function SavedMoviesProvider({children}:SavedMoviesProviderProps) {
     const [savedMovieIds, setSavedMovieIds] = useState<number[]>([]);
     const [loadingSavedMovies, setLoadingSavedMovies] = useState(true);
 
@@ -39,16 +57,16 @@ export function SavedMoviesProvider({children}:SavedMoviesProviderProps) {
             setLoadingSavedMovies(false);
             return;
         }
-        loadSavedMovies(user);
+        void loadSavedMovies(user);
     }, [user]);
 
-    async function loadSavedMovies(user) {
+    async function loadSavedMovies(user: User) {
         const token = localStorage.getItem("token");
 
         try {
             setLoadingSavedMovies(true);
 
-            const response = await axios.get(
+            const response = await axios.get<SavedMovieRecord[]>(
                 `${noviApiUrl}/savedMovies`,
                 {
                     headers:
@@ -74,10 +92,14 @@ export function SavedMoviesProvider({children}:SavedMoviesProviderProps) {
 
         } catch
             (error) {
-            console.error(
-                "fout bij het laden van de films:",
-                error.response?.data || error.message
-            );
+            if (axios.isAxiosError(error)) {
+                console.error(
+                    "fout bij het laden van de films:",
+                    error.response?.data || error.message
+                );
+            } else {
+                console.error("Onbekende fout: ", error);
+            }
             setSavedMovieIds([]);
         } finally {
             setLoadingSavedMovies(false);
@@ -85,6 +107,7 @@ export function SavedMoviesProvider({children}:SavedMoviesProviderProps) {
     }
 
     async function saveMovie(movie: Movie) {
+        if (!user) return;
         if (savedMovieIds.includes(movie.id)) return;
 
         const token = localStorage.getItem("token");
@@ -112,18 +135,24 @@ export function SavedMoviesProvider({children}:SavedMoviesProviderProps) {
                 movie.id,
             ]);
         } catch (error) {
+            if (axios.isAxiosError(error)) {
             console.error(
                 "Fout bij het opslaan van film:",
                 error.response?.data || error.message
             );
+        } else {
+            console.error("Onbekende fout: ", error)
+            }
         }
     }
 
     async function removeMovie(movieId: number) {
+        if (!user) return;
+
         const token = localStorage.getItem("token");
 
         try {
-            const response = await axios.get(
+            const response = await axios.get<SavedMovieRecord[]>(
                 `${noviApiUrl}/savedMovies`,
                 {
                     headers:
@@ -157,10 +186,13 @@ export function SavedMoviesProvider({children}:SavedMoviesProviderProps) {
             }
 
         } catch (error) {
-
+            if (axios.isAxiosError(error)) {
             console.log("Fout bij verwijderen van film:",
                 error.response?.data || error.message
             );
+        } else {
+            console.error("Onbekende fout: ", error);
+            }
         }
     }
 

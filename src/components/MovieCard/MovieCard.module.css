@@ -10,9 +10,7 @@
 
 .image-wrapper {
     width: 100%;
-    aspect-ratio: 16 / 9;
     overflow: hidden;
-    border-radius: 999px;
     position: relative;
     background: var(--color3);
 
@@ -24,7 +22,22 @@
     display: block;
 }
 
-.noPoster {
+.wide {
+    aspect-ratio: 16 / 9;
+    border-radius: 999px;
+}
+
+.square {
+    aspect-ratio: 1 / 1;
+    border-radius: 32px;
+}
+
+.portrait {
+    aspect-ratio: 3 / 4;
+    border-radius: 999px;
+}
+
+.no-poster {
     position:absolute;
     inset:0;
     display: flex;

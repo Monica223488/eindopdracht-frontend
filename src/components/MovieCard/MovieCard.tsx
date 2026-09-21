@@ -1,24 +1,19 @@
 import styles from './MovieCard.module.css';
-import { useContext } from "react";
-import { SavedMoviesContext } from "../../context/SavedMoviesContext.js";
+import { useSavedMovies} from "../../context/SavedMoviesContext.js";
 import { useAuth } from "../../context/AuthContext.js";
 import Button from '../Button/Button.js';
 import { Link } from "react-router-dom";
+import type { Movie } from '../../types/Movie';
 
 const IMG_URL = "https://image.tmdb.org/t/p/w500";
-export type Movie = {
-    id: number;
-    title?: string;
-    poster_path?: string | null;
-    backdrop_path?: string | null;
-};
 
 type MovieCardProps = {
     movie: Movie;
+    variant: 'wide' | 'square' | 'portrait';
 };
 
-function MovieCard({ movie }:MovieCardProps) {
-    const {saveMovie, removeMovie, isMovieSaved} = useContext(SavedMoviesContext);
+function MovieCard({ movie, variant }:MovieCardProps) {
+    const {saveMovie, removeMovie, isMovieSaved} = useSavedMovies();
     const {user} = useAuth();
 
     const backdropUrl = movie.backdrop_path
@@ -32,9 +27,9 @@ function MovieCard({ movie }:MovieCardProps) {
         }
 
         if (isMovieSaved(movie.id)){
-            removeMovie(movie.id);
+            void removeMovie(movie.id);
         } else {
-            saveMovie(movie);
+            void saveMovie(movie);
         }
     }
 
@@ -42,11 +37,11 @@ function MovieCard({ movie }:MovieCardProps) {
     return (
         <article className={styles['movie-tile']}>
             <Link to={`/movies/${movie.id}`}>
-            <div className={styles['image-wrapper']}>
+            <div className={`${styles['image-wrapper']} ${styles[variant]}`}>
                 {backdropUrl ? (
                     <img src={backdropUrl} alt={movie.title} />
                 ) : (
-                    <div className={styles.noPoster}>
+                    <div className={styles['no-poster']}>
                         <p>{movie.title}</p>
                     </div>
                 )}

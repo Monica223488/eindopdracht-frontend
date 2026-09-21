@@ -1,7 +1,7 @@
 import {createContext, ReactNode, useContext, useEffect, useState} from 'react';
 import { jwtDecode } from "jwt-decode";
 
-type User = {
+export type User = {
     id: string;
     email: string;
     role: string;

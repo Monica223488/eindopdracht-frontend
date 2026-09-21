@@ -1,35 +1,41 @@
-import {useEffect, useState} from 'react';
+import {FormEvent, useEffect, useState} from 'react';
 import axios from 'axios';
 
-import Header from '../../components/header/Header.tsx';
-import MovieGallery from '../../components/MovieGallery/MovieGallery.tsx';
-import Pagination from '../../components/Pagination/Pagination.tsx';
+import Header from '../../components/header/Header';
+import MovieGallery from '../../components/MovieGallery/MovieGallery';
+import Pagination from '../../components/Pagination/Pagination';
+import type { Movie } from '../../components/MovieCard/MovieCard';
 
 import styles from './Categories.module.css';
 
 const tmdbUrl = import.meta.env.VITE_TMDB_URL
 
+type Genre = {
+    id: number;
+    name: string;
+};
+
 
 function Categories() {
-    const [movies, setMovies] = useState([]);
+    const [movies, setMovies] = useState<Movie[]>([]);
     const [page, setPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
     const [loading, toggleLoading] = useState(false);
     const [error, toggleError] = useState(false);
-    const [genres, setGenres] = useState([]);
-    const [selectedGenre, setSelectedGenre] = useState(null);
+    const [genres, setGenres] = useState<Genre[]>([]);
+    const [selectedGenre, setSelectedGenre] = useState<number | null>(null);
     const [searchInput, setSearchInput] = useState('');
     const [searchQuery, setSearchQuery] = useState('');
     const [genreError, toggleGenreError] = useState(false);
 
-    function handleGenreClick(genreId) {
+    function handleGenreClick(genreId:number) {
         setSelectedGenre(prev => (prev === genreId ? null : genreId));
         setSearchQuery('');
         setSearchInput('');
         setPage(1);
     }
 
-    function handleSearch(e) {
+    function handleSearch(e: FormEvent<HTMLFormElement>) {
         e.preventDefault();
 
         setSearchQuery(searchInput);
@@ -53,13 +59,13 @@ function Categories() {
 
                 setGenres(data.genres);
             } catch (e) {
-                if (e.code === "ERR_CANCELED") return;
+                if (axios.isAxiosError(e) && e.code === "ERR_CANCELED") return;
                 console.error(e);
                 toggleGenreError(true);
             }
         }
 
-        fetchGenres();
+        void fetchGenres();
         return () => controller.abort();
     }, []);
 
@@ -91,7 +97,7 @@ function Categories() {
                 setMovies(data.results ?? []);
                 setTotalPages(data.total_pages ?? 1);
             } catch (e) {
-                if (e.code === "ERR_CANCELED") return;
+                if (axios.isAxiosError(e) && e.code === "ERR_CANCELED") return;
                 console.error(e);
                 toggleError(true);
             } finally {
@@ -99,7 +105,7 @@ function Categories() {
             }
         }
 
-        fetchData();
+        void fetchData();
         return () => controller.abort();
     }, [page, selectedGenre, searchQuery]);
 

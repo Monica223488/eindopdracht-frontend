@@ -1,10 +1,11 @@
 import styles from './MovieDetails.module.css';
 import { useParams, useNavigate } from "react-router-dom";
-import {useContext, useEffect, useState} from "react";
+import {useEffect, useState} from "react";
 import axios from 'axios';
-import {SavedMoviesContext} from "../../context/SavedMoviesContext.tsx";
-import {AuthContext} from "../../context/AuthContext.tsx";
-import Button from "../../components/Button/Button.tsx";
+import {useSavedMovies} from "../../context/SavedMoviesContext";
+import {useAuth} from "../../context/AuthContext";
+import type { MovieDetails as MovieDetailsType } from '../../types/Movie';
+import Button from "../../components/Button/Button";
 
 const tmdbUrl = import.meta.env.VITE_TMDB_URL;
 const IMG_URL = "https://image.tmdb.org/t/p/w500";
@@ -12,13 +13,14 @@ const languageNames = new Intl.DisplayNames(["nl"], {
     type: "language"
 });
 
+
 function MovieDetails() {
-    const [movieDetails, setMovieDetails] = useState(null);
+    const [movieDetails, setMovieDetails] = useState<MovieDetailsType | null>(null);
     const [error, toggleError] = useState(false);
     const [loading, toggleLoading] = useState(false);
 
-    const {saveMovie, removeMovie, isMovieSaved} = useContext(SavedMoviesContext);
-    const {user} = useContext(AuthContext);
+    const {saveMovie, removeMovie, isMovieSaved} = useSavedMovies();
+    const {user} = useAuth();
     const { movieId } = useParams();
     const navigate = useNavigate();
 
@@ -28,10 +30,12 @@ function MovieDetails() {
             return;
         }
 
+        if (!movieDetails) return;
+
         if (isMovieSaved(movieDetails.id)) {
-            removeMovie(movieDetails.id);
+            void removeMovie(movieDetails.id);
         } else {
-            saveMovie(movieDetails);
+            void saveMovie(movieDetails);
         }
     }
 
@@ -44,7 +48,7 @@ function MovieDetails() {
             toggleError(false);
 
             try {
-                const { data } = await axios.get(
+                const { data } = await axios.get<MovieDetailsType>(
                     `${tmdbUrl}/movie/${movieId}`,
                     {
                         signal: controller.signal,
@@ -57,7 +61,7 @@ function MovieDetails() {
 
                 setMovieDetails(data);
             } catch (e) {
-                if (e.code === "ERR_CANCELED") return;
+                if (axios.isAxiosError(e) && e.code === "ERR_CANCELED") return;
 
                 console.error(e);
                 toggleError(true);
@@ -66,7 +70,7 @@ function MovieDetails() {
             }
         }
 
-        fetchMovieDetails();
+        void fetchMovieDetails();
 
         return () => controller.abort();
     }, [movieId]);
@@ -82,7 +86,7 @@ function MovieDetails() {
                     <div className={styles['movie-detail-numbers']}>
                         <p>{movieDetails.release_date?.slice(0, 4) || "onbekend"}</p>
                         <p>{movieDetails.runtime} min</p>
-                        <p>★ {movieDetails.vote_average?.toFixed(1)}</p>
+                        <p>★ {movieDetails.vote_average?.toFixed(1)}/10</p>
                     </div>
                     <img
                         src={`${IMG_URL}${movieDetails.backdrop_path}`}

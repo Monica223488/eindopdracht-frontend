@@ -1,13 +1,14 @@
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 
-import { AuthContext } from '../../context/AuthContext.tsx';
-import { SavedMoviesContext } from '../../context/SavedMoviesContext.tsx';
+import { useAuth} from '../../context/AuthContext';
+import { useSavedMovies } from '../../context/SavedMoviesContext';
+import type { Movie } from '../../types/Movie';
 
-import Header from '../../components/header/Header.tsx';
-import MovieGallery from '../../components/MovieGallery/MovieGallery.tsx';
-import Pagination from '../../components/Pagination/Pagination.tsx';
+import Header from '../../components/header/Header';
+import MovieGallery from '../../components/MovieGallery/MovieGallery';
+import Pagination from '../../components/Pagination/Pagination';
 
 import styles from './SavedMovies.module.css';
 
@@ -15,8 +16,8 @@ const tmdbUrl = import.meta.env.VITE_TMDB_URL
 
 
 function SavedMovies() {
-    const { savedMovieIds, loadingSavedMovies } = useContext(SavedMoviesContext);
-    const [movies, setMovies] = useState([]);
+    const { savedMovieIds, loadingSavedMovies } = useSavedMovies();
+    const [movies, setMovies] = useState<Movie[]>([]);
     const [loadingMovies, setLoadingMovies] = useState(false);
     const [page, setPage] = useState(1);
     const moviesPerPage=12;
@@ -35,7 +36,7 @@ function SavedMovies() {
                 setLoadingMovies(true);
 
                 const requests = savedMovieIds.map((movieId) =>
-                    axios.get(`${tmdbUrl}/movie/${movieId}`, {
+                    axios.get<Movie>(`${tmdbUrl}/movie/${movieId}`, {
                         params: {
                             api_key: import.meta.env.VITE_API_KEY,
                             language: "nl-NL",
@@ -56,13 +57,13 @@ function SavedMovies() {
         }
 
         if (savedMovieIds.length > 0) {
-            fetchSavedMovies();
+            void fetchSavedMovies();
         } else {
             setMovies([]);
         }
     }, [savedMovieIds]);
 
-    const {user} = useContext(AuthContext);
+    const {user} = useAuth();
 
 
     if (!user) {

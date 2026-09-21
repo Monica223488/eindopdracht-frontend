@@ -1,35 +1,38 @@
-import {useContext, useState} from 'react';
+import {type FormEvent, useState} from 'react';
 import axios from 'axios';
-import {jwtDecode} from 'jwt-decode';
 import {Link, useNavigate} from 'react-router-dom';
 
-import {AuthContext} from '../../context/AuthContext.tsx';
+import {useAuth} from '../../context/AuthContext';
 
-import AuthenticateLayout from '../../components/AuthenticateLayout/AuthenticateLayout.tsx';
-import Button from '../../components/Button/Button.tsx';
-import InputField from '../../components/InputField/InputField.tsx';
+import AuthenticateLayout from '../../components/AuthenticateLayout/AuthenticateLayout';
+import Button from '../../components/Button/Button';
+import InputField from '../../components/InputField/InputField';
 
 import styles from './LogIn.module.css';
 
 const noviApiUrl = import.meta.env.VITE_NOVI_API_URL;
 const projectId = import.meta.env.VITE_NOVI_PROJECT_ID;
 
+type LoginResponse = {
+    token: string;
+};
+
 function LogIn() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, toggleError] = useState(false);
-    const {login} = useContext(AuthContext);
+    const {login} = useAuth();
     const navigate = useNavigate();
 
-    async function handleSubmit(e) {
+    async function handleSubmit(e:FormEvent<HTMLFormElement>) {
         e.preventDefault();
         toggleError(false);
 
         try {
-            const result = await axios.post(`${noviApiUrl}/login`,
+            const result = await axios.post<LoginResponse>(`${noviApiUrl}/login`,
                 {
-                    email: email,
-                    password: password
+                    email,
+                    password
                 },
                 {
                     headers: {
@@ -38,14 +41,7 @@ function LogIn() {
                     }
                 });
 
-            const decodedToken = jwtDecode(result.data.token);
-
-            const loggedInUser = {
-                ...result.data.user,
-                id: decodedToken.userId,
-            };
-
-            login(result.data.token, loggedInUser);
+            login(result.data.token);
 
             navigate("/", {
                 state: {

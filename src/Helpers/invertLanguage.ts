@@ -1,10 +1,12 @@
-export function invertLanguage(lang) {
-    const alternatives = {
+import type { Language } from "../types/Questionnaire";
+
+export function invertLanguage(lang: Language):string[] {
+    const alternatives: Record<Language, string[]> = {
         en: ["fr", "es", "it", "de", "ko", "ja", "nl"],
         nl: ["en", "fr", "es", "de", "ko", "ja", "it"],
         fr: ["en", "es", "de", "it", "ko", "ja", "nl"],
         de: ["en", "es", "fr", "it", "nl", "ko", "ja" ]
     };
 
-    return alternatives[lang] ?? ["en"];
+    return alternatives[lang];
 }
