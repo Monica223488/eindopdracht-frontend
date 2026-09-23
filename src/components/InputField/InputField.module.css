@@ -3,8 +3,8 @@ form input {
     max-width: 350px;
     padding: 5px 10px;
     margin: 15px 0;
-    border: none;
+    border: solid 2px var(--color3);
     border-radius: 6px;
-    background-color: var(--color3);
+    background-color: var(--color2);
     color: var(--color1);
 }

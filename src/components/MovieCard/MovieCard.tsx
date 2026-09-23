@@ -9,7 +9,7 @@ const IMG_URL = "https://image.tmdb.org/t/p/w500";
 
 type MovieCardProps = {
     movie: Movie;
-    variant: 'wide' | 'square' | 'portrait';
+    variant: 'wide' | 'standard' | 'extra-wide';
 };
 
 function MovieCard({ movie, variant }:MovieCardProps) {
@@ -36,22 +36,27 @@ function MovieCard({ movie, variant }:MovieCardProps) {
 
     return (
         <article className={styles['movie-tile']}>
-            <Link to={`/movies/${movie.id}`}>
             <div className={`${styles['image-wrapper']} ${styles[variant]}`}>
                 {backdropUrl ? (
-                    <img src={backdropUrl} alt={movie.title} />
+                    <img src={backdropUrl} alt={movie.title}/>
                 ) : (
-                    <div className={styles['no-poster']}>
-                        <p>{movie.title}</p>
-                    </div>
+                    <div className={styles['no-poster']} />
                 )}
+                <div className={styles['movie-info']}>
+                    <Link to={`/movies/${movie.id}`}>
+                        <h3>{movie.title}</h3>
+                    </Link>
+                    <button
+                        className={styles['save-button']}
+                        onClick={handleSaveMovie}
+                        aria-label={
+                            isMovieSaved(movie.id)
+                                ? 'Film verwijderen uit opgeslagen films'
+                                : 'Film opslaan'}>
+                        {isMovieSaved(movie.id) ? '♥' : '♡'}
+                    </button>
+                </div>
             </div>
-
-            <h3>{movie.title}</h3>
-            </Link>
-            <Button text={isMovieSaved(movie.id) ? "film verwijderen": "film opslaan"}
-                    className={styles['movie-save-button']}
-                    clickHandler={handleSaveMovie} />
         </article>
     );
 }

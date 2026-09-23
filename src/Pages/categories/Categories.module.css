@@ -46,7 +46,12 @@
     padding-top: 20px;
 }
 
-.page.navigation.button {
-
+.search {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    padding-bottom: 10px;
 }
+
+
 

@@ -9,7 +9,7 @@ import MovieGallery from '../../components/MovieGallery/MovieGallery';
 
 import type { Movie } from '../../types/Movie';
 import type { FormEvent } from 'react';
-import type { Answers } from '../../types/Questionnaire';
+import type {Answers, Language, Recency} from '../../types/Questionnaire';
 
 import popcorn from '../../assets/popcorn.png';
 
@@ -65,7 +65,7 @@ function Questionnaire() {
 
     return (
         <div>
-            <Header title="Vragenlijst" icon={popcorn}/>
+            <Header title="Vragenlijst" />
             <main className={styles["questionnaire-main"]}>
                 {!showResults ? (<form onSubmit={handleSubmit} className={styles["questionnaire-form"]}>
                         <p className={styles["centerText"]}>Wil je vandaag eens iets anders kijken? Beantwoord de onderstaande
@@ -74,48 +74,119 @@ function Questionnaire() {
                         <fieldset className={styles["form-group"]}>
                             <legend>Welk genre kijk je het meeste?</legend>
 
-                            <select className={styles["dropdown"]} value={answers.genreId}
-                                    onChange={(e) => setAnswers((prev) => ({
-                                        ...prev, genreId: Number(e.target.value),
-                                    }))
-                                    }>
-                                <option value={28}>Actie</option>
-                                <option value={35}>Comedy</option>
-                                <option value={27}>Horror</option>
-                                <option value={18}>Drama</option>
-                                <option value={10749}>Romantiek</option>
-                                <option value={99}>Documentaire</option>
-                            </select>
+                            <div className={styles["answer-options"]}>
+                                <label>
+                                    <input
+                                        type="radio"
+                                        name="genre"
+                                        value={28}
+                                        checked={answers.genreId === 28}
+                                        onChange={(e) =>
+                                            setAnswers((prev) => ({
+                                                ...prev,
+                                                genreId: Number(e.target.value),
+                                            }))}
+                                    />
+                                    Actie
+                                </label>
+                                <label>
+                                    <input
+                                        type="radio"
+                                        name="genre"
+                                        value={35}
+                                        checked={answers.genreId === 35}
+                                        onChange={(e) =>
+                                            setAnswers((prev) => ({
+                                                ...prev,
+                                                genreId: Number(e.target.value),
+                                            }))}/>
+                                    Comedy
+                                </label>
+                                <label>
+                                    <input
+                                        type="radio"
+                                        name="genre"
+                                        value={27}
+                                        checked={answers.genreId === 27}
+                                        onChange={(e) =>
+                                            setAnswers((prev) => ({
+                                                ...prev,
+                                                genreId: Number(e.target.value),
+                                            }))}/>
+                                    Horror
+                                </label>
+                                <label>
+                                    <input
+                                        type="radio"
+                                        name="genre"
+                                        value={18}
+                                        checked={answers.genreId === 18}
+                                        onChange={(e) =>
+                                            setAnswers((prev) => ({
+                                                ...prev,
+                                                genreId: Number(e.target.value),
+                                            }))
+                                        }
+                                    />
+                                    Drama
+                                </label>
+                                <label>
+                                    <input
+                                        type="radio"
+                                        name="genre"
+                                        value={10749}
+                                        checked={answers.genreId === 10749}
+                                        onChange={(e) =>
+                                            setAnswers((prev) => ({
+                                                ...prev,
+                                                genreId: Number(e.target.value),
+                                            }))
+                                        }
+                                    />
+                                    Romantiek
+                                </label>
+                                <label>
+                                    <input
+                                        type="radio"
+                                        name="genre"
+                                        value={99}
+                                        checked={answers.genreId === 99}
+                                        onChange={(e) =>
+                                            setAnswers((prev) => ({
+                                                ...prev,
+                                                genreId: Number(e.target.value),
+                                            }))}/>
+                                    Documentaire
+                                </label>
+                            </div>
                         </fieldset>
-
                         <fieldset className={styles["form-group"]}>
                             <legend>Kijk je meestal recente films(de afgelopen 5 jaar) of oudere films?</legend>
-
+                            <div className={styles["answer-options"]}>
                             <label>
                                 <input type="radio" name="recency" value="recent" checked={answers.recency === 'recent'}
                                        onChange={(e) =>
-                                           setAnswers((prev) => ({...prev, recency: e.target.value,}))}/>
+                                           setAnswers((prev) => ({...prev, recency: e.target.value as Recency,}))}/>
                                 Recente films
                             </label>
 
                             <label>
                                 <input type="radio" name="recency" value="older" checked={answers.recency === 'older'}
                                        onChange={(e) =>
-                                           setAnswers((prev) => ({...prev, recency: e.target.value,}))}/>
+                                           setAnswers((prev) => ({...prev, recency: e.target.value as Recency,}))}/>
                                 Oudere films
                             </label>
+                            </div>
                         </fieldset>
-
                         <fieldset className={styles["form-group"]}>
                             <legend>In welke taal kijk je meestal een film?</legend>
-
+                            <div className={styles["answer-options"]}>
                             <label>
                                 <input type="radio" name="language" value="en"
                                        checked={answers.language === 'en'}
                                        onChange={(e) => setAnswers((prev) => ({
-                                           ...prev, language: e.target.value,
-                                       }))
-                                       }/>
+                                           ...prev, language: e.target.value as Language,
+                                       }))}/>
                                 Engels
                             </label>
 
@@ -123,7 +194,7 @@ function Questionnaire() {
                                 <input type="radio" name="language" value="nl"
                                        checked={answers.language === 'nl'}
                                        onChange={(e) => setAnswers((prev) => ({
-                                           ...prev, language: e.target.value,
+                                           ...prev, language: e.target.value as Language,
                                        }))
                                        }/>
                                 Nederlands
@@ -133,21 +204,19 @@ function Questionnaire() {
                                 <input type="radio" name="language" value="fr"
                                        checked={answers.language === 'fr'}
                                        onChange={(e) => setAnswers((prev) => ({
-                                           ...prev, language: e.target.value,
-                                       }))
-                                       }/>
+                                           ...prev, language: e.target.value as Language,
+                                       }))}/>
                                 Frans
                             </label>
-
-                            <label>
+                                <label>
                                 <input type="radio" name="language" value="de"
                                        checked={answers.language === 'de'}
                                        onChange={(e) => setAnswers((prev) => ({
-                                           ...prev, language: e.target.value,
-                                       }))
-                                       }/>
+                                           ...prev, language: e.target.value as Language,
+                                       }))}/>
                                 Duits
                             </label>
+                            </div>
                         </fieldset>
 
                         <Button text="Uitkomsten" type="submit"></Button>

@@ -15,6 +15,7 @@
     align-items: center;
     padding: 100px;
     background-color: var(--color3);
+    border-radius: 300px 115px 230px 110px;
 }
 
 .right {
@@ -29,6 +30,7 @@
 .right button {
     max-width: 300px;
     margin: 20px;
+    background-color: var(--color3);
 }
 
 @media (max-width: 768px) {

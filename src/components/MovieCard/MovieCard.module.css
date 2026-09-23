@@ -5,7 +5,6 @@
     width: 100%;
     align-items: center;
     padding: 15px;
-    height: 100%;
 }
 
 .image-wrapper {
@@ -22,18 +21,43 @@
     display: block;
 }
 
+.movie-info {
+    position: absolute;
+    left: 20px;
+    right: 20px;
+    bottom: 20px;
+
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 16px;
+
+    background: linear-gradient(
+            to top,
+            rgba(0, 0, 0, 0.75) 0%,
+            rgba(0, 0, 0, 0.35) 25%,
+            transparent 55%);
+}
+
+.movie-info h3 {
+    color: var(--color2);
+    margin: 0;
+    max-width: 75%;
+    line-height: 1.1;
+}
+
 .wide {
     aspect-ratio: 16 / 9;
     border-radius: 999px;
 }
 
-.square {
-    aspect-ratio: 1 / 1;
-    border-radius: 32px;
+.standard {
+    aspect-ratio: 4 / 3;
+    border-radius: 999px;
 }
 
-.portrait {
-    aspect-ratio: 3 / 4;
+.extra-wide {
+    aspect-ratio: 2 / 1;
     border-radius: 999px;
 }
 
@@ -53,8 +77,13 @@
     margin: 0;
 }
 
-.movie-save-button {
-    margin-top: auto;
-    background: var(--color3);
-    border: solid 2px var(--color3);
+.save-button {
+    flex-shrink: 0;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    font-size: 2rem;
+    line-height: 1;
+    padding: 0;
+    color: var(--color2);
 }

@@ -4,7 +4,7 @@ import axios from 'axios';
 import Header from '../../components/header/Header';
 import MovieGallery from '../../components/MovieGallery/MovieGallery';
 import Pagination from '../../components/Pagination/Pagination';
-import type { Movie } from '../../components/MovieCard/MovieCard';
+import type { Movie } from '../../types/Movie';
 
 import styles from './Categories.module.css';
 
@@ -113,7 +113,7 @@ function Categories() {
         <>
             <Header title="Ontdekken"/>
             <main>
-                <form onSubmit={handleSearch}>
+                <form onSubmit={handleSearch} className={styles['search']}>
                     <input
                         type="text"
                         placeholder="Zoek een film..."
