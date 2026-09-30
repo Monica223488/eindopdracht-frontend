@@ -49,7 +49,7 @@ function CreateAccount() {
         <>
             <AuthenticateLayout title="Registreren">
                 <form className={styles["create-account-form"]} onSubmit={handleSubmitAccount}>
-                    <p>Vul onderstaande velden in om je te registreren</p>
+                    <p>Maak een account aan om films op te slaan.</p>
                     <InputField name="email" label="e-mailadres:" inputType="email"
                                 value={email} changeHandler={setEmail}
                                 placeholder="Vul hier je e-mailadres in" />
@@ -58,7 +58,7 @@ function CreateAccount() {
                                 placeholder="Kies een wachtwoord"/>
                     <Button text={loading ? "Registreren..." : "registreren"} type="submit"/>
                     {error && <p>Het registreren is niet gelukt. Probeer het opnieuw.</p>}
-                    <p>Al een account? Klik{" "} <Link to="/inloggen"><strong>hier</strong></Link> om naar de inlogpagina te gaan.</p>
+                    <p>Al een account? Log{" "} <Link to="/inloggen"><strong>hier</strong></Link> in.</p>
                 </form>
             </AuthenticateLayout>
         </>

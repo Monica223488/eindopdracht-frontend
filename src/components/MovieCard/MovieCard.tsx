@@ -1,8 +1,7 @@
 import styles from './MovieCard.module.css';
 import { useSavedMovies} from "../../context/SavedMoviesContext.js";
 import { useAuth } from "../../context/AuthContext.js";
-import Button from '../Button/Button.js';
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import type { Movie } from '../../types/Movie';
 
 const IMG_URL = "https://image.tmdb.org/t/p/w500";
@@ -15,6 +14,7 @@ type MovieCardProps = {
 function MovieCard({ movie, variant }:MovieCardProps) {
     const {saveMovie, removeMovie, isMovieSaved} = useSavedMovies();
     const {user} = useAuth();
+    const location = useLocation();
 
     const backdropUrl = movie.backdrop_path
         ? `${IMG_URL}${movie.backdrop_path}`
@@ -43,7 +43,7 @@ function MovieCard({ movie, variant }:MovieCardProps) {
                     <div className={styles['no-poster']} />
                 )}
                 <div className={styles['movie-info']}>
-                    <Link to={`/movies/${movie.id}`}>
+                    <Link to={`/movies/${movie.id}`} state={{ backgroundLocation: location }}>
                         <h3>{movie.title}</h3>
                     </Link>
                     <button

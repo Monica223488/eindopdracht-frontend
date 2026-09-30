@@ -76,6 +76,7 @@ function MovieDetails() {
     }, [movieId]);
 
     return (
+        <div className={styles["movie-details-overlay"]}>
         <main className={styles['movie-details-tile']}>
             {loading && <p>Film wordt geladen...</p>}
             {error && <p>De film kon niet worden opgehaald.</p>}
@@ -101,14 +102,22 @@ function MovieDetails() {
                     <p>{movieDetails.overview || "Geen omschrijving beschikbaar"}</p>
                 </>
             )}
-            {movieDetails && (
-                <Button
-                    text={isMovieSaved(movieDetails.id) ? "film verwijderen" : "film opslaan"}
-                    clickHandler={handleSaveMovie}
-                />
-            )}
+            <div className={styles["movie-detail-buttons"]}>
             <Button text={"← Terug"} clickHandler={() => navigate(-1)}/>
+            {movieDetails && (
+                <button
+                onClick={handleSaveMovie}
+                className={styles["favorite-button"]}
+            aria-label={isMovieSaved(movieDetails.id)
+                ? "Verwijder uit opgeslagen films"
+                : "Sla film op"}
+        >
+            {isMovieSaved(movieDetails.id) ? "♥" : "♡"}
+        </button>
+            )}
+            </div>
         </main>
+        </div>
     );
 }
 

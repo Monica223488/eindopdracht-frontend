@@ -57,15 +57,14 @@ function LogIn() {
         <>
             <AuthenticateLayout title="Inloggen">
                 <form className={styles["login-form"]} onSubmit={handleSubmit}>
-                    <p>Log eerst in om films te kunnen opslaan in MoovieMatcher</p>
+                    <p>Log in om je favoriete films op te slaan.</p>
                     <InputField name="email" label="e-mail:" inputType="text" value={email}
                                 changeHandler={setEmail} placeholder="Vul hier je email in"/>
                     <InputField name="password" label="wachtwoord:" inputType="password" value={password}
                                 changeHandler={setPassword} placeholder="Vul hier je wachtwoord in"/>
                     <Button text="inloggen" type="submit"/>
                     {error && <p>Het inloggen is mislukt. Controleer je gegevens.</p>}
-                    <p>Nog geen account? Klik dan{" "}<Link to={"/registreren"}><strong>hier</strong></Link> om naar de
-                        registratiepagina te gaan.</p>
+                    <p>Nog geen account? Registreer{" "}<Link to={"/registreren"}><strong>hier</strong></Link>. </p>
                 </form>
             </AuthenticateLayout>
         </>

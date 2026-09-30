@@ -1,8 +1,22 @@
 .footer-container {
     display: flex;
-    flex-direction: row;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-    background-color: var(--color2);
-    color: var(--color1);
+    gap: 30px;
+    padding: 20px 40px;
 }
+
+    .attribution {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .attribution img {
+        width: 70px;
+    }
+
+    .attribution p {
+        max-width: 260px;
+        font-size: 0.75rem;
+    }

@@ -10,7 +10,7 @@ function AuthenticateLayout({title, children}:AuthenticateLayoutProps) {
     return (
             <div className={styles['container']}>
                 <div className={styles['left']}>
-                    <h1>Welke film wil je kijken? Eens iets buiten je comfortzone?</h1>
+                    <h1>Welke film wil je kijken? <br /> Eens iets buiten je comfortzone?</h1>
                 </div>
                 <div className={styles['right']}>
                     <div className={styles['form-container']}>

@@ -23,42 +23,45 @@
 
 .movie-info {
     position: absolute;
-    left: 20px;
-    right: 20px;
-    bottom: 20px;
-
+    inset: 0;
     display: flex;
     align-items: flex-end;
     justify-content: space-between;
     gap: 16px;
-
+    padding: 20px 24px;
     background: linear-gradient(
             to top,
             rgba(0, 0, 0, 0.75) 0%,
-            rgba(0, 0, 0, 0.35) 25%,
-            transparent 55%);
+            rgba(0, 0, 0, 0.4) 30%,
+            rgba(0, 0, 0, 0) 65%
+    );
 }
 
 .movie-info h3 {
     color: var(--color2);
     margin: 0;
     max-width: 75%;
-    line-height: 1.1;
+    line-height: 1.15;
+    padding-bottom: 2px;
+}
+
+.image-wrapper {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    position: relative;
 }
 
 .wide {
-    aspect-ratio: 16 / 9;
-    border-radius: 999px;
+    border-radius: 90px 30px 100px 40px;
 }
 
 .standard {
-    aspect-ratio: 4 / 3;
-    border-radius: 999px;
+    border-radius: 30px 100px 30px 90px;
 }
 
 .extra-wide {
-    aspect-ratio: 2 / 1;
-    border-radius: 999px;
+    border-radius: 80px 40px 70px 30px;
 }
 
 .no-poster {
@@ -86,4 +89,5 @@
     line-height: 1;
     padding: 0;
     color: var(--color2);
+    margin-bottom: 2px;
 }

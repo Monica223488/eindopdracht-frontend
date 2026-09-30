@@ -49,8 +49,18 @@
 .search {
     display: flex;
     justify-content: center;
+    align-items: center;
     gap: 10px;
     padding-bottom: 10px;
+}
+
+.search button {
+    flex-shrink: 0;
+}
+
+.main-container p{
+    text-align: center;
+    margin: 20px;
 }
 
 

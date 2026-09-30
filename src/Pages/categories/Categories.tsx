@@ -112,7 +112,7 @@ function Categories() {
     return (
         <>
             <Header title="Ontdekken"/>
-            <main>
+            <main className={styles['main-container']}>
                 <form onSubmit={handleSearch} className={styles['search']}>
                     <input
                         type="text"
