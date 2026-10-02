@@ -14,7 +14,7 @@ function Navigation() {
     return (
             <nav>
                 <div className={styles['nav-container']}>
-                    <h4>MoovieMatcher</h4>
+                    <h3>MoovieMatcher</h3>
 
                     <button
                         type="button" className={styles["hamburger"]} onClick={() => setMenuOpen((prev) => !prev)}>

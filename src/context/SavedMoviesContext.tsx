@@ -4,10 +4,8 @@ import axios from 'axios';
 import type { Movie } from '../types/Movie';
 
 import {useAuth} from './AuthContext';
-import type { User } from './AuthContext';
 
-const noviApiUrl = import.meta.env.VITE_NOVI_API_URL;
-const projectId = import.meta.env.VITE_NOVI_PROJECT_ID;
+const apiUrl = import.meta.env.VITE_API_URL;
 
 type SavedMoviesProviderProps = {
     children: ReactNode;
@@ -23,8 +21,9 @@ type SavedMoviesContextType = {
 
 type SavedMovieRecord = {
     id: string;
-    movieId: number;
-    email: string;
+    tmdbId: number;
+    title: string,
+    posterPath: string | null;
 };
 
 export const SavedMoviesContext =
@@ -45,66 +44,70 @@ export function useSavedMovies() {
 export function SavedMoviesProvider({
                                         children
                                     }: SavedMoviesProviderProps) {
-    const [savedMovieIds, setSavedMovieIds] = useState<number[]>([]);
+    const [savedMovies, setSavedMovies] = useState<SavedMovieRecord[]>([]);
     const [loadingSavedMovies, setLoadingSavedMovies] = useState(true);
 
     const {user} = useAuth();
 
+    const savedMovieIds = savedMovies.map((movie) => movie.tmdbId);
+
     useEffect(() => {
 
         if (!user) {
-            setSavedMovieIds([]);
+            setSavedMovies([]);
             setLoadingSavedMovies(false);
             return;
         }
-        void loadSavedMovies(user);
-    }, [user]);
+        let cancelled = false;
 
-    async function loadSavedMovies(user: User) {
+    async function loadSavedMovies() {
         const token = localStorage.getItem("token");
 
         try {
             setLoadingSavedMovies(true);
+            setSavedMovies([]);
 
             const response = await axios.get<SavedMovieRecord[]>(
-                `${noviApiUrl}/savedMovies`,
+                `${apiUrl}/saved-movies`,
                 {
                     headers:
                         {
                             Authorization: `Bearer ${token}`,
-                            "novi-education-project-id":
-                            projectId
                         },
                 }
             );
+            if (!cancelled) {
+            setSavedMovies(response.data);
+        }
 
+    } catch (error) {
+            if (!cancelled) {
+                if (axios.isAxiosError(error)) {
+                    console.error(
+                        "Fout bij het laden van de films:",
+                        error.response?.data || error.message
+                    );
+                } else {
+                    console.error("Onbekende fout:", error);
+                }
 
-            const moviesForCurrentUser = response.data.filter(
-                (savedMovie) =>
-                    savedMovie.email === user.email
-            );
-
-            const movieIds = moviesForCurrentUser.map(
-                (savedMovie) => savedMovie.movieId
-            );
-
-            setSavedMovieIds(movieIds);
-
-        } catch
-            (error) {
-            if (axios.isAxiosError(error)) {
-                console.error(
-                    "fout bij het laden van de films:",
-                    error.response?.data || error.message
-                );
-            } else {
-                console.error("Onbekende fout: ", error);
+                setSavedMovies([]);
             }
-            setSavedMovieIds([]);
+
         } finally {
-            setLoadingSavedMovies(false);
+            if (!cancelled) {
+                setLoadingSavedMovies(false);
+            }
         }
     }
+
+    void loadSavedMovies();
+
+    return () => {
+        cancelled = true;
+    };
+
+}, [user]);
 
     async function saveMovie(movie: Movie) {
         if (!user) return;
@@ -112,36 +115,34 @@ export function SavedMoviesProvider({
 
         const token = localStorage.getItem("token");
 
-
         try {
-            await axios.post(
-                `${noviApiUrl}/savedMovies`,
+            const response = await axios.post<SavedMovieRecord>(
+                `${apiUrl}/saved-movies`,
                 {
-                    movieId: movie.id,
-                    userId: user.id,
-                    email: user.email,
+                    tmdbId: movie.id,
+                    title: movie.title,
+                    posterPath: movie.poster_path,
                 },
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,
-                        "novi-education-project-id":
-                        projectId,
-                    }
+                    },
                 }
             );
 
-            setSavedMovieIds((previousIds) => [
-                ...previousIds,
-                movie.id,
+            setSavedMovies((previousMovies) => [
+                ...previousMovies,
+                response.data,
             ]);
+
         } catch (error) {
             if (axios.isAxiosError(error)) {
-            console.error(
-                "Fout bij het opslaan van film:",
-                error.response?.data || error.message
-            );
-        } else {
-            console.error("Onbekende fout: ", error)
+                console.error(
+                    "Fout bij het opslaan van film:",
+                    error.response?.data || error.message
+                );
+            } else {
+                console.error("Onbekende fout:", error);
             }
         }
     }
@@ -151,47 +152,36 @@ export function SavedMoviesProvider({
 
         const token = localStorage.getItem("token");
 
+        const foundRecord = savedMovies.find(
+            (movie) => movie.tmdbId === movieId
+        );
+
+        if (!foundRecord) return;
+
         try {
-            const response = await axios.get<SavedMovieRecord[]>(
-                `${noviApiUrl}/savedMovies`,
+            await axios.delete(
+                `${apiUrl}/saved-movies/${foundRecord.id}`,
                 {
-                    headers:
-                        {
-                            Authorization: `Bearer ${token}`,
-                            "novi-education-project-id":
-                            projectId
-                        },
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
                 }
             );
 
-            const foundRecord = response.data.find((savedMovie) => savedMovie.movieId === movieId && savedMovie.email === user.email);
-
-
-            if (foundRecord) {
-                await axios.delete(
-                    `${noviApiUrl}/savedMovies/${foundRecord.id}`,
-                    {
-                        headers:
-                            {
-                                Authorization: `Bearer ${token}`,
-                                "novi-education-project-id":
-                                projectId
-                            },
-                    }
-                );
-
-                setSavedMovieIds((previousIds) =>
-                    previousIds.filter((id) => id !== movieId)
-                );
-            }
+            setSavedMovies((previousMovies) =>
+                previousMovies.filter(
+                    (movie) => movie.tmdbId !== movieId
+                )
+            );
 
         } catch (error) {
             if (axios.isAxiosError(error)) {
-            console.log("Fout bij verwijderen van film:",
-                error.response?.data || error.message
-            );
-        } else {
-            console.error("Onbekende fout: ", error);
+                console.error(
+                    "Fout bij het verwijderen van film:",
+                    error.response?.data || error.message
+                );
+            } else {
+                console.error("Onbekende fout:", error);
             }
         }
     }

@@ -2,9 +2,7 @@ import {createContext, ReactNode, useContext, useEffect, useState} from 'react';
 import { jwtDecode } from "jwt-decode";
 
 export type User = {
-    id: string;
     email: string;
-    role: string;
 };
 
 type AuthState = {
@@ -13,10 +11,8 @@ type AuthState = {
 };
 
 type JwtPayload = {
+    sub: string;
     exp: number;
-    userId: string;
-    email: string;
-    role: string;
 };
 
 type AuthContextType = {
@@ -45,42 +41,50 @@ export function useAuth() {
     return context;
 }
 
-function AuthContextProvider({ children }:AuthContextProviderProps) {
+function AuthContextProvider({children}: AuthContextProviderProps) {
     const [authState, setAuthState] = useState<AuthState>({
         user: null,
-        status: 'pending',
-    })
+        status: 'pending',});
 
     useEffect(() => {
         const token = localStorage.getItem('token');
-        if (!token){
-        setAuthState({
-            user: null,
-            status: 'done',
-        });
-        return;
+        if (!token) {
+            setAuthState({
+                user: null,
+                status: 'done',
+            });
+            return;
         }
 
         try {
-            const decoded =jwtDecode<JwtPayload>(token);
-            const expired = Date.now() > (decoded.exp * 1000)
-                if (expired) {
-                alert("Je sessie is verlopen. Log opnieuw in.");
-                logout ();
+            const decoded = jwtDecode<JwtPayload>(token);
+            const expired = !decoded.exp || Date.now() >= decoded.exp * 1000;
+
+            if (expired || !decoded.sub) {
+                localStorage.removeItem('token');
+                setAuthState({
+                    user: null,
+                    status: 'done',
+                });
                 return;
             }
 
             setAuthState({
-            user: {id: decoded.userId, email: decoded.email, role: decoded.role,},
-            status: 'done',
-        });
+                user: {
+                    email: decoded.sub,},
+                status: 'done',
+            });
 
-    } catch (error)
-    {
-        console.error(error);
-        localStorage.removeItem('token');
-        setAuthState({user: null, status: 'done',});
-    }
+        } catch (error) {
+            console.error(error);
+            localStorage.removeItem('token');
+
+            setAuthState({
+                user: null,
+                status: 'done',
+            });
+        }
+
     }, []);
 
     function login(token: string) {
@@ -89,7 +93,7 @@ function AuthContextProvider({ children }:AuthContextProviderProps) {
 
         setAuthState({
             user: {
-                id: decoded.userId, email: decoded.email, role: decoded.role,
+                email: decoded.sub,
             }, status: "done",
         });
     }

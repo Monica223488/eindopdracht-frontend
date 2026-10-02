@@ -87,13 +87,14 @@ function SavedMovies() {
                     <p>Je hebt nog geen films opgeslagen.</p>
                 ) : (
                     <>
-                    <MovieGallery movies={moviesForCurrentPage}>
-                    </MovieGallery>
+                    <MovieGallery movies={moviesForCurrentPage}/>
+                    {totalPages > 1 && (
                     <Pagination page={page}
             totalPages={totalPages}
             onPrevious={()=> setPage((previousPage)=> previousPage - 1 )}
             onNext={()=> setPage((previousPage)=> previousPage + 1)}>
                     </Pagination>
+                    )}
                     </>
                 )}
             </main>

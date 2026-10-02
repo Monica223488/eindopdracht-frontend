@@ -29,19 +29,15 @@ function LogIn() {
         toggleError(false);
 
         try {
-            const result = await axios.post<LoginResponse>(`${noviApiUrl}/login`,
+            const response = await axios.post(
+                'http://localhost:8080/auth/login',
                 {
                     email,
-                    password
-                },
-                {
-                    headers: {
-                        "Content-Type": "application/json",
-                        "novi-education-project-id": projectId
-                    }
-                });
+                    password,
+                }
+            );
 
-            login(result.data.token);
+            login(response.data.token);
 
             navigate("/", {
                 state: {

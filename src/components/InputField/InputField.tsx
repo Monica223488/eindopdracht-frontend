@@ -7,10 +7,11 @@ type InputFieldProps = {
     value: string;
     changeHandler: (value: string) => void;
     placeholder?: string;
+    autoComplete?: string;
 };
 
 
-function InputField({name, inputType, label, value, changeHandler, placeholder}:InputFieldProps) {
+function InputField({name, inputType, label, value, changeHandler, placeholder, autoComplete}:InputFieldProps) {
     return (
         <>
             <label htmlFor={`${name}-field`}>{label}</label>
@@ -20,6 +21,7 @@ function InputField({name, inputType, label, value, changeHandler, placeholder}:
                 type={inputType}
                 value={value}
                 placeholder={placeholder}
+                autoComplete={autoComplete}
                 onChange={(e) => changeHandler(e.target.value)}
             />
         </>
