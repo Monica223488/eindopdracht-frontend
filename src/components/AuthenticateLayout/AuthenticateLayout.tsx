@@ -1,0 +1,25 @@
+import styles from './AuthenticateLayout.module.css';
+import type { ReactNode } from "react";
+
+type AuthenticateLayoutProps ={
+    title: string;
+    children: ReactNode;
+}
+
+function AuthenticateLayout({title, children}:AuthenticateLayoutProps) {
+    return (
+            <div className={styles['container']}>
+                <div className={styles['left']}>
+                    <h1>Welke film wil je kijken? <br /> Eens iets buiten je comfortzone?</h1>
+                </div>
+                <div className={styles['right']}>
+                    <div className={styles['form-container']}>
+                        <h2>{title}</h2>
+                        {children}
+                    </div>
+                </div>
+            </div>
+    )
+}
+
+export default AuthenticateLayout;
