@@ -6,7 +6,7 @@ import MovieGallery from '../../components/MovieGallery/MovieGallery';
 import Pagination from '../../components/Pagination/Pagination';
 import type { Movie } from '../../types/Movie';
 
-import styles from './Categories.module.css';
+import styles from './Discover.module.css';
 
 const tmdbUrl = import.meta.env.VITE_TMDB_URL
 
@@ -16,7 +16,7 @@ type Genre = {
 };
 
 
-function Categories() {
+function Discover() {
     const [movies, setMovies] = useState<Movie[]>([]);
     const [page, setPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
@@ -27,6 +27,7 @@ function Categories() {
     const [searchInput, setSearchInput] = useState('');
     const [searchQuery, setSearchQuery] = useState('');
     const [genreError, toggleGenreError] = useState(false);
+    const [showGenres, setShowGenres] = useState(false);
 
     function handleGenreClick(genreId:number) {
         setSelectedGenre(prev => (prev === genreId ? null : genreId));
@@ -39,6 +40,7 @@ function Categories() {
         e.preventDefault();
 
         setSearchQuery(searchInput);
+        setSelectedGenre(null);
         setPage(1);
     }
 
@@ -124,7 +126,22 @@ function Categories() {
                         Zoeken
                     </button>
                 </form>
-                <div className={styles['genre-labels']}>
+                <button
+                    type="button"
+                    className={styles["genre-toggle"]}
+                    onClick={() => setShowGenres(!showGenres)}
+                >
+                    {selectedGenre
+                        ? genres.find((genre) => genre.id === selectedGenre)?.name
+                        : "Kies een categorie"}
+                    {showGenres ? " ▲" : " ▼"}
+                </button>
+
+                <div
+                    className={`${styles["genre-labels"]} ${
+                        showGenres ? styles["genres-open"] : ""
+                    }`}
+                >
                     {genreError && <p>De categorieën konden niet worden opgehaald.</p>}
                     {genres.map((genre) => (
                         <button
@@ -178,4 +195,4 @@ function Categories() {
     );
 }
 
-export default Categories;
+export default Discover;

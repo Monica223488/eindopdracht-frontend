@@ -27,7 +27,7 @@ function Navigation() {
                             <li><NavLink className={({isActive}) => isActive ? 'active-menu-link' : 'default-menu-link'}
                                          to="/vragenlijst" onClick={() => setMenuOpen(false)}>vragenlijst</NavLink></li>
                             <li><NavLink className={({isActive}) => isActive ? 'active-menu-link' : 'default-menu-link'}
-                                         to="/categorieën" onClick={() => setMenuOpen(false)}>ontdekken</NavLink></li>
+                                         to="/ontdekken" onClick={() => setMenuOpen(false)}>ontdekken</NavLink></li>
                             <li><NavLink className={({isActive}) => isActive ? 'active-menu-link' : 'default-menu-link'}
                                          to="/opgeslagenfilms" onClick={() => setMenuOpen(false)}>opgeslagen
                                 films</NavLink></li>

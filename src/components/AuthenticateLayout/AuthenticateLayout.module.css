@@ -68,5 +68,6 @@
 
     .left {
         padding: 40px;
+        border-radius: 150px 115px 230px 110px;
     }
 }

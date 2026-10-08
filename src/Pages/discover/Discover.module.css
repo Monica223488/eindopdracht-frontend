@@ -63,5 +63,31 @@
     margin: 20px;
 }
 
+.genre-toggle {
+    display: none;
+}
+
+@media (max-width: 600px) {
+    .search{
+        display: flex;
+        flex-direction: column;
+        padding-bottom: 30px;
+    }
+
+    .genre-toggle {
+        display: block;
+        margin: 20px auto;
+        background-color: var(--color3);
+    }
+
+    .genre-labels {
+        display: none;
+    }
+
+    .genre-labels.genres-open {
+        display: flex;
+    }
+
+}
 
 
