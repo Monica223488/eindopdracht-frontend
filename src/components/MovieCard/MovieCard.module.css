@@ -53,15 +53,15 @@
 }
 
 .wide {
-    border-radius: 90px 30px 100px 40px;
+    border-radius: 90px 30px 70px 40px;
 }
 
 .standard {
-    border-radius: 30px 100px 30px 90px;
+    border-radius: 30px 70px 30px 70px;
 }
 
 .extra-wide {
-    border-radius: 80px 40px 70px 30px;
+    border-radius: 80px 60px 70px 30px;
 }
 
 .no-poster {

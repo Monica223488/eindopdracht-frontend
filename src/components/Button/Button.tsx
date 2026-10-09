@@ -1,4 +1,4 @@
-import './Button.module.css';
+import styles from './Button.module.css';
 
 type ButtonProps = {
     text: string;
@@ -14,7 +14,7 @@ function Button({text, type = "button", clickHandler, disabled, className}:Butto
                 type={type}
                 onClick={clickHandler}
                 disabled={disabled}
-                className={className}>
+                className={styles.button}>
                 {text}
             </button>
     )
