@@ -10,8 +10,7 @@ import InputField from '../../components/InputField/InputField';
 
 import styles from './LogIn.module.css';
 
-const noviApiUrl = import.meta.env.VITE_NOVI_API_URL;
-const projectId = import.meta.env.VITE_NOVI_PROJECT_ID;
+const apiUrl = import.meta.env.VITE_API_URL;
 
 type LoginResponse = {
     token: string;
@@ -30,7 +29,7 @@ function LogIn() {
 
         try {
             const response = await axios.post(
-                'http://localhost:8080/auth/login',
+                `${apiUrl}/auth/login`,
                 {
                     email,
                     password,
