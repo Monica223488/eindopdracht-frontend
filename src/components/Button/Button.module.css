@@ -1,4 +1,4 @@
-button {
+.button {
     border-radius: 30px;
     padding: 9px 15px;
     background-color: var(--color2);
@@ -11,7 +11,7 @@ button {
     font-size: 16px;
 }
 
-button + button {
+.button + .button {
     margin-left: 10px;
 }
 

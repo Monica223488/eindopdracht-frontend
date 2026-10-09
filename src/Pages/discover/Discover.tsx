@@ -7,6 +7,7 @@ import Pagination from '../../components/Pagination/Pagination';
 import type { Movie } from '../../types/Movie';
 
 import styles from './Discover.module.css';
+import Button from "../../components/Button/Button";
 
 const tmdbUrl = import.meta.env.VITE_TMDB_URL
 
@@ -122,9 +123,7 @@ function Discover() {
                         value={searchInput}
                         onChange={(e) => setSearchInput(e.target.value)}
                     />
-                    <button type="submit">
-                        Zoeken
-                    </button>
+                    <Button text="Zoeken" type="submit"/>
                 </form>
                 <button
                     type="button"
