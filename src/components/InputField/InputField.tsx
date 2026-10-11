@@ -1,13 +1,14 @@
-import './InputField.module.css';
+import styles from './InputField.module.css';
 
 type InputFieldProps = {
     name: string;
     inputType: "text" | "email" | "password";
-    label: string;
+    label?: string;
     value: string;
     changeHandler: (value: string) => void;
     placeholder?: string;
     autoComplete?: string;
+    className?: string;
 };
 
 
@@ -23,6 +24,7 @@ function InputField({name, inputType, label, value, changeHandler, placeholder, 
                 placeholder={placeholder}
                 autoComplete={autoComplete}
                 onChange={(e) => changeHandler(e.target.value)}
+                className={styles.inputfield}
             />
         </>
     );

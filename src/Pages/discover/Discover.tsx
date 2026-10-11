@@ -8,6 +8,7 @@ import type { Movie } from '../../types/Movie';
 
 import styles from './Discover.module.css';
 import Button from "../../components/Button/Button";
+import InputField from "../../components/InputField/InputField";
 
 const tmdbUrl = import.meta.env.VITE_TMDB_URL
 
@@ -117,24 +118,24 @@ function Discover() {
             <Header title="Ontdekken"/>
             <main className={styles['main-container']}>
                 <form onSubmit={handleSearch} className={styles['search']}>
-                    <input
-                        type="text"
-                        placeholder="Zoek een film..."
+                    <InputField
+                        name="search"
+                        inputType="text"
                         value={searchInput}
-                        onChange={(e) => setSearchInput(e.target.value)}
+                        changeHandler={setSearchInput}
+                        placeholder="Zoek een film..."
                     />
                     <Button text="Zoeken" type="submit"/>
                 </form>
-                <button
+                <Button
                     type="button"
                     className={styles["genre-toggle"]}
-                    onClick={() => setShowGenres(!showGenres)}
-                >
-                    {selectedGenre
+                    clickHandler={() => setShowGenres(!showGenres)}
+                    text={`${
+                    selectedGenre
                         ? genres.find((genre) => genre.id === selectedGenre)?.name
-                        : "Kies een categorie"}
-                    {showGenres ? " ▲" : " ▼"}
-                </button>
+                        : "Kies een categorie"
+                } ${showGenres ? "▲" : "▼"}`} />
 
                 <div
                     className={`${styles["genre-labels"]} ${

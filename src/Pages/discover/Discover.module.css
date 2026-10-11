@@ -30,6 +30,7 @@
     margin: 8px;
     cursor: pointer;
     background-color: var(--color3);
+    font-family: "Funnel Display", sans-serif;
 }
 
 .active {

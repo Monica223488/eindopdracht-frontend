@@ -20,3 +20,15 @@
         max-width: 260px;
         font-size: 0.75rem;
     }
+
+@media (max-width: 600px) {
+    .footer-container {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .attribution {
+        display: flex;
+        flex-direction: column;
+    }
+}
