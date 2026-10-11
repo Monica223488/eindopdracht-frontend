@@ -86,13 +86,23 @@ function MovieDetails() {
                     <h1>{movieDetails.title}</h1>
                     <div className={styles['movie-detail-numbers']}>
                         <p>{movieDetails.release_date?.slice(0, 4) || "onbekend"}</p>
-                        <p>{movieDetails.runtime} min</p>
-                        <p>★ {movieDetails.vote_average?.toFixed(1)}/10</p>
+                        {movieDetails.runtime != null && movieDetails.runtime > 0 && (
+                            <p>{movieDetails.runtime} min</p>
+                        )}
+                        {movieDetails.vote_average != null && movieDetails.vote_average > 0 && (
+                            <p>★ {movieDetails.vote_average.toFixed(1)}/10</p>
+                        )}
                     </div>
-                    <img
-                        src={`${IMG_URL}${movieDetails.backdrop_path}`}
-                        alt={movieDetails.title}
-                    />
+                    <div className={styles["image-wrapper"]}>
+                        {movieDetails.backdrop_path ? (
+                            <img
+                                src={`${IMG_URL}${movieDetails.backdrop_path}`}
+                                alt={movieDetails.title}
+                            />
+                        ) : (
+                            <span>Geen afbeelding beschikbaar</span>
+                        )}
+                    </div>
                     <div className={styles['movie-details-genre-language']}>
                     <p>
                         {languageNames.of(movieDetails.original_language)}

@@ -14,7 +14,7 @@ function Button({text, type = "button", clickHandler, disabled, className}:Butto
                 type={type}
                 onClick={clickHandler}
                 disabled={disabled}
-                className={styles.button}>
+                className={`${styles.button} ${className ?? ""}`}>
                 {text}
             </button>
     )
