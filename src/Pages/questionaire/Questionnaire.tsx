@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 
 import {invertAnswers} from '../../Helpers/invertAnswers';
@@ -10,8 +10,6 @@ import MovieGallery from '../../components/MovieGallery/MovieGallery';
 import type { Movie } from '../../types/Movie';
 import type { FormEvent } from 'react';
 import type {Answers, Language, Recency} from '../../types/Questionnaire';
-
-import popcorn from '../../assets/popcorn.png';
 
 import styles from './Questionnaire.module.css';
 
@@ -31,6 +29,13 @@ function Questionnaire() {
     const [showResults, setShowResults] = useState(false);
     const [loading, toggleLoading] = useState(false);
     const [error, toggleError] = useState(false);
+
+    useEffect(() => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'instant'
+        });
+    }, [showResults]);
 
     async function handleSubmit(e:FormEvent<HTMLFormElement>) {
         e.preventDefault();
@@ -67,6 +72,11 @@ function Questionnaire() {
         <div>
             <Header title="Vragenlijst" />
             <main className={styles["questionnaire-main"]}>
+                {error && (
+                    <p role="alert">
+                        Er ging iets mis bij het ophalen van de films.
+                        Probeer het opnieuw.
+                    </p>)}
                 {!showResults ? (<form onSubmit={handleSubmit} className={styles["questionnaire-form"]}>
                         <p className={styles["centerText"]}>Wil je vandaag eens iets anders kijken? Beantwoord de onderstaande
                             vragen over jouw voorkeuren en ontvang juist aanbevelingen die daar nét van afwijken.
@@ -227,12 +237,9 @@ function Questionnaire() {
                             <Button text="Terug naar de vragenlijst" type="button"
                                     clickHandler={() => setShowResults(false)}/>
                         </div>
-                        {loading && <p>Loading...</p>}
-                        {error && <p>Er ging iets mis bij het ophalen van films.</p>}
 
                         {!loading && !error && (
                             <MovieGallery movies={movies}>
-
                             </MovieGallery>
                         )}
                     </div>

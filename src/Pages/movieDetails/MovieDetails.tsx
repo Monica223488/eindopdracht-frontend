@@ -1,14 +1,18 @@
-import styles from './MovieDetails.module.css';
-import { useParams, useNavigate } from "react-router-dom";
-import {useEffect, useState} from "react";
+import { useEffect, useState } from 'react';
 import axios from 'axios';
-import {useSavedMovies} from "../../context/SavedMoviesContext";
-import {useAuth} from "../../context/AuthContext";
+import { useNavigate, useParams } from 'react-router-dom';
+
+import { useAuth } from '../../context/AuthContext';
+import { useSavedMovies } from '../../context/SavedMoviesContext';
+
 import type { MovieDetails as MovieDetailsType } from '../../types/Movie';
-import Button from "../../components/Button/Button";
+
+import Button from '../../components/Button/Button';
+
+import styles from './MovieDetails.module.css';
 
 const tmdbUrl = import.meta.env.VITE_TMDB_URL;
-const IMG_URL = "https://image.tmdb.org/t/p/w500";
+const IMG_URL = 'https://image.tmdb.org/t/p/w500';
 const languageNames = new Intl.DisplayNames(["nl"], {
     type: "language"
 });
