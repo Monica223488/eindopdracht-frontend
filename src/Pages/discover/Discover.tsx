@@ -36,6 +36,7 @@ function Discover() {
         setSearchQuery('');
         setSearchInput('');
         setPage(1);
+        setShowGenres(false);
     }
 
     function handleSearch(e: FormEvent<HTMLFormElement>) {
